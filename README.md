@@ -1,5 +1,21 @@
 # Makerskills
 
+Prueba concepto Angular 8 + Firebase Auth (Google) + Firebase Firestore
+
+### Algunos comandos
+
+`firebase login` login máquina local para proyecto firebase
+
+`firebase init` inicio servicios firebase (hosting)
+
+`firebase deploy` deploy hacia firebase (hosting) desde build (dist/**, generado por angular)
+
+`ng serve` servidor desarrollo local
+
+`ng build --prod` genera carpeta dist/** para deploy a firebase
+
+## Makerskills
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.21.
 
 ## Development server

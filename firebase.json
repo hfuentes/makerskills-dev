@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": "dist/makerskills",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}

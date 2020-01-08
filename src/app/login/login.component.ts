@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  error = undefined
+  error: string = undefined
 
   constructor(private authService: AuthService, private router: Router) { }
 
@@ -18,14 +18,18 @@ export class LoginComponent implements OnInit {
     this.error = undefined
     this.authService.doGoogleLogin()
       .then(res => {
-        this.router.navigate(['/profile'])
+        this.router.navigate(['profile'])
         console.dir(res)
       }).catch(err => {
         if (err && err.code == 'auth/user-disabled') {
-          this.error = 'Cuenta deshabilitada'
+          this.error = 'Ops! Your account is disabled, please contact the administrator.'
         } else {
-          this.error = 'Error al intentar ingresar con Google'
+          this.error = 'Error trying to log in with Google, please try again later.'
         }
       })
+  }
+
+  isVisible() {
+    return !this.authService.authenticated
   }
 }

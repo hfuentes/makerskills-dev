@@ -12,10 +12,14 @@ export class LogoutComponent implements OnInit {
 
   ngOnInit() {}
 
+  isVisible() {
+    return this.authService.authenticated
+  }
+
   doLogout() {
     this.authService
       .doLogout()
-      .then(res => this.router.navigate(['/login']))
+      .then(() => this.router.navigate(['login']))
       .catch(err => console.error(err))
   }
 

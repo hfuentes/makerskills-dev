@@ -5,6 +5,9 @@ import { AppComponent } from './app.component';
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFirestoreModule } from '@angular/fire/firestore'
+
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 
 import { environment } from '../environments/environment';
 import { LoginComponent } from './login/login.component';
@@ -22,7 +25,9 @@ import { ProfileComponent } from './profile/profile.component';
     BrowserModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AngularFirestoreModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]

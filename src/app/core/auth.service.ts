@@ -1,24 +1,36 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth'
+import { AngularFirestore } from '@angular/fire/firestore'
 import * as firebase from 'firebase/app'
-import { first } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private afAuth: AngularFireAuth) { }
+  userData: any
+
+  constructor(
+    private afAuth: AngularFireAuth,
+    private afStore: AngularFirestore
+  ) {
+    this.afAuth.authState.subscribe(user => {
+      if (user) {
+        this.userData = user
+        localStorage.setItem('userData', JSON.stringify(this.userData))
+      } else {
+        this.userData = undefined
+        localStorage.removeItem('userData')
+      }
+    })
+  }
 
   get authenticated(): boolean {
-    return this.afAuth.authState !== null;
+    const user = JSON.parse(localStorage.getItem('userData'))
+    return user && user !== null && user.emailVerified !== false
   }
 
-  get currentUserObservable(): any {
-    return this.afAuth.auth
-  }
-
-  doGoogleLogin = () => {
+  doGoogleLogin() {
     return new Promise<any>((resolve, reject) => {
       let provider = new firebase.auth.GoogleAuthProvider()
       provider.addScope('profile')
@@ -30,6 +42,16 @@ export class AuthService {
     })
   }
 
-  doLogout = () => this.afAuth.auth.signOut()
-  
+  doLogout () {
+    return new Promise<any>((resolve, reject) => {
+      this.afAuth.auth.signOut()
+        .then(res => {
+          this.userData = undefined
+          localStorage.removeItem('userData')
+          resolve(res)
+        })
+        .catch(err => reject(err))
+    })
+  }
+
 }

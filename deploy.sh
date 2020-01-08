@@ -1,0 +1,1 @@
+rm -rf dist/ && ng build --prod && firebase deploy

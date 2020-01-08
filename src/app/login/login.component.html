@@ -1,4 +1,14 @@
-<h2>Login</h2>
-<button (click)="doGoogleAuth()">Entrar con Google</button>
-<br>
-<span *ngIf="error">{{error}}</span>
+<div *ngIf="isVisible()">
+    <div class="row">
+        <div class="col">
+            <button class="btn btn-primary" (click)="doGoogleAuth()">Sign in with Google</button>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col">
+            <div *ngIf="error" class="alert alert-danger" role="alert">
+                {{error}}
+            </div>
+        </div>
+    </div>
+</div>

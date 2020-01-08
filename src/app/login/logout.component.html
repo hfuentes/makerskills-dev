@@ -1,1 +1,3 @@
-<button (click)="doLogout()">Cerrar la sesión</button>
+<button *ngIf="isVisible()" (click)="doLogout()" type="button" class="close" aria-label="Close" title="Cerrar sesión!">
+    <span aria-hidden="true">&times;</span>
+</button>

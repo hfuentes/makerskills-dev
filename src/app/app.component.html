@@ -1,4 +1,5 @@
 <div>
-  <span>{{ title }} app is running!</span>
+  <h3>Skills! (authenticated={{authenticated}})</h3>
+  <app-logout *ngIf="authenticated"></app-logout>
+  <router-outlet></router-outlet>
 </div>
-<router-outlet></router-outlet>

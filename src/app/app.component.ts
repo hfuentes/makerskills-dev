@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
+import { AuthService } from './core/auth.service'
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -7,9 +8,11 @@ import { AngularFireAuth } from '@angular/fire/auth';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(auth: AngularFireAuth) {
 
+  constructor(public authService: AuthService) { }
+
+  get authenticated(): boolean {
+    return this.authService.authenticated
   }
-  
-  title = 'makerskills';
+
 }

@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router'
 import { AngularFireAuth } from '@angular/fire/auth'
 import { AngularFirestore } from '@angular/fire/firestore'
 import * as firebase from 'firebase/app'
+
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +14,8 @@ export class AuthService {
 
   constructor(
     private afAuth: AngularFireAuth,
-    private afStore: AngularFirestore
+    private afStore: AngularFirestore,
+    private router: Router
   ) {
     this.afAuth.authState.subscribe(user => {
       if (user) {
@@ -21,6 +24,7 @@ export class AuthService {
       } else {
         this.userData = undefined
         localStorage.removeItem('userData')
+        router.navigate(['login'])
       }
     })
   }

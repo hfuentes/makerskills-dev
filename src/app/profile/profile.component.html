@@ -25,7 +25,7 @@
                     <th scope="row"></th>
                     <td>
                       <div class="input-group mb-3">
-                      <select class="custom-select" id="inputGroupSelectHabilidad"
+                      <select class="form-control form-control-sm" id="inputGroupSelectHabilidad"
                        name="inputGroupSelectHabilidad"
                       (change) = "selectChangeHandler($event)">
                           <option selected>Seleccione...</option>
@@ -36,7 +36,7 @@
                       </div>
                     </td>
                     <td><div class="input-group mb-3">
-                    <select class="custom-select" id="inputGroupSelectExperiencia"
+                    <select class="form-control form-control-sm" id="inputGroupSelectExperiencia"
                     name="inputGroupSelectExperiencia"
                     (change) = "selectChangeHandler($event)">
                         <option selected>Seleccione...</option>
@@ -46,7 +46,7 @@
                       </select>
                     </div></td>
                     <td><div class="input-group mb-3">
-                    <select class="custom-select" id="inputGroupSelectNivel"
+                    <select class="form-control form-control-sm" id="inputGroupSelectNivel"
                     name="inputGroupSelectNivel"
                     (change) = "selectChangeHandler($event)">
                         <option selected>Seleccione...</option>
@@ -58,8 +58,8 @@
                 </tr>
             </tbody>
         </table>
-        <button (click)="this.agregar=true" *ngIf="!agregar">Nueva Habilidad</button>
-        <button (click)="addItem()" *ngIf="agregar">Agregar</button>
-        <button (click)="cancelAddItem()" *ngIf="agregar">Cancelar</button>
+        <button class="btn btn-primary btn-sm" (click)="this.agregar=true" *ngIf="!agregar">Nueva Habilidad</button>
+        <button class="btn btn-success btn-sm" (click)="addItem()" *ngIf="agregar">Agregar</button>
+        <button class="btn btn-danger btn-sm" (click)="cancelAddItem()" *ngIf="agregar">Cancelar</button>
     </div>
 </div>

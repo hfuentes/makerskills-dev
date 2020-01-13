@@ -8,7 +8,6 @@ export class UserService {
   constructor(private db: AngularFirestore) { }
 
   getUserByEmail(email: string = ''): any {
-    console.log('getUserByEmail')
     return new Promise<any>((resolve, reject) => {
       return this.db.firestore.collection('users').doc(email).get()
         .then(doc => {
@@ -21,7 +20,6 @@ export class UserService {
   }
 
   updateUserByGoogleProfile(googleProfile: any = {}): any {
-    console.log('updateUserByGoogleProfile')
     return new Promise<any>((resolve, reject) => {
       const profile = googleProfile.additionalUserInfo.profile
       return this.db.firestore.collection('users').doc(profile.email).update({

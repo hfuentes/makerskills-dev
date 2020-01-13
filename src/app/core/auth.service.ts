@@ -57,7 +57,7 @@ export class AuthService {
       return this.afAuth.auth
         .signInWithPopup(provider)
         .then(profile => this.userService.updateUserByGoogleProfile(profile))
-        .then(profile => this.userService.getUserByEmail(profile.additionalUserInfo.profile.email))
+        .then(profile => this.userService.getUserByEmail(profile.email))
         .then(user => {
           localStorage.setItem('userData', JSON.stringify(user))
           return resolve(user)

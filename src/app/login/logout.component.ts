@@ -20,7 +20,6 @@ export class LogoutComponent implements OnInit {
     this.authService
       .doLogout()
       .then(() => this.router.navigate(['login']))
-      .catch(err => console.error(err))
   }
 
 }

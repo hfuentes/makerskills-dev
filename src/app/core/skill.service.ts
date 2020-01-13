@@ -11,10 +11,12 @@ export class SkillService {
   getSkills() {
     return new Promise<any>((resolve, reject) => {
       this.db.firestore.collection('skills').get().then(res => {
+        let skills: Array<string>  = []
         res.forEach(doc => {
-          
+          skills.push(doc.id)
         })
-      }).catch(err => console.log(err))
+        resolve(skills)
+      }).catch(err => reject(err))
     })
   }
 }

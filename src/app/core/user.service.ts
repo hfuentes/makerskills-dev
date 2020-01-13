@@ -1,32 +1,45 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { User } from './domain/user';
+import { Skill } from './domain/skill';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class UserService {
 
   constructor(private db: AngularFirestore) { }
 
   getUserByEmail(email: string = ''): any {
+    console.log('getUserByEmail')
     return new Promise<any>((resolve, reject) => {
-      this.db.firestore.collection('users').doc(email).get()
+      return this.db.firestore.collection('users').doc(email).get()
         .then(doc => {
-          return resolve(new User(
-            doc.id,
-            doc.data().displayName,
-            doc.data().photoURL
-          ))
+          return resolve({
+            email: doc.id,
+            ...doc.data()
+          })
         }).catch(err => reject(err))
     })
   }
 
   updateUserByGoogleProfile(googleProfile: any = {}): any {
-    const profile = googleProfile.additionalUserInfo.profile
-    return this.db.firestore.collection('users').doc(profile.email).update({
-      displayName: profile.name,
-      photoURL: profile.picture
+    console.log('updateUserByGoogleProfile')
+    return new Promise<any>((resolve, reject) => {
+      const profile = googleProfile.additionalUserInfo.profile
+      return this.db.firestore.collection('users').doc(profile.email).update({
+        displayName: profile.name,
+        photoURL: profile.picture
+      }).then(() => resolve(profile)).catch(err => reject(err))
+    })
+  }
+
+  getSkills(email: string = ''): any {
+    return new Promise<any>((resolve, reject) => {
+      return this.db.firestore.collection('users').doc(email).get()
+        .then(doc => {
+          let skills: Array<Skill> = [];
+          (doc.data().skills || []).forEach(skillMap => {
+            skills.push(skillMap.id)
+          });
+        }).catch(err => reject(err))
     })
   }
 

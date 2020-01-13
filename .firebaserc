@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "makerskills-develop"
+    "default": "makerskills-develop",
+    "makerskills-develop": "makerskills-develop"
   }
 }

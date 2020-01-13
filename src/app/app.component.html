@@ -8,7 +8,7 @@
   </nav>
   <nav *ngIf="auth.userData" aria-label="breadcrumb">
     <ol class="breadcrumb float-right">
-      <li class="breadcrumb-item active" aria-current="page">
+      <li class="breadcrumb-item active" aria-current="page" title="{{auth.userData.email}}">
         Welcome, {{auth.userData.displayName}}!&nbsp;
         <app-logout></app-logout>
       </li>

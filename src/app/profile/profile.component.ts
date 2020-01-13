@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SkillService } from '../core/skill.service';
 
 @Component({
   selector: 'app-profile',
@@ -6,9 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfileComponent implements OnInit {
 
-  constructor() { }
+  constructor(public skillService: SkillService) { }
 
   ngOnInit() {
+    this.skillService.getSkills()
   }
 
 }

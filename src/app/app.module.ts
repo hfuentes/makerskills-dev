@@ -13,13 +13,15 @@ import { environment } from '../environments/environment';
 import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './login/logout.component';
 import { ProfileComponent } from './profile/profile.component';
+import { RestrictedComponent } from './restricted/restricted.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     LogoutComponent,
-    ProfileComponent
+    ProfileComponent,
+    RestrictedComponent
   ],
   imports: [
     BrowserModule,

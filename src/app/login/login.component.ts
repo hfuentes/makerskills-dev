@@ -10,17 +10,14 @@ export class LoginComponent implements OnInit {
 
   error: string = undefined
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(public auth: AuthService, private router: Router) { }
 
   ngOnInit() {}
 
   doGoogleAuth = () => {
     this.error = undefined
-    this.authService.doGoogleLogin()
-      .then(res => {
-        this.router.navigate(['profile'])
-        console.dir(res)
-      }).catch(err => {
+    this.auth.doGoogleLogin()
+      .then(() => this.router.navigate(['profile'])).catch(err => {
         if (err && err.code == 'auth/user-disabled') {
           this.error = 'Ops! Your account is disabled, please contact the administrator.'
         } else {
@@ -30,6 +27,6 @@ export class LoginComponent implements OnInit {
   }
 
   isVisible() {
-    return !this.authService.authenticated
+    return !this.auth.authenticated
   }
 }

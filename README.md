@@ -4,15 +4,17 @@ Prueba concepto Angular 8 + Firebase Auth (Google) + Firebase Firestore
 
 ### Algunos comandos
 
+`ng serve` servidor desarrollo local
+
+`ng build --prod` genera carpeta dist/** para deploy a firebase
+
 `firebase login` login máquina local para proyecto firebase
 
 `firebase init` inicio servicios firebase (hosting)
 
 `firebase deploy` deploy hacia firebase (hosting) desde build (dist/**, generado por angular)
 
-`ng serve` servidor desarrollo local
-
-`ng build --prod` genera carpeta dist/** para deploy a firebase
+`firebase deploy --only firestore:rules` subir modificación en reglas firestore
 
 ## Makerskills
 

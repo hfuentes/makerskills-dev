@@ -7,16 +7,23 @@ import { AuthService } from './auth.service'
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-  
-  constructor(private auth: AuthService, private router: Router) {}
-  
+
+  constructor(private auth: AuthService, private router: Router) { }
+
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      if (!this.auth.authenticated) {
-        this.router.navigate(['login'])
+      console.log('authenticated ' + this.auth.authenticated)
+    if (this.auth.authenticated) {
+      console.log(next.data)
+      if (!this.auth.matchingRoles(next.data.roles)) {
+        this.router.navigate(['restricted'])
         return false
       }
       return true
     }
+    this.router.navigate(['login'])
+    return false
+
+  }
 }

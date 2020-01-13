@@ -1,6 +1,6 @@
 export interface Roles {
     admin: boolean
-    profile?: boolean
+    profile: boolean
 }
 
 export class User {
@@ -9,10 +9,10 @@ export class User {
     photoURL?: string
     roles: Roles
 
-    constructor(auth) {
-        this.email = auth.email
-        this.displayName = auth.displayName
-        this.photoURL = auth.displayName
+    constructor(email, displayName, photoURL) {
+        this.email = email
+        this.displayName = displayName
+        this.photoURL = photoURL
         this.roles = {
             admin: false,
             profile: true

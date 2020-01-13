@@ -47,6 +47,3 @@ Thumbs.db
 
 # env
 .env
-
-# firebase cache
-/.firebase

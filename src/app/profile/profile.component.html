@@ -24,44 +24,41 @@
                 <tr *ngIf="agregar">
                     <th scope="row"></th>
                     <td>
-                      <div class="input-group mb-3">
-                      <select class="form-control form-control-sm" id="inputGroupSelectHabilidad"
-                       name="inputGroupSelectHabilidad"
-                      (change) = "selectChangeHandler($event)">
-                          <option selected>Seleccione...</option>
-                          <option value="Java">Java</option>
-                          <option value="NodeJS">NodeJS</option>
-                          <option value="Angular 8">Angular 8</option>
-                        </select>
-                      </div>
+                        <div class="input-group mb-3">
+                            <select class="form-control form-control-sm" id="inputGroupSelectHabilidad"
+                                name="inputGroupSelectHabilidad" (change)="selectChangeHandler($event)">
+                                <option selected>Seleccione...</option>
+                                <option value="Java">Java</option>
+                                <option value="NodeJS">NodeJS</option>
+                                <option value="Angular 8">Angular 8</option>
+                            </select>
+                        </div>
                     </td>
-                    <td><div class="input-group mb-3">
-                    <select class="form-control form-control-sm" id="inputGroupSelectExperiencia"
-                    name="inputGroupSelectExperiencia"
-                    (change) = "selectChangeHandler($event)">
-                        <option selected>Seleccione...</option>
-                        <option value="1 año">1 año</option>
-                        <option value="2 años">2 años</option>
-                        <option value="3 años">3 años</option>
-                      </select>
-                    </div></td>
-                    <td><div class="input-group mb-3">
-                    <select class="form-control form-control-sm" id="inputGroupSelectNivel"
-                    name="inputGroupSelectNivel"
-                    (change) = "selectChangeHandler($event)">
-                        <option selected>Seleccione...</option>
-                        <option value="Junior">Junior</option>
-                        <option value="Medio">Medio</option>
-                        <option value="Senior">Senior</option>
-                      </select>
-                    </div></td>
+                    <td>
+                        <div class="input-group mb-3">
+                            <select class="form-control form-control-sm" id="inputGroupSelectExperiencia"
+                                name="inputGroupSelectExperiencia" (change)="selectChangeHandler($event)">
+                                <option selected>Seleccione...</option>
+                                <option value="1 año">1 año</option>
+                                <option value="2 años">2 años</option>
+                                <option value="3 años">3 años</option>
+                            </select>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group mb-3">
+                            <select class="form-control form-control-sm" id="inputGroupSelectNivel"
+                                name="inputGroupSelectNivel" (change)="selectChangeHandler($event)">
+                                <option selected>Seleccione...</option>
+                                <option value="Junior">Junior</option>
+                                <option value="Medio">Medio</option>
+                                <option value="Senior">Senior</option>
+                            </select>
+                        </div>
+                    </td>
                 </tr>
             </tbody>
         </table>
-        <app-loading [loading]="this.loading" [error]="this.error">
-            Ejemplo contenido que se quiere mostrar cuando el servicio responde
-        </app-loading>
-        
 
         <button class="btn btn-primary btn-sm" (click)="this.agregar=true" *ngIf="!agregar">Nueva Habilidad</button>
         <button class="btn btn-success btn-sm" (click)="addItem()" *ngIf="agregar">Agregar</button>
@@ -69,36 +66,38 @@
     </div>
 </div>
 
+<app-loading [loading]="this.loading" [error]="this.error">
+    <div class="row">
+        <div class="col mt-3">
+            <h3>Profile Skills # Data from firestore :)</h3>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col">
+            <app-skills-chart [skills]="skills2"></app-skills-chart>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Skill</th>
+                        <th scope="col">Exp</th>
+                        <th scope="col">Level</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let skill of skills2; let i = index">
+                        <th scope="row">{{i}}</th>
+                        <td>{{skill.name}}</td>
+                        <td>{{skill.exp.name}}</td>
+                        <td>{{skill.level.name}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-<div class="row">
-    <div class="col mt-3">
-        <h3>Profile Skills # Data from firestore :)</h3>
-    </div>
-</div>
-<div class="row mt-3">
-    <div class="col">
-        <app-skills-chart [skills]="skills2"></app-skills-chart>
-    </div>
-</div>
-<div class="row mt-3">
-    <div class="col">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Skill</th>
-                    <th scope="col">Exp</th>
-                    <th scope="col">Level</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let skill of skills2; let i = index">
-                    <th scope="row">{{i}}</th>
-                    <td>{{skill.name}}</td>
-                    <td>{{skill.exp.name}}</td>
-                    <td>{{skill.level.name}}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
+</app-loading>

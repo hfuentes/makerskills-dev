@@ -3,6 +3,7 @@ import { SkillService } from '../core/skill.service'
 import { Skill, Skill2 } from '../core/domain/skill'
 import { UserService } from '../core/user.service'
 import { SkillsChartComponent } from '../skills-chart/skills-chart.component'
+import { AuthService } from '../core/auth.service'
 
 @Component({
   selector: 'app-profile',
@@ -21,27 +22,28 @@ export class ProfileComponent implements OnInit {
 
   @ViewChild('skillsChart', {static: true}) chart: SkillsChartComponent
 
-  constructor(public skillService: SkillService, public userService: UserService) {
+  constructor(public skillService: SkillService, public userService: UserService, public auth: AuthService) {
     this.skills = [{ habilidad: "algo", experiencia: "3", nivel: "Junior" }];
   }
 
   ngOnInit() {
     /**************/
-    this.loading = true;
+    
     this.skillService.getSkills().then(names => {
-      this.loading = false;
-      const skillsNames = names;
-      console.log(skillsNames);
-    }).catch(err => {
-      console.error(err);
-      this.loading = false;
-      this.error = {status: 400, message: "Servicio no disponible"};
-    });
+      const skillsNames = names
+      console.log(skillsNames)
+    }).catch(err => console.error(err));
     /**************/
 
-    this.userService.getSkills('hector.fuentes@imagemaker.com')
-    .then(res => this.skills2 = res)
-    .catch(err => console.error(err))
+    this.loading = true
+    this.userService.getSkills(this.auth.userData.email).then(skills => {
+      this.skills2 = skills
+      this.loading = false
+    }).catch(err => {
+      console.error(err)
+      this.error = {message: 'Error on loading user skills, please try again.'};
+      this.loading = false
+    })
 
     this.skills.push({ habilidad: "algo2", experiencia: "3", nivel: "Junior" });
   }

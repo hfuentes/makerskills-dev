@@ -10,12 +10,14 @@ import { SkillsChartComponent } from '../skills-chart/skills-chart.component'
 })
 export class ProfileComponent implements OnInit {
 
-  public skills: [Skill]
-  public skills2: [Skill2]
-  public agregar: boolean
-  habilidadSeleccionada: string
-  experienciaSeleccionada: string
-  nivelSeleccionado: string
+  public skills: [Skill];
+  public skills2: [Skill2];
+  public agregar: boolean;
+  habilidadSeleccionada: string;
+  experienciaSeleccionada: string;
+  nivelSeleccionado: string;
+  public loading: boolean;
+  public error: object;
 
   @ViewChild('skillsChart', {static: true}) chart: SkillsChartComponent
 
@@ -25,10 +27,16 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     /**************/
+    this.loading = true;
     this.skillService.getSkills().then(names => {
-      const skillsNames = names
-      console.log(skillsNames)
-    }).catch(err => console.error(err))
+      this.loading = false;
+      const skillsNames = names;
+      console.log(skillsNames);
+    }).catch(err => {
+      console.error(err);
+      this.loading = false;
+      this.error = {status: 400, message: "Servicio no disponible"};
+    });
     /**************/
 
     this.userService.getSkills('hector.fuentes@imagemaker.com')

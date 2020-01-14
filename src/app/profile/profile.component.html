@@ -58,6 +58,11 @@
                 </tr>
             </tbody>
         </table>
+        <app-loading [loading]="this.loading" [error]="this.error">
+            Ejemplo contenido que se quiere mostrar cuando el servicio responde
+        </app-loading>
+        
+
         <button class="btn btn-primary btn-sm" (click)="this.agregar=true" *ngIf="!agregar">Nueva Habilidad</button>
         <button class="btn btn-success btn-sm" (click)="addItem()" *ngIf="agregar">Agregar</button>
         <button class="btn btn-danger btn-sm" (click)="cancelAddItem()" *ngIf="agregar">Cancelar</button>

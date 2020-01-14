@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Skill2 } from './domain/skill';
+import * as firebase from 'firebase'
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -47,7 +48,7 @@ export class UserService {
   }
 
   //TODO delete seed method
-  //private seed(): void {
+  //seed(): void {
     /*
     //Init user data
     this.db.collection("users").doc("hector.fuentes@imagemaker.com").set(JSON.parse(JSON.stringify(new User('', 'Héctor Fuentes', ''))))
@@ -66,6 +67,19 @@ export class UserService {
     ref.doc('MongoDB').set({ exp: { name: '1 Years', value: 1 }, level: { name: 'Junior', value: 1 }})
     ref.doc('JasperReports').set({ exp: { name: '1 Years', value: 1 }, level: { name: 'Medium', value: 2 }})
     ref.doc('JavaScript').set({ exp: { name: '4 Years', value: 4 }, level: { name: 'Senior', value: 3 }})
+    */
+
+    /*
+    //Init skills data
+    const ref = this.db.collection('skills')
+    ref.doc('AngularJS').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
+    ref.doc('Java 7').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
+    ref.doc('React').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
+    ref.doc('Node').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
+    ref.doc('PL SQL').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
+    ref.doc('MongoDB').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
+    ref.doc('JasperReports').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
+    ref.doc('JavaScript').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
     */
   //}
 }

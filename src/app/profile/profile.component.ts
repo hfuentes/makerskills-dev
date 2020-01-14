@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ViewChild } from '@angular/core'
 import { SkillService } from '../core/skill.service'
 import { Skill, Skill2 } from '../core/domain/skill'
 import { UserService } from '../core/user.service'
+import { SkillsChartComponent } from '../skills-chart/skills-chart.component'
 
 @Component({
   selector: 'app-profile',
@@ -15,6 +16,8 @@ export class ProfileComponent implements OnInit {
   habilidadSeleccionada: string
   experienciaSeleccionada: string
   nivelSeleccionado: string
+
+  @ViewChild('skillsChart', {static: true}) chart: SkillsChartComponent
 
   constructor(public skillService: SkillService, public userService: UserService) {
     this.skills = [{ habilidad: "algo", experiencia: "3", nivel: "Junior" }];

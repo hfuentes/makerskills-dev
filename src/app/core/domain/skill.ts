@@ -7,17 +7,35 @@ export class Skill {
 
 export interface Exp {
   name: string
-  value: string
+  value: number
 }
 
 export interface Level {
   name: string
-  value: string
+  value: number
 }
 
 export class Skill2 {
   name: string
   exp: Exp
   level: Level
-  constructor() {}
+  constructor() { }
+}
+
+export class SkillChartNode {
+  name: string
+  get slug(): string {
+    return this.name.toLowerCase().replace(' ','_').replace(/[^a-zA-Z0-9]+/g, '')
+  }
+  label: string
+  value: number
+}
+
+export class SkillChartRow {
+  name: string
+  get slug(): string {
+    return this.name.toLowerCase().replace(' ','_').replace(/[^a-zA-Z0-9]+/g, '')
+  }
+  nodes: Array<SkillChartNode> = []
+  color: string
 }

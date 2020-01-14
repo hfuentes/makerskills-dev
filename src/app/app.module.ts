@@ -14,6 +14,7 @@ import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './login/logout.component';
 import { ProfileComponent } from './profile/profile.component';
 import { RestrictedComponent } from './restricted/restricted.component';
+import { SkillsChartComponent } from './skills-chart/skills-chart.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { RestrictedComponent } from './restricted/restricted.component';
     LoginComponent,
     LogoutComponent,
     ProfileComponent,
-    RestrictedComponent
+    RestrictedComponent,
+    SkillsChartComponent
   ],
   imports: [
     BrowserModule,

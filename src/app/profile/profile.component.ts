@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core'
 import { SkillService } from '../core/skill.service'
-import { Skill } from '../core/domain/skill'
+import { Skill, Skill2 } from '../core/domain/skill'
+import { UserService } from '../core/user.service'
 
 @Component({
   selector: 'app-profile',
@@ -14,8 +15,10 @@ export class ProfileComponent implements OnInit {
   habilidadSeleccionada: string;
   experienciaSeleccionada: string;
   nivelSeleccionado: string;
+  public skills2: [Skill2]
 
-  constructor(public skillService: SkillService) {
+
+  constructor(public skillService: SkillService, public userService: UserService) {
     this.skills = [{ habilidad: "algo", experiencia: "3", nivel: "Junior" }];
   }
 
@@ -26,6 +29,10 @@ export class ProfileComponent implements OnInit {
       console.log(this.skillsNames)
     }).catch(err => console.error(err));
     /**************/
+
+    this.userService.getSkills('hector.fuentes@imagemaker.com')
+    .then(res => this.skills2 = res)
+    .catch(err => console.error(err))
 
     this.skills.push({ habilidad: "algo2", experiencia: "3", nivel: "Junior" });
   }

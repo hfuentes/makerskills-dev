@@ -61,3 +61,32 @@
         <button class="btn btn-danger btn-sm" (click)="cancelAddItem()" *ngIf="agregar">Cancelar</button>
     </div>
 </div>
+
+
+<div class="row">
+    <div class="col mt-3">
+        <h3>Profile Skills # Data from firestore :)</h3>
+    </div>
+</div>
+<div class="row mt-3">
+    <div class="col">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">habilideichon</th>
+                    <th scope="col">experiencia</th>
+                    <th scope="col">nivel</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let skill of skills2; let i = index">
+                    <th scope="row">{{i}}</th>
+                    <td>{{skill.name}}</td>
+                    <td>{{skill.exp.name}}</td>
+                    <td>{{skill.level.name}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

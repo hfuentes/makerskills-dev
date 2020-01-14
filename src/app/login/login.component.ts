@@ -12,7 +12,7 @@ export class LoginComponent implements OnInit {
 
   constructor(public auth: AuthService, private router: Router) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   doGoogleAuth = () => {
     this.error = undefined

@@ -10,8 +10,6 @@ import * as _ from 'lodash'
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 
-  userData: User
-
   constructor(
     private afAuth: AngularFireAuth,
     private afStore: AngularFirestore,
@@ -21,32 +19,33 @@ export class AuthService {
     this.afAuth.authState.subscribe(auth => {
       if (auth) {
         this.userService.getUserByEmail(auth.email).then(user => {
-          this.userData = user
-          localStorage.setItem('userData', JSON.stringify(this.userData))
+          localStorage.setItem('userData', JSON.stringify(user))
         }).catch(() => {
-          this.userData = undefined
           localStorage.removeItem('userData')
           router.navigate(['login'])
         })
       } else {
-        this.userData = undefined
         localStorage.removeItem('userData')
         router.navigate(['login'])
       }
     })
   }
 
+  get userData(): User {
+    const userStr = localStorage.getItem('userData')
+    if (userStr) return JSON.parse(userStr)
+    return null
+  }
+
   get authenticated(): boolean {
-    const user = JSON.parse(localStorage.getItem('userData'))
-    return user !== null && this.userData !== null
+    return localStorage.getItem('userData') ? true : false
   }
 
   matchingRoles(roles: Array<string> = []): boolean {
-    console.log('roles auth ' + JSON.stringify(roles))
-    roles.forEach(role => {
-      console.log('role ' + this.userData.roles[role])
-      if (this.userData.roles[role]) return true
-    });
+    for (let i = 0; i < roles.length; i++) {
+      const role = roles[i];
+      if (this.userData.roles && this.userData.roles[role]) return true
+    }
     return false
   }
 
@@ -57,11 +56,11 @@ export class AuthService {
       provider.addScope('email')
       return this.afAuth.auth
         .signInWithPopup(provider)
-        .then(profile => {
-          return this.userService
-            .updateUserByGoogleProfile(profile)
-            .then(() => resolve())
-            .catch(err => reject(err))
+        .then(profile => this.userService.updateUserByGoogleProfile(profile))
+        .then(profile => this.userService.getUserByEmail(profile.email))
+        .then(user => {
+          localStorage.setItem('userData', JSON.stringify(user))
+          return resolve(user)
         }).catch(err => reject(err))
     })
   }
@@ -69,7 +68,6 @@ export class AuthService {
   doLogout() {
     return new Promise<any>((resolve, reject) => {
       this.afAuth.auth.signOut().then(res => {
-        this.userData = undefined
         localStorage.removeItem('userData')
         resolve(res)
       }).catch(err => reject(err))

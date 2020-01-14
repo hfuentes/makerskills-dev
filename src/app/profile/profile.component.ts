@@ -9,10 +9,11 @@ import { Skill } from '../core/domain/skill'
 export class ProfileComponent implements OnInit {
 
   public skills: [Skill]
-  public agregar: boolean
-  habilidadSeleccionada: string
-  experienciaSeleccionada: string
-  nivelSeleccionado: string
+  public agregar: boolean;
+  public skillsNames: any;
+  habilidadSeleccionada: string;
+  experienciaSeleccionada: string;
+  nivelSeleccionado: string;
 
   constructor(public skillService: SkillService) {
     this.skills = [{ habilidad: "algo", experiencia: "3", nivel: "Junior" }];
@@ -21,9 +22,9 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
     /**************/
     this.skillService.getSkills().then(names => {
-      const skillsNames = names
-      console.log(skillsNames)
-    }).catch(err => console.error(err))
+      this.skillsNames = names;
+      console.log(this.skillsNames)
+    }).catch(err => console.error(err));
     /**************/
 
     this.skills.push({ habilidad: "algo2", experiencia: "3", nivel: "Junior" });
@@ -31,11 +32,27 @@ export class ProfileComponent implements OnInit {
 
   addItem(): void {
     this.agregar = false;
-    this.skills.push({ habilidad: this.habilidadSeleccionada, experiencia: this.experienciaSeleccionada, nivel: this.nivelSeleccionado });
+    console.log(!this.habilidadSeleccionada ? 'true' : 'false')
+    if (!this.habilidadSeleccionada || this.habilidadSeleccionada === '' || 
+    !this.experienciaSeleccionada || this.experienciaSeleccionada === '' || 
+    !this.nivelSeleccionado || this.nivelSeleccionado === '') {
+      console.log('Campos Vacios revisar');
+    }
+    else {
+      this.skills.push({ habilidad: this.habilidadSeleccionada, experiencia: this.experienciaSeleccionada, nivel: this.nivelSeleccionado });
+      this.habilidadSeleccionada = '';
+      this.experienciaSeleccionada = '';
+      this.nivelSeleccionado = '';
+    }
+
   }
 
   cancelAddItem(): void {
+    //controlar campos con datos
     this.agregar = false;
+    this.habilidadSeleccionada = '';
+    this.experienciaSeleccionada = '';
+    this.nivelSeleccionado = '';
   }
 
   selectChangeHandler(event: any) {

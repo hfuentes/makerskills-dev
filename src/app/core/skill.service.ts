@@ -11,7 +11,7 @@ export class SkillService {
   getSkills() {
     return new Promise<any>((resolve, reject) => {
       this.db.firestore.collection('skills').get().then(res => {
-        let skills: Array<string>  = []
+        let skills: Array<string>  = [];
         res.forEach(doc => {
           skills.push(doc.id)
         })

@@ -27,11 +27,9 @@
                       <div class="input-group mb-3">
                       <select class="form-control form-control-sm" id="inputGroupSelectHabilidad"
                        name="inputGroupSelectHabilidad"
-                      (change) = "selectChangeHandler($event)">
-                          <option selected>Seleccione...</option>
-                          <option value="Java">Java</option>
-                          <option value="NodeJS">NodeJS</option>
-                          <option value="Angular 8">Angular 8</option>
+                      (change) = "selectChangeHandler($event)"> 
+                      <option selected>Seleccione...</option>        
+                          <option [value]="item" *ngFor="let item of skillsNames">{{item}}</option>      
                         </select>
                       </div>
                     </td>

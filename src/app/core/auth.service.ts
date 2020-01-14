@@ -60,8 +60,9 @@ export class AuthService {
         .then(profile => {
           return this.userService
             .updateUserByGoogleProfile(profile)
-            .then(() => resolve())
-            .catch(err => reject(err))
+            .then(() => {
+              return resolve()
+            }).catch(err => reject(err))
         }).catch(err => reject(err))
     })
   }

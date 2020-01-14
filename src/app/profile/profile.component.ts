@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core'
 import { SkillService } from '../core/skill.service'
-import { Skill } from '../core/domain/skill'
-import { timeout } from 'q';
+import { Skill, Skill2 } from '../core/domain/skill'
+import { UserService } from '../core/user.service'
 
 @Component({
   selector: 'app-profile',
@@ -10,6 +10,7 @@ import { timeout } from 'q';
 export class ProfileComponent implements OnInit {
 
   public skills: [Skill];
+  public skills2: [Skill2];
   public agregar: boolean;
   habilidadSeleccionada: string;
   experienciaSeleccionada: string;
@@ -17,7 +18,7 @@ export class ProfileComponent implements OnInit {
   public loading: boolean;
   public error: object;
 
-  constructor(public skillService: SkillService) {
+  constructor(public skillService: SkillService, public userService: UserService) {
     this.skills = [{ habilidad: "algo", experiencia: "3", nivel: "Junior" }];
   }
 
@@ -34,6 +35,11 @@ export class ProfileComponent implements OnInit {
       this.error = {status: 400, message: "Servicio no disponible"};
     });
     /**************/
+
+    this.userService.getSkills('hector.fuentes@imagemaker.com')
+    .then(res => this.skills2 = res)
+    .catch(err => console.error(err))
+
     this.skills.push({ habilidad: "algo2", experiencia: "3", nivel: "Junior" });
   }
 

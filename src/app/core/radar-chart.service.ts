@@ -39,8 +39,10 @@ export class RadarChartService {
     if (data) this.setAxis(data)
     this.host = d3.select(htmlElement)
     if (!data) this.buildSVG()
-    this.drawAxes()
-    this.drawLevels()
+    if (this.svg) {
+      this.drawAxes()
+      this.drawLevels()
+    }
   }
 
   private setAxis(data: Array<SkillChartRow>): void {
@@ -65,7 +67,7 @@ export class RadarChartService {
 
   private drawAxes(): void {
     this.axes = this.svg.selectAll('.axis')
-      .data(this.axisSlugs).enter()
+      .data(this.axisLabels).enter()
       .append('g')
       .attr('class', d => 'axis ' + d)
 
@@ -122,10 +124,10 @@ export class RadarChartService {
       .attr('stroke-width', '1.5px')
       .attr('stroke', (row: SkillChartRow, index) => {
         console.log('this.colorScale = ' + index)
-        row.color = this.colorScale(1)
-        return this.colorScale(1)
+        row.color = this.colorScale(row.color)
+        return this.colorScale(row.color)
       })
-      .attr('fill', (row: SkillChartRow) => this.colorScale(1))
+      .attr('fill', (row: SkillChartRow) => this.colorScale(row.color))
       .attr('fill-opacity', 0.3)
       .attr('stroke-opacity', 1)
       .on(over, (row: SkillChartRow) => {
@@ -160,13 +162,12 @@ export class RadarChartService {
     return coords
   }
 
-  // show tooltip of vertices
   private tooltipShow(row: SkillChartRow): void {
     this.tooltip.transition().duration(200).style('opacity', .9)
     let html = '<h3 class="header">' + row.name + '</h3>'
-    row.nodes.forEach((node) => {
+    /*row.nodes.forEach((node) => {
       html += '<div class="rating">' + node.name + ': ' + node.label + '</div>'
-    })
+    })*/
     this.tooltip.html(html)
     this.tooltip.style('left', (d3.event.pageX) + 'px').style('top', (d3.event.pageY - 28) + 'px')
       .style('border-color', row.color)

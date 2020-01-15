@@ -31,4 +31,6 @@ export class SkillChartRow {
   }
   nodes: Array<SkillChartNode> = []
   color: string
+  maxLabel: string
+  minLabel: string
 }

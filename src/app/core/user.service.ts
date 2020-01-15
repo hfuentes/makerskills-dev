@@ -1,9 +1,8 @@
 import { User } from './domain/user';
-import { Injectable, Component } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Skill } from './domain/skill';
 import * as firebase from 'firebase'
-import { User } from './domain/user';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -65,7 +64,12 @@ export class UserService {
   }
 
   //TODO delete seed method
-  seed(): void {
+  //seed(): void {
+
+    //Timestamp
+    // import * as firebase from 'firebase'
+    // firebase.firestore.FieldValue.serverTimestamp()
+
     /*
     //Init user data
     this.db.collection("users").doc("hector.fuentes@imagemaker.com").set(JSON.parse(JSON.stringify(new User('', 'Héctor Fuentes', ''))))
@@ -122,5 +126,5 @@ export class UserService {
       userSkillsRef.doc('JQuery').set({ exp: { name: '4 Years', value: 4 }, level: { name: 'Senior', value: 3 } })
     })
     */
-  }
+  //}
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import * as d3 from 'd3'
-import { SkillChartRow, SkillChartNode } from './domain/skill'
+import { SkillChartRow } from './domain/skill'
 
 @Injectable({ providedIn: 'root' })
 export class RadarChartService {

@@ -26,7 +26,7 @@ export class SharedService {
         let exps: Array<string>  = [];
         res.forEach(doc => {
           exps.push(doc.id);
-        })
+        });
         resolve(exps);
       }).catch(err => reject(err));
     });
@@ -38,8 +38,23 @@ export class SharedService {
         let levels: Array<string>  = [];
         res.forEach(doc => {
           levels.push(doc.id);
-        })
+        });
         resolve(levels);
+      }).catch(err => reject(err));
+    });
+  }
+
+  getUsers() {
+    return new Promise<any>((resolve, reject) => {
+      this.db.firestore.collection('users').get().then(res => {
+        let users: Array<any>  = [];
+        res.forEach(doc => {
+          users.push({
+            email: doc.id,
+            ...doc.data()
+          });
+        });
+        resolve(users);
       }).catch(err => reject(err));
     });
   }

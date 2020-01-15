@@ -1,6 +1,6 @@
 import { AuthService } from './../core/auth.service';
 import { Component, OnInit, ViewChild } from '@angular/core'
-import { SharedService } from '../core/skill.service'
+import { SharedService } from '../core/shared.service'
 import { Skill } from '../core/domain/skill'
 import { UserService } from '../core/user.service'
 import { SkillsChartComponent } from '../skills-chart/skills-chart.component'

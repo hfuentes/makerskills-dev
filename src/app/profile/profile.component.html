@@ -12,14 +12,27 @@
                     <th scope="col">habilideichon</th>
                     <th scope="col">experiencia</th>
                     <th scope="col">nivel</th>
+                    <th scope="col">action</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let skill of skills; let i = index">
                     <th scope="row">{{i}}</th>
-                    <td>{{skill.habilidad}}</td>
-                    <td>{{skill.experiencia}}</td>
-                    <td>{{skill.nivel}}</td>
+                    <td><div *ngIf="!actualizar">{{skill.name}}</div>
+                        <div class="input-group mb-3" *ngIf="actualizar">
+                        <select class="form-control form-control-sm" id="inputGroupSelectHabilidad"
+                         name="inputGroupSelectHabilidad"
+                        (change) = "selectChangeHandler($event)"> 
+                        <option selected>Seleccione...</option>        
+                            <option [value]="item" *ngFor="let item of skillsNames" [selected]="item ===skill.name">{{item}}</option>      
+                          </select>
+                        </div></td>
+                    <td>{{skill.exp.name}}</td>
+                    <td>{{skill.level.name}}</td>
+                    <td> 
+                        <button class="btn btn-danger btn-sm" (click)="deleteSkill(i)">X</button>
+                        <button class="btn btn-success btn-sm" (click)="actualizarSkill(i)">A</button>
+                    </td>
                 </tr>
                 <tr *ngIf="agregar">
                     <th scope="row"></th>
@@ -77,14 +90,16 @@
                     <th scope="col">habilideichon</th>
                     <th scope="col">experiencia</th>
                     <th scope="col">nivel</th>
+                    <th scope="col">action</th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let skill of skills2; let i = index">
+                <tr *ngFor="let skill of skills; let i = index">
                     <th scope="row">{{i}}</th>
                     <td>{{skill.name}}</td>
                     <td>{{skill.exp.name}}</td>
                     <td>{{skill.level.name}}</td>
+                    <td>{{i}}</td>
                 </tr>
             </tbody>
         </table>

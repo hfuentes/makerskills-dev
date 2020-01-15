@@ -1,9 +1,10 @@
 import { AuthService } from './../core/auth.service';
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ViewChild } from '@angular/core'
 import { SkillService } from '../core/skill.service'
 import { Skill } from '../core/domain/skill'
 import { UserService } from '../core/user.service'
 import { User } from '../core/domain/user'
+import { SkillsChartComponent } from '../skills-chart/skills-chart.component'
 
 @Component({
   selector: 'app-profile',
@@ -18,22 +19,30 @@ export class ProfileComponent implements OnInit {
   habilidadSeleccionada: string;
   experienciaSeleccionada: string;
   nivelSeleccionado: string;
-
-
+  public loading: boolean;
+  public error: object;
+  @ViewChild('skillsChart', {static: true}) chart: SkillsChartComponent
   constructor(public skillService: SkillService, public userService: UserService, public auth: AuthService) {
   }
 
   ngOnInit() {
     /**************/
+    
     this.skillService.getSkills().then(names => {
-      this.skillsNames = names;
-      console.log(this.skillsNames)
+      this.skillsNames = names
+      console.log( this.skillsNames)
     }).catch(err => console.error(err));
     /**************/
-   
-    this.userService.getSkills(this.auth.userData.email)
-    .then(res => this.skills = res)
-    .catch(err => console.error(err))
+
+    this.loading = true
+    this.userService.getSkills(this.auth.userData.email).then(skills => {
+      this.skills = skills
+      this.loading = false
+    }).catch(err => {
+      console.error(err)
+      this.error = {message: 'Error on loading user skills, please try again.'};
+      this.loading = false
+    })
   }
 
   addItem(): void {
@@ -50,11 +59,11 @@ export class ProfileComponent implements OnInit {
         name: this.habilidadSeleccionada, 
         exp: { 
           name: this.experienciaSeleccionada, 
-          value: '1'
+          value: 1
         },
         level : {
           name: this.nivelSeleccionado,
-        value: '2'}
+        value: 2}
       }
       this.skills.push(skill);
       this.habilidadSeleccionada = '';

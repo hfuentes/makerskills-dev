@@ -1,0 +1,14 @@
+<div *ngIf=this.loading class="spinner-border text-primary" role="status">
+  <span class="sr-only">Loading...</span>
+</div>
+
+<div *ngIf="!this.loading && !this.error">
+  <ng-content></ng-content>
+</div>
+
+<div *ngIf="this.error && this.error.message && !this.loading"> 
+  <span>
+    {{this.error.message}}
+  </span>
+</div>
+

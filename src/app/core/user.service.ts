@@ -48,33 +48,33 @@ export class UserService {
     })
   }
 
-  addNewSkill(skill:Skill, user: User ):any{
+  addNewSkill(skill: Skill, user: User): any {
     this.db.firestore.collection('users').doc(user.email).collection('skills').doc(skill.name).set({
-      exp:skill.exp,
-      level:skill.level
+      exp: skill.exp,
+      level: skill.level
     })
   }
 
-  deleteSkill(skill:Skill, user: User){
+  deleteSkill(skill: Skill, user: User) {
     console.log("borrando")
     this.db.firestore.collection('users').doc(user.email).collection('skills').doc(skill.name).delete().then(
-     function() {
+      function () {
         console.log('eliminado');
       }).catch(err => console.log('Error: ' + err))
   }
 
-  updateSkill(skill:Skill, user: User) {
+  updateSkill(skill: Skill, user: User) {
     console.log("actualizando")
     this.db.firestore.collection('users').doc(user.email).collection('skills').doc(skill.name).set({
-      exp:skill.exp,
-      level:skill.level
+      exp: skill.exp,
+      level: skill.level
     }).then(
-     function() {
+      function () {
         console.log('eliminado');
       }).catch(err => console.log('Error: ' + err))
   }
   //TODO delete seed method
-  //seed(): void {
+  seed(): void {
 
     //Timestamp
     // import * as firebase from 'firebase'
@@ -136,5 +136,23 @@ export class UserService {
       userSkillsRef.doc('JQuery').set({ exp: { name: '4 Years', value: 4 }, level: { name: 'Senior', value: 3 } })
     })
     */
-  //}
+
+    const ref = this.db.collection('skills')
+    ref.doc('AngularJS').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
+    ref.doc('Java 7').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
+    ref.doc('React').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
+    ref.doc('Node').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
+    ref.doc('PL SQL').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
+    ref.doc('MongoDB').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
+    ref.doc('JasperReports').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
+    ref.doc('JavaScript').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
+    ref.doc('Sketch').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
+    ref.doc('Bootstrap').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
+    ref.doc('HTML5').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
+    ref.doc('CSS3').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
+    ref.doc('Illustrator').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
+    ref.doc('Photoshop').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
+    ref.doc('Adobe Fireworks').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
+    ref.doc('JQuery').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
+  }
 }

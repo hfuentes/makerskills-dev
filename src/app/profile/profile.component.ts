@@ -1,6 +1,6 @@
 import { AuthService } from './../core/auth.service';
 import { Component, OnInit, ViewChild } from '@angular/core'
-import { SkillService } from '../core/skill.service'
+import { SharedService } from '../core/skill.service'
 import { Skill } from '../core/domain/skill'
 import { UserService } from '../core/user.service'
 import { SkillsChartComponent } from '../skills-chart/skills-chart.component'
@@ -25,7 +25,7 @@ export class ProfileComponent implements OnInit {
   @ViewChild('skillsChart', { static: false }) chart: SkillsChartComponent
 
   constructor(
-    public skillService: SkillService,
+    public skillService: SharedService,
     public userService: UserService,
     public auth: AuthService
   ) { }

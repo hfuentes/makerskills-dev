@@ -106,6 +106,12 @@ export class ProfileComponent implements OnInit {
 
   actualizarSkill(index:number):void{
     this.actualizar = true;
+   
+  }
+
+  ejecutarActualizarSkill(index: number):void{
+    this.userService.updateSkill(this.skills[index], this.auth.userData)
+    this.actualizar = false;
   }
 
 }

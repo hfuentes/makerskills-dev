@@ -18,8 +18,8 @@
             <tbody>
                 <tr *ngFor="let skill of skills; let i = index">
                     <th scope="row">{{i}}</th>
-                    <td><div *ngIf="!actualizar">{{skill.name}}</div>
-                        <div class="input-group mb-3" *ngIf="actualizar">
+                    <td><div *ngIf="!(actualizar && i === indexSelected)">{{skill.name}}</div>
+                        <div class="input-group mb-3" *ngIf="actualizar && i === indexSelected">
                         <select class="form-control form-control-sm" id="inputGroupSelectHabilidad"
                          name="inputGroupSelectHabilidad"
                         (change) = "selectChangeHandler($event)"> 
@@ -30,8 +30,15 @@
                     <td>{{skill.exp.name}}</td>
                     <td>{{skill.level.name}}</td>
                     <td> 
-                        <button class="btn btn-danger btn-sm" (click)="deleteSkill(i)">X</button>
-                        <button class="btn btn-success btn-sm" (click)="actualizarSkill(i)">A</button>
+                        <div  *ngIf="!(actualizar && i === indexSelected)">                            
+                            <button class="btn btn-danger btn-sm" (click)="deleteSkill(i)">X</button>
+                            <button class="btn btn-success btn-sm" (click)="actualizarSkill(i); indexSelected = i">A</button>
+                        </div>
+                        <div  *ngIf="(actualizar && i === indexSelected)">                            
+                            <button class="btn btn-danger btn-sm" (click)="indexSelected = undefined">X2</button>
+                            <button class="btn btn-success btn-sm" (click)="ejecutarActualizarSkill(i); indexSelected = undefined">A2</button>
+                        </div>
+
                     </td>
                 </tr>
                 <tr *ngIf="agregar">
@@ -86,7 +93,7 @@
     </div>
     <div class="row mt-3">
         <div class="col">
-            <app-skills-chart [skills]="skills2"></app-skills-chart>
+            <app-skills-chart [skills]="skills"></app-skills-chart>
         </div>
     </div>
     <div class="row mt-3">
@@ -101,7 +108,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let skill of skills2; let i = index">
+                    <tr *ngFor="let skill of skills; let i = index">
                         <th scope="row">{{i}}</th>
                         <td>{{skill.name}}</td>
                         <td>{{skill.exp.name}}</td>

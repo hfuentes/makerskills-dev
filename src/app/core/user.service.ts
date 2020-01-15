@@ -137,6 +137,8 @@ export class UserService {
     })
     */
 
+    /*
+    //Init skills
     const ref = this.db.collection('skills')
     ref.doc('AngularJS').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
     ref.doc('Java 7').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
@@ -153,6 +155,25 @@ export class UserService {
     ref.doc('Illustrator').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
     ref.doc('Photoshop').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
     ref.doc('Adobe Fireworks').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
-    ref.doc('JQuery').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
+    ref.doc('JQuery').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })*/
+
+    /*
+    //Init levels
+    const lRef = this.db.firestore.collection('levels')
+    lRef.doc('Junior').set({ value: 1, valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
+    lRef.doc('Medium').set({ value: 2, valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
+    lRef.doc('Senior').set({ value: 3, valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
+    //Init exps
+    const exRef = this.db.firestore.collection('exps')
+    exRef.doc('1 Year').set({ value: 1, valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
+    exRef.doc('2 Years').set({ value: 2, valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
+    exRef.doc('3 Years').set({ value: 3, valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
+    exRef.doc('4 Years').set({ value: 4, valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
+    exRef.doc('5 Years').set({ value: 5, valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
+    exRef.doc('6 Years').set({ value: 6, valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
+    exRef.doc('7 Years').set({ value: 7, valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
+    exRef.doc('8 Years').set({ value: 8, valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
+    exRef.doc('9 Years').set({ value: 9, valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
+    exRef.doc('10 Years').set({ value: 10, valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })*/
   }
 }

@@ -34,7 +34,7 @@ export class SkillsChartComponent implements OnInit, OnChanges, AfterViewInit {
   private buildLevelRow(skills: Array<Skill>): SkillChartRow {
     let levelRow: SkillChartRow = new SkillChartRow()
     levelRow.name = 'Level'
-    levelRow.color = '#17becf'
+    levelRow.color = '#007bff'
     levelRow.nodes = _.map(skills, (skill: Skill) => {
       let node = new SkillChartNode()
       node.name = skill.name

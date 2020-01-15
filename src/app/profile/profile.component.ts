@@ -48,8 +48,7 @@ export class ProfileComponent implements OnInit {
       this.error = { message: 'Error on loading user skills, please try again.' }
       this.loading = false
     })
-
-    this.userService.seed()
+    
   }
 
   addItem(): void {

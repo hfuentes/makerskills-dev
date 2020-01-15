@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef, OnChanges, Input, ViewChild, AfterViewInit } from '@angular/core'
-import { SkillChartNode, Skill2, SkillChartRow } from '../core/domain/skill'
+import { SkillChartNode, Skill, SkillChartRow } from '../core/domain/skill'
 import { RadarChartService } from '../core/radar-chart.service'
 
 @Component({
@@ -9,14 +9,14 @@ import { RadarChartService } from '../core/radar-chart.service'
 })
 export class SkillsChartComponent implements OnInit, OnChanges, AfterViewInit {
 
-  @Input() skills: Array<Skill2>
+  @Input() skills: Array<Skill>
   @ViewChild('skillschartcontainer', { static: true }) element: ElementRef
 
   private htmlElement: HTMLElement
 
   constructor(private chartService: RadarChartService) { }
 
-  private buildChartData(skills: Array<Skill2>): Array<SkillChartRow> {
+  private buildChartData(skills: Array<Skill>): Array<SkillChartRow> {
     let data: Array<SkillChartRow> = []
 
     if (skills && skills.length > 0) {

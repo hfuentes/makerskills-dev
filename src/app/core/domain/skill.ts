@@ -1,10 +1,3 @@
-export class Skill {
-  habilidad: string
-  experiencia: string
-  nivel: string
-  constructor() { }
-}
-
 export interface Exp {
   name: string
   value: number
@@ -15,7 +8,7 @@ export interface Level {
   value: number
 }
 
-export class Skill2 {
+export class Skill {
   name: string
   exp: Exp
   level: Level

@@ -1,8 +1,3 @@
-<div class="row">
-    <div class="col mt-3">
-        <h3>Profile Skills</h3>
-    </div>
-</div>
 <div class="row mt-3">
     <div class="col">
         <table class="table">
@@ -84,13 +79,7 @@
         <button class="btn btn-danger btn-sm" (click)="cancelAddItem()" *ngIf="agregar">Cancelar</button>
     </div>
 </div>
-
 <app-loading [loading]="this.loading" [error]="this.error">
-    <div class="row">
-        <div class="col mt-3">
-            <h3>Profile Skills # Data from firestore :)</h3>
-        </div>
-    </div>
     <div class="row mt-3">
         <div class="col">
             <app-skills-chart [skills]="skills"></app-skills-chart>
@@ -105,18 +94,69 @@
                         <th scope="col">Skill</th>
                         <th scope="col">Exp</th>
                         <th scope="col">Level</th>
+                        <th scope="col">action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let skill of skills; let i = index">
                         <th scope="row">{{i}}</th>
-                        <td>{{skill.name}}</td>
+                        <td>
+                            <div *ngIf="!actualizar">{{skill.name}}</div>
+                            <div class="input-group mb-3" *ngIf="actualizar">
+                                <select class="form-control form-control-sm" id="inputGroupSelectHabilidad"
+                                    name="inputGroupSelectHabilidad" (change)="selectChangeHandler($event)">
+                                    <option selected>Seleccione...</option>
+                                    <option [value]="item" *ngFor="let item of skillsNames"
+                                        [selected]="item ===skill.name">{{item}}</option>
+                                </select>
+                            </div>
+                        </td>
                         <td>{{skill.exp.name}}</td>
                         <td>{{skill.level.name}}</td>
+                        <td>
+                            <button class="btn btn-danger btn-sm" (click)="deleteSkill(i)">X</button>
+                            <button class="btn btn-success btn-sm" (click)="actualizarSkill(i)">A</button>
+                        </td>
+                    </tr>
+                    <tr *ngIf="agregar">
+                        <th scope="row"></th>
+                        <td>
+                            <div class="input-group mb-3">
+                                <select class="form-control form-control-sm" id="inputGroupSelectHabilidad"
+                                    name="inputGroupSelectHabilidad" (change)="selectChangeHandler($event)">
+                                    <option selected>Seleccione...</option>
+                                    <option [value]="item" *ngFor="let item of skillsNames">{{item}}</option>
+                                </select>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="input-group mb-3">
+                                <select class="form-control form-control-sm" id="inputGroupSelectExperiencia"
+                                    name="inputGroupSelectExperiencia" (change)="selectChangeHandler($event)">
+                                    <option selected>Seleccione...</option>
+                                    <option value="1 año">1 año</option>
+                                    <option value="2 años">2 años</option>
+                                    <option value="3 años">3 años</option>
+                                </select>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="input-group mb-3">
+                                <select class="form-control form-control-sm" id="inputGroupSelectNivel"
+                                    name="inputGroupSelectNivel" (change)="selectChangeHandler($event)">
+                                    <option selected>Seleccione...</option>
+                                    <option value="Junior">Junior</option>
+                                    <option value="Medio">Medio</option>
+                                    <option value="Senior">Senior</option>
+                                </select>
+                            </div>
+                        </td>
                     </tr>
                 </tbody>
             </table>
+            <button class="btn btn-primary btn-sm" (click)="this.agregar=true" *ngIf="!agregar">Nueva Habilidad</button>
+            <button class="btn btn-success btn-sm" (click)="addItem()" *ngIf="agregar">Agregar</button>
+            <button class="btn btn-danger btn-sm" (click)="cancelAddItem()" *ngIf="agregar">Cancelar</button>
         </div>
     </div>
-
 </app-loading>

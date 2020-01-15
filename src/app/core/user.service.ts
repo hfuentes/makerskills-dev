@@ -1,5 +1,5 @@
 import { User } from './domain/user';
-import { Injectable, Component } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Skill } from './domain/skill';
 import * as firebase from 'firebase'
@@ -39,8 +39,8 @@ export class UserService {
           docs.forEach(doc => {
             skills.push({
               name: doc.id,
-              exp: {...doc.data().exp},
-              level: {...doc.data().level}
+              exp: { ...doc.data().exp },
+              level: { ...doc.data().level }
             })
           })
           return resolve(skills)
@@ -75,6 +75,11 @@ export class UserService {
   }
   //TODO delete seed method
   //seed(): void {
+
+    //Timestamp
+    // import * as firebase from 'firebase'
+    // firebase.firestore.FieldValue.serverTimestamp()
+
     /*
     //Init user data
     this.db.collection("users").doc("hector.fuentes@imagemaker.com").set(JSON.parse(JSON.stringify(new User('', 'Héctor Fuentes', ''))))
@@ -106,6 +111,30 @@ export class UserService {
     ref.doc('MongoDB').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
     ref.doc('JasperReports').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
     ref.doc('JavaScript').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
+    */
+
+    /*
+    //Init full user
+    this.db.collection("users").doc("gabriel.torres@imagemaker.com").set({ email: 'gabriel.torres@imagemaker.com', displayName: 'Gabriel Torres', photoURL: '', roles: { admin: false, profile: true } }).then(() => {
+      const skillsRef = this.db.collection('skills')
+      skillsRef.doc('Sketch').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
+      skillsRef.doc('Bootstrap').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
+      skillsRef.doc('HTML5').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
+      skillsRef.doc('CSS3').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
+      skillsRef.doc('Illustrator').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
+      skillsRef.doc('Photoshop').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
+      skillsRef.doc('Adobe Fireworks').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
+      skillsRef.doc('JQuery').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
+      const userSkillsRef = this.db.collection('users').doc('gabriel.torres@imagemaker.com').collection('skills')
+      userSkillsRef.doc('Sketch').set({ exp: { name: '3 Years', value: 3 }, level: { name: 'Medium', value: 2 } })
+      userSkillsRef.doc('Bootstrap').set({ exp: { name: '2 Years', value: 2 }, level: { name: 'Senior', value: 3 } })
+      userSkillsRef.doc('HTML5').set({ exp: { name: '1 Years', value: 1 }, level: { name: 'Junior', value: 1 } })
+      userSkillsRef.doc('CSS3').set({ exp: { name: '2 Years', value: 2 }, level: { name: 'Medium', value: 2 } })
+      userSkillsRef.doc('Illustrator').set({ exp: { name: '1 Years', value: 1 }, level: { name: 'Medium', value: 2 } })
+      userSkillsRef.doc('Photoshop').set({ exp: { name: '1 Years', value: 1 }, level: { name: 'Junior', value: 1 } })
+      userSkillsRef.doc('Adobe Fireworks').set({ exp: { name: '1 Years', value: 1 }, level: { name: 'Medium', value: 2 } })
+      userSkillsRef.doc('JQuery').set({ exp: { name: '4 Years', value: 4 }, level: { name: 'Senior', value: 3 } })
+    })
     */
   //}
 }

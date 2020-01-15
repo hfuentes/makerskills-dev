@@ -54,14 +54,18 @@ export class RadarChartService {
   }
 
   private buildSVG(): void {
-    this.svg = this.host.append('svg')
-      .attr('width', this.config.width + this.config.margin.left + this.config.margin.right)
-      .attr('height', this.config.height + this.config.margin.top + this.config.margin.bottom)
-      .append('g')
-      .attr('transform', 'translate(' + this.config.margin.left + ',' + this.config.margin.top + ')')
-      .append('g')
-
-    this.tooltip = this.host.append('div').attr('class', 'skill-tooltip').style('opacity', 0)
+    //console.log('append svg')
+    //console.log(this.svg)
+    //if (this.svg == undefined) {
+      
+      this.svg = this.host.append('svg')
+        .attr('width', this.config.width + this.config.margin.left + this.config.margin.right)
+        .attr('height', this.config.height + this.config.margin.top + this.config.margin.bottom)
+        .append('g')
+        .attr('transform', 'translate(' + this.config.margin.left + ',' + this.config.margin.top + ')')
+        .append('g')
+      this.tooltip = this.host.append('div').attr('class', 'skill-tooltip').style('opacity', 0)
+    //}
   }
 
   private drawAxes(): void {

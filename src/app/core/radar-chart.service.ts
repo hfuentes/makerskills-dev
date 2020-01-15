@@ -122,12 +122,10 @@ export class RadarChartService {
       .attr('class', 'area')
       .attr('points', (row: SkillChartRow) => this.getSkillChartCoordinatesString(row))
       .attr('stroke-width', '1.5px')
-      .attr('stroke', (row: SkillChartRow, index) => {
-        console.log('this.colorScale = ' + index)
-        row.color = this.colorScale(row.color)
-        return this.colorScale(row.color)
+      .attr('stroke', (row: SkillChartRow) => {
+        return row.color
       })
-      .attr('fill', (row: SkillChartRow) => this.colorScale(row.color))
+      .attr('fill', (row: SkillChartRow) => row.color)
       .attr('fill-opacity', 0.3)
       .attr('stroke-opacity', 1)
       .on(over, (row: SkillChartRow) => {

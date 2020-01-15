@@ -1,9 +1,9 @@
-export interface Exp {
+export class Exp {
   name: string
   value: number
 }
 
-export interface Level {
+export class Level {
   name: string
   value: number
 }
@@ -31,6 +31,4 @@ export class SkillChartRow {
   }
   nodes: Array<SkillChartNode> = []
   color: string
-  maxLabel: string
-  minLabel: string
 }

@@ -2,7 +2,7 @@
 
 Prueba concepto Angular 8 + Firebase Auth (Google) + Firebase Firestore
 
-### Algunos comandos
+## Algunos comandos
 
 `ng serve` servidor desarrollo local
 
@@ -16,14 +16,24 @@ Prueba concepto Angular 8 + Firebase Auth (Google) + Firebase Firestore
 
 `firebase deploy --only firestore:rules` subir modificación en reglas firestore
 
-### Componentes transversales
-
+## Componentes transversales
+### Loading
+```
 <app-loading [loading]="this.loading" [error]="this.error">
-  contenido a mostrar
+  ...<div>contenido a mostrar</div>...
 </app-loading>
+```
 
-`loading` variable de tipo bolean que le indica al componente si debe mostrar html de carga.
+`loading: boolean` indica al componente si debe mostrar html de carga.
 
-`error` variable de tipo object con los siguientes atributos:
-  { status: number, message: string }
-  en caso de inicializar el objeto, se mostrara mensaje de error
+`error: any` variable con los siguientes atributos:
+```
+{ status: number, message: string }
+```
+En caso de inicializar el objeto, se mostrara mensaje de error
+
+### Radar Chart
+
+Ejemplo: https://jonasrenault.github.io/fortune100/
+
+GitHub: https://github.com/jonasrenault/fortune100/blob/master/src/app/radar-chart.service.ts

@@ -4,6 +4,7 @@ import { SharedService } from '../core/skill.service'
 import { Skill } from '../core/domain/skill'
 import { UserService } from '../core/user.service'
 import { SkillsChartComponent } from '../skills-chart/skills-chart.component'
+import { SeedService } from '../core/seed.service';
 
 @Component({
   selector: 'app-profile',
@@ -27,10 +28,14 @@ export class ProfileComponent implements OnInit {
   constructor(
     public skillService: SharedService,
     public userService: UserService,
-    public auth: AuthService
+    public auth: AuthService,
+    private seed: SeedService
   ) { }
 
   ngOnInit() {
+
+    this.seed.populate()
+
     /**************/
 
     this.skillService.getSkills().then(names => {
@@ -48,7 +53,7 @@ export class ProfileComponent implements OnInit {
       this.error = { message: 'Error on loading user skills, please try again.' }
       this.loading = false
     })
-    
+
   }
 
   addItem(): void {

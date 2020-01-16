@@ -10,20 +10,56 @@ export class UsersComponent implements OnInit {
 
   constructor(public sharedService: SharedService) { }
 
-  private users: Array<any>;
-  private loading: boolean;
-  private error: any;
+  public users: Array<any>;
+
+  public loading: boolean;
+  public error: any;
+
+  loadingGetUsers = {
+    loading: false,
+    error: null
+  };
+
+  loadingAddUser = {
+    loading: false,
+    error: null
+  };
+
+  loadingUpdateUser = {
+    error: null
+  };
 
   ngOnInit() {
-    this.loading = true;
+    this.loadingGetUsers.loading = true;
     this.sharedService.getUsers().then(users => {
-      this.loading = false;
+      this.loadingGetUsers.loading = false;
       this.users = users;
       console.log(this.users);
     }).catch(err => {
       console.error(err);
-      this.loading = false;
-      this.error = {
+      this.loadingGetUsers.loading = false;
+      this.loadingGetUsers.error = {
+        status: 400,
+        message: 'Servicio no disponible'
+      };
+    });
+  }
+
+  onClick(user){
+    if(user.active){
+      user.active = false;
+    }else{
+      user.active = true;
+    }
+
+    user.loadingUpdateUser = true;
+    this.sharedService.editUser(user.email, {active: user.active})
+    .then(() => {
+      user.loadingUpdateUser = false;
+    })
+    .catch(err => {
+      user.loadingUpdateUser = false;
+      this.loadingUpdateUser.error = {
         status: 400,
         message: 'Servicio no disponible'
       };

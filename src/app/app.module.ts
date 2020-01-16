@@ -20,7 +20,7 @@ import { AdminComponent } from './admin/admin.component';
 import { SkillsComponent } from './admin/skills/skills.component';
 import { ExpsComponent } from './admin/exps/exps.component';
 import { UsersComponent } from './admin/users/users.component';
-import { LevelsComponent } from './admin/levels/levels.component'
+import { LevelsComponent } from './admin/levels/levels.component';
 
 @NgModule({
   declarations: [

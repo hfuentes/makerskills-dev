@@ -53,12 +53,35 @@ export class SharedService {
           let user: User = {
             email: doc.id,
             displayName: doc.data().displayName,
-            roles: doc.data().roles
+            roles: doc.data().roles,
+            active: doc.data().active
           }
           users.push(user);
         });
         resolve(users);
       }).catch(err => reject(err));
+    });
+  }
+
+  addUser(user: User){
+    return new Promise<any>((resolve, reject): any => {
+      this.db.firestore.collection('users').add(user).then(
+        respuesta => {
+          resolve(respuesta);
+        }).catch(error =>{
+          reject(error);
+        });
+    });
+  }
+
+  editUser(email, data){
+    return new Promise<any>((resolve, reject): any => {
+      this.db.firestore.collection('users').doc(email).update(data)
+      .then(respuesta => {
+        resolve(respuesta);
+      }).catch(error => {
+        reject(error);
+      });
     });
   }
 }

@@ -11,17 +11,19 @@ import * as _ from 'lodash'
 export class SkillsChartComponent implements OnInit, OnChanges, AfterViewInit {
 
   @Input() skills: Array<Skill>
+  @Input() drawLevels: boolean = true
+  @Input() drawExps: boolean = true
   @ViewChild('skillschartcontainer', { static: true }) element: ElementRef
 
   private htmlElement: HTMLElement
 
   constructor(private chartService: RadarChartService) { }
 
-  private buildExpRow(skills: Array<Skill>): SkillChartRow {
+  private buildExpRow(): SkillChartRow {
     let expRow: SkillChartRow = new SkillChartRow()
     expRow.name = 'Experience'
-    expRow.color = '#d62728'
-    expRow.nodes = _.map(skills, (skill: Skill) => {
+    expRow.color = '#ff4444'
+    expRow.nodes = _.map(this.skills, (skill: Skill) => {
       let node = new SkillChartNode()
       node.name = skill.name
       node.label = skill.exp.name
@@ -31,11 +33,11 @@ export class SkillsChartComponent implements OnInit, OnChanges, AfterViewInit {
     return expRow
   }
 
-  private buildLevelRow(skills: Array<Skill>): SkillChartRow {
+  private buildLevelRow(): SkillChartRow {
     let levelRow: SkillChartRow = new SkillChartRow()
     levelRow.name = 'Level'
-    levelRow.color = '#007bff'
-    levelRow.nodes = _.map(skills, (skill: Skill) => {
+    levelRow.color = '#33b5e5'
+    levelRow.nodes = _.map(this.skills, (skill: Skill) => {
       let node = new SkillChartNode()
       node.name = skill.name
       node.label = skill.level.name
@@ -45,13 +47,25 @@ export class SkillsChartComponent implements OnInit, OnChanges, AfterViewInit {
     return levelRow
   }
 
-  private buildChartData(skills: Array<Skill>): Array<SkillChartRow> {
+  private buildChartData(): Array<SkillChartRow> {
     let data: Array<SkillChartRow> = []
-    if (skills && skills.length > 0) {
-      data.push(this.buildExpRow(skills))
-      data.push(this.buildLevelRow(skills))
+    if (this.skills && this.skills.length > 0) {
+      this.drawExps ? data.push(this.buildExpRow()) : true
+      this.drawLevels ? data.push(this.buildLevelRow()) : true
     }
+    console.log(data)
     return data
+  }
+
+  private calculateNumberOfLevels() {
+    let levels = 3
+    if (this.skills && this.skills.length > 0) {
+      return _.max([
+        this.drawExps ? _.maxBy(this.skills, (skill: Skill) => skill.exp.value).exp.value : 3,
+        this.drawLevels ? _.maxBy(this.skills, (skill: Skill) => skill.level.value).level.value : 3
+      ])
+    }
+    return levels
   }
 
   ngOnInit() { }
@@ -62,9 +76,12 @@ export class SkillsChartComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   ngOnChanges(): void {
-    const chartData: Array<SkillChartRow> = this.buildChartData(this.skills)
-    this.chartService.setup(this.htmlElement, chartData)
-    this.chartService.populate(chartData)
+    this.htmlElement.innerHTML = ''
+    this.chartService.setupAndPopulate(
+      this.htmlElement,
+      this.buildChartData(),
+      this.calculateNumberOfLevels()
+    )
   }
 
 }

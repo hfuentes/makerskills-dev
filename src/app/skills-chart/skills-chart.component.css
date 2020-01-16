@@ -16,7 +16,7 @@
 
 :host >>> .axis text.label {
   font-size: 11px;
-  fill: #999;
+  /*fill: #999;*/
 }
 
 :host >>> .skill-tooltip {

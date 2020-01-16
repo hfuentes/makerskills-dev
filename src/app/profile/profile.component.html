@@ -107,7 +107,27 @@
             <button class="btn btn-danger btn-sm" (click)="cancelAddItem()" *ngIf="agregar">Cancel</button>
         </div>
         <div class="col">
-            <app-skills-chart [skills]="skills"></app-skills-chart>
+            <div class="row">
+                <div class="col">
+                    <app-skills-chart [skills]="skills" [drawLevels]="chartConfig.drawLevels" [drawExps]="chartConfig.drawExps"></app-skills-chart>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <button type="button" class="mr-1 btn btn-sm" 
+                        [ngClass]="{'btn-outline-secondary': !chartConfig.drawLevels, 'btn-primary': chartConfig.drawLevels}"
+                        [disabled]="!chartConfig.drawExps"
+                        (click)="chartConfig.drawLevels = !chartConfig.drawLevels">
+                        Draw Levels
+                    </button>
+                    <button type="button" class="mr-1 btn btn-sm"
+                        [ngClass]="{'btn-outline-secondary': !chartConfig.drawExps, 'btn-danger': chartConfig.drawExps}"
+                        [disabled]="!chartConfig.drawLevels"
+                        (click)="chartConfig.drawExps = !chartConfig.drawExps">
+                        Draw Exps
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </app-loading>

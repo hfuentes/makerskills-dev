@@ -27,6 +27,10 @@ export class ProfileComponent implements OnInit {
   loading: boolean
   error: any
   indexSelected: number
+  chartConfig: any = { //chart config data
+    drawLevels: true,
+    drawExps: true
+  }
 
   @ViewChild('skillsChart', { static: false }) chart: SkillsChartComponent
 

@@ -16,6 +16,16 @@ Prueba concepto Angular 8 + Firebase Auth (Google) + Firebase Firestore
 
 `firebase deploy --only firestore:rules` subir modificación en reglas firestore
 
+### Despliegue en Firebase
+
+Ejecutar script `deploy.sh`, instrucciones:
+
+`rm -rf dist/`
+
+`ng build --prod`
+
+`firebase deploy`
+
 ## Componentes transversales
 ### Loading
 ```

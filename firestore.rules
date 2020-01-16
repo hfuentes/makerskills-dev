@@ -1,17 +1,34 @@
 rules_version = '2';
 service cloud.firestore {
+	function isSignedIn() {
+    return request.auth != null;
+  }
   match /databases/{database}/documents {
+		function hasRole(role) {
+      let auth_email = request.auth.token.email;
+      let auth_roles = get(/databases/$(database)/documents/users/$(auth_email)).data.roles;
+      return auth_roles[role];
+    }
+    function isOwner() {
+    	let auth_email = request.auth.token.email;
+      return resource.id == auth_email;
+    }
     match /users/{document=**} {
-      allow read, write: if request.auth.uid != null;
+      allow create, delete: if isSignedIn() && hasRole('admin');
+      allow update: if isSignedIn() && (hasRole('admin') || (hasRole('profile') && isOwner()));
+      allow get, list: if isSignedIn();
     }
     match /skills/{document=**} {
-      allow read, write: if request.auth.uid != null;
+      allow create, update, delete: if isSignedIn() && hasRole('admin');
+      allow get, list: if isSignedIn();
     }
     match /exps/{document=**} {
-      allow read, write: if request.auth.uid != null;
+      allow create, update, delete: if isSignedIn() && hasRole('admin');
+      allow get, list: if isSignedIn();
     }
     match /levels/{document=**} {
-      allow read, write: if request.auth.uid != null;
+      allow create, update, delete: if isSignedIn() && hasRole('admin');
+      allow get, list: if isSignedIn();
     }
   }
 }

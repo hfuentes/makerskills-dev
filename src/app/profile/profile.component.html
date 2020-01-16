@@ -25,15 +25,39 @@
                                 <select class="form-control form-control-sm" id="inputGroupSelectHabilidad"
                                     name="inputGroupSelectHabilidad" (change)="selectChangeHandler($event)">
                                     <option selected>Seleccione...</option>
-                                    <option [value]="item" *ngFor="let item of skillsNames"
-                                        [selected]="item ===skill.name">
-                                        {{ item }}
+                                    <option [value]="item.name" *ngFor="let item of skillsNames"
+                                        [selected]="item.name === skill.name">
+                                        {{ item.name }}
                                     </option>
                                 </select>
                             </div>
                         </td>
-                        <td>{{ skill.exp.name }}</td>
-                        <td>{{ skill.level.name }}</td>
+                        <td>
+                            <div *ngIf="!(actualizar && i === indexSelected)">{{skill.exp.name}}</div>
+                            <div class="input-group mb-3" *ngIf="actualizar && i === indexSelected">
+                                <select class="form-control form-control-sm" id="inputGroupSelectExperiencia"
+                                    name="inputGroupSelectExperiencia" (change)="selectChangeHandler($event)">
+                                    <option selected>Seleccione...</option>
+                                    <option [value]="item.value" *ngFor="let item of expsNames"
+                                        [selected]="item.name === skill.exp.name">
+                                        {{ item.name }}
+                                    </option>
+                                </select>
+                            </div>
+                        </td>
+                        <td> 
+                            <div *ngIf="!(actualizar && i === indexSelected)">{{skill.level.name}}</div>
+                            <div class="input-group mb-3" *ngIf="actualizar && i === indexSelected">
+                                <select class="form-control form-control-sm" id="inputGroupSelectNivel"
+                                    name="inputGroupSelectNivel" (change)="selectChangeHandler($event)">
+                                    <option selected>Seleccione...</option>
+                                    <option [value]="item.value" *ngFor="let item of levelsNames"
+                                        [selected]="item.name === skill.level.name">
+                                        {{ item.name }}
+                                    </option>
+                                </select>
+                            </div>
+                        </td>
                         <td>
                             <div *ngIf="!(actualizar && i === indexSelected)">
                                 <button class="btn btn-danger btn-sm mr-1" (click)="deleteSkill(i)">Delete</button>
@@ -53,7 +77,7 @@
                                 <select class="form-control form-control-sm" id="inputGroupSelectHabilidad"
                                     name="inputGroupSelectHabilidad" (change)="selectChangeHandler($event)">
                                     <option selected>Seleccione...</option>
-                                    <option [value]="item" *ngFor="let item of skillsNames">{{item}}</option>
+                                    <option [value]="item.name" *ngFor="let item of skillsNames">{{item.name}}</option>
                                 </select>
                             </div>
                         </td>
@@ -62,9 +86,7 @@
                                 <select class="form-control form-control-sm" id="inputGroupSelectExperiencia"
                                     name="inputGroupSelectExperiencia" (change)="selectChangeHandler($event)">
                                     <option selected>Seleccione...</option>
-                                    <option value="1 año">1 año</option>
-                                    <option value="2 años">2 años</option>
-                                    <option value="3 años">3 años</option>
+                                    <option [value]="item.value" *ngFor="let item of expsNames">{{item.name}}</option>
                                 </select>
                             </div>
                         </td>
@@ -73,9 +95,7 @@
                                 <select class="form-control form-control-sm" id="inputGroupSelectNivel"
                                     name="inputGroupSelectNivel" (change)="selectChangeHandler($event)">
                                     <option selected>Seleccione...</option>
-                                    <option value="Junior">Junior</option>
-                                    <option value="Medio">Medio</option>
-                                    <option value="Senior">Senior</option>
+                                    <option [value]="item.value" *ngFor="let item of levelsNames">{{item.name}}</option>                                
                                 </select>
                             </div>
                         </td>
@@ -87,7 +107,27 @@
             <button class="btn btn-danger btn-sm" (click)="cancelAddItem()" *ngIf="agregar">Cancel</button>
         </div>
         <div class="col">
-            <app-skills-chart [skills]="skills"></app-skills-chart>
+            <div class="row">
+                <div class="col">
+                    <app-skills-chart [skills]="skills" [drawLevels]="chartConfig.drawLevels" [drawExps]="chartConfig.drawExps"></app-skills-chart>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <button type="button" class="mr-1 btn btn-sm" 
+                        [ngClass]="{'btn-outline-secondary': !chartConfig.drawLevels, 'btn-primary': chartConfig.drawLevels}"
+                        [disabled]="!chartConfig.drawExps"
+                        (click)="chartConfig.drawLevels = !chartConfig.drawLevels">
+                        Draw Levels
+                    </button>
+                    <button type="button" class="mr-1 btn btn-sm"
+                        [ngClass]="{'btn-outline-secondary': !chartConfig.drawExps, 'btn-danger': chartConfig.drawExps}"
+                        [disabled]="!chartConfig.drawLevels"
+                        (click)="chartConfig.drawExps = !chartConfig.drawExps">
+                        Draw Exps
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </app-loading>

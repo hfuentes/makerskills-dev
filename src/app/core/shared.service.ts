@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Skill, Exp, Level } from '../core/domain/skill'
 import { User } from './domain/user';
 
 @Injectable({
@@ -11,10 +12,13 @@ export class SharedService {
 
   getSkills() {
     return new Promise<any>((resolve, reject) => {
-      this.db.firestore.collection('skills').where('valid', '==', 'true').get().then(res => {
-        let skills: Array<string>  = [];
+      this.db.firestore.collection('skills').where('valid', '==', true).get().then(res => {
+        let skills: Array<Skill>  = [];
         res.forEach(doc => {
-          skills.push(doc.id);
+          skills.push({
+            name : doc.id,
+            ...doc.data().skill
+          })        
         });
         resolve(skills);
       }).catch(err => reject(err));
@@ -23,11 +27,14 @@ export class SharedService {
 
   getExps() {
     return new Promise<any>((resolve, reject) => {
-      this.db.firestore.collection('exps').where('valid', '==', 'true').get().then(res => {
-        let exps: Array<string>  = [];
+      this.db.firestore.collection('exps').where('valid', '==', true).get().then(res => {
+        let exps: Array<Exp>  = [];
         res.forEach(doc => {
-          exps.push(doc.id);
-        });
+          exps.push({
+            name: doc.id,
+            value: doc.data().value
+          });
+        })
         resolve(exps);
       }).catch(err => reject(err));
     });
@@ -35,11 +42,14 @@ export class SharedService {
 
   getLevels() {
     return new Promise<any>((resolve, reject) => {
-      this.db.firestore.collection('levels').where('valid', '==', 'true').get().then(res => {
-        let levels: Array<string>  = [];
+      this.db.firestore.collection('levels').where('valid', '==', true).get().then(res => {
+        let levels: Array<Level>  = [];
         res.forEach(doc => {
-          levels.push(doc.id);
-        });
+          levels.push({
+            name: doc.id,
+            value: doc.data().value
+          });
+        })
         resolve(levels);
       }).catch(err => reject(err));
     });

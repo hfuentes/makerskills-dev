@@ -12,7 +12,6 @@ export class RadarChartService {
   private axisLabels = []
   private totalAxes = 0
   private radius
-  private colorScale
   private axes
   private levels
   private nodes
@@ -29,20 +28,30 @@ export class RadarChartService {
       width: 250,
       height: 250,
       radians: 2 * Math.PI,
-      levels: 5,
+      levels: 5, //five levels by default
     }
     this.radius = Math.min(this.config.width / 2, this.config.height / 2)
-    this.colorScale = d3.scaleOrdinal(d3.schemeCategory10)
   }
 
-  public setup(htmlElement: HTMLElement, data?: Array<SkillChartRow>): void {
-    if (data) this.setAxis(data)
+  public setup(htmlElement: HTMLElement): void {
     this.host = d3.select(htmlElement)
-    if (!data) this.buildSVG()
+    if (!this.svg) this.buildSVG()
     if (this.svg) {
       this.drawAxes()
       this.drawLevels()
     }
+  }
+
+  public setupAndPopulate(htmlElement: HTMLElement, data: Array<SkillChartRow>, levels: number) {
+    this.host = d3.select(htmlElement)
+    this.config.levels = levels
+    this.setAxis(data)
+    this.buildSVG()
+    if (this.svg) {
+      this.drawAxes()
+      this.drawLevels()
+    }
+    this.populate(data)
   }
 
   private setAxis(data: Array<SkillChartRow>): void {
@@ -149,7 +158,7 @@ export class RadarChartService {
   }
 
   private getSkillChartCoordinates(row: SkillChartRow): Array<any> {
-    const maxValue = 5
+    const maxValue = this.config.levels
     const coords = []
     row.nodes.forEach((node, index) => {
       coords.push({
@@ -163,9 +172,9 @@ export class RadarChartService {
   private tooltipShow(row: SkillChartRow): void {
     this.tooltip.transition().duration(200).style('opacity', .9)
     let html = '<h3 class="header">' + row.name + '</h3>'
-    /*row.nodes.forEach((node) => {
-      html += '<div class="rating">' + node.name + ': ' + node.label + '</div>'
-    })*/
+    row.nodes.forEach((node) => {
+      html += '<div class="rating">' + node.name + ': ' + node.label + ' (' + node.value + ')</div>'
+    })
     this.tooltip.html(html)
     this.tooltip.style('left', (d3.event.pageX) + 'px').style('top', (d3.event.pageY - 28) + 'px')
       .style('border-color', row.color)

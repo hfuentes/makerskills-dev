@@ -48,31 +48,7 @@ export class UserService {
     })
   }
 
-  addNewSkill(skill: Skill, user: User): any {
-    this.db.firestore.collection('users').doc(user.email).collection('skills').doc(skill.name).set({
-      exp: skill.exp,
-      level: skill.level
-    })
-  }
 
-  deleteSkill(skill: Skill, user: User) {
-    console.log("borrando")
-    this.db.firestore.collection('users').doc(user.email).collection('skills').doc(skill.name).delete().then(
-      function () {
-        console.log('eliminado');
-      }).catch(err => console.log('Error: ' + err))
-  }
-
-  updateSkill(skill: Skill, user: User) {
-    console.log("actualizando")
-    this.db.firestore.collection('users').doc(user.email).collection('skills').doc(skill.name).set({
-      exp: skill.exp,
-      level: skill.level
-    }).then(
-      function () {
-        console.log('eliminado');
-      }).catch(err => console.log('Error: ' + err))
-  }
   //TODO delete seed method
   seed(): void {
 

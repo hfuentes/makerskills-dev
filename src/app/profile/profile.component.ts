@@ -1,11 +1,11 @@
 import { ProfileService } from './../core/profile.service';
 import { AuthService } from './../core/auth.service';
 import { Component, OnInit, ViewChild } from '@angular/core'
-import { SharedService } from '../core/skill.service'
+import { SharedService } from '../core/shared.service'
 import { Skill } from '../core/domain/skill'
 import { UserService } from '../core/user.service'
 import { SkillsChartComponent } from '../skills-chart/skills-chart.component'
-import { Numeric } from 'd3';
+import { SeedService } from '../core/seed.service';
 
 @Component({
   selector: 'app-profile',
@@ -34,10 +34,14 @@ export class ProfileComponent implements OnInit {
     public skillService: SharedService,
     public userService: UserService,
     public auth: AuthService,
-    public profileService: ProfileService
+    public profileService: ProfileService,
+    private seed: SeedService
   ) { }
 
   ngOnInit() {
+
+    this.seed.populate()
+
     /**************/
     this.loading = true
     this.skillService.getSkills().then(names => {
@@ -80,7 +84,6 @@ export class ProfileComponent implements OnInit {
       this.loading = false
     })
 
-    this.userService.seed()
   }
 
   addItem(): void {
@@ -126,16 +129,17 @@ export class ProfileComponent implements OnInit {
     console.log(event)
     switch (event.target.name) {
       case "inputGroupSelectHabilidad":
-        this.habilidadSeleccionada = event.target.value
-        break
-      case "inputGroupSelectExperiencia":
+        this.habilidadSeleccionada = event.target.value;
+        break;
+      case "inputGroupSelectExperiencia":{
         this.experienciaSeleccionada = event.target.selectedOptions[0].label;
         this.experienciaSeleccionadaValue = event.target.value;
-        break
+        break;
+      }
       case "inputGroupSelectNivel":
         this.nivelSeleccionado = event.target.selectedOptions[0].label;
-        this.nivelSeleccionadoValue = event.target.value
-        break
+        this.nivelSeleccionadoValue = event.target.value;
+        break;
     }
 
 

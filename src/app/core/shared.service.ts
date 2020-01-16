@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Skill, Exp, Level } from '../core/domain/skill'
+import { User } from './domain/user';
 
 @Injectable({
   providedIn: 'root'
@@ -50,6 +51,23 @@ export class SharedService {
           });
         })
         resolve(levels);
+      }).catch(err => reject(err));
+    });
+  }
+
+  getUsers() {
+    return new Promise<Array<User>>((resolve, reject): any => {
+      this.db.firestore.collection('users').get().then(res => {
+        let users: Array<User>  = [];
+        res.forEach(doc => {
+          let user: User = {
+            email: doc.id,
+            displayName: doc.data().displayName,
+            roles: doc.data().roles
+          }
+          users.push(user);
+        });
+        resolve(users);
       }).catch(err => reject(err));
     });
   }

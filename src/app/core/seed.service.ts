@@ -1,55 +1,16 @@
-import { User } from './domain/user';
 import { Injectable } from '@angular/core';
+import * as firebase from 'firebase'
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Skill } from './domain/skill';
 
-@Injectable({ providedIn: 'root' })
-export class UserService {
+@Injectable({
+  providedIn: 'root'
+})
+export class SeedService {
 
   constructor(private db: AngularFirestore) { }
 
-  getUserByEmail(email: string = ''): any {
-    return new Promise<any>((resolve, reject) => {
-      return this.db.firestore.collection('users').doc(email).get()
-        .then(doc => {
-          return resolve({
-            email: doc.id,
-            ...doc.data()
-          })
-        }).catch(err => reject(err))
-    })
-  }
-
-  updateUserByGoogleProfile(googleProfile: any = {}): any {
-    return new Promise<any>((resolve, reject) => {
-      const profile = googleProfile.additionalUserInfo.profile
-      return this.db.firestore.collection('users').doc(profile.email).update({
-        displayName: profile.name,
-        photoURL: profile.picture
-      }).then(() => resolve(profile)).catch(err => reject(err))
-    })
-  }
-
-  getSkills(email: string = ''): any { //get user's skills
-    return new Promise<any>((resolve, reject) => {
-      return this.db.firestore.collection('users').doc(email).collection('skills').get()
-        .then(docs => {
-          let skills: Array<Skill> = []
-          docs.forEach(doc => {
-            skills.push({
-              name: doc.id,
-              exp: { ...doc.data().exp },
-              level: { ...doc.data().level }
-            })
-          })
-          return resolve(skills)
-        }).catch(err => reject(err))
-    })
-  }
-
-
   //TODO delete seed method
-  seed(): void {
+  public populate(): void {
 
     //Timestamp
     // import * as firebase from 'firebase'
@@ -112,22 +73,41 @@ export class UserService {
     })
     */
 
-    const ref = this.db.collection('skills')
-    ref.doc('AngularJS').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
-    ref.doc('Java 7').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
-    ref.doc('React').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
-    ref.doc('Node').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
-    ref.doc('PL SQL').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
-    ref.doc('MongoDB').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
-    ref.doc('JasperReports').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
-    ref.doc('JavaScript').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
-    ref.doc('Sketch').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
-    ref.doc('Bootstrap').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
-    ref.doc('HTML5').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
-    ref.doc('CSS3').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
-    ref.doc('Illustrator').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
-    ref.doc('Photoshop').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
-    ref.doc('Adobe Fireworks').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
-    ref.doc('JQuery').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp() })
+    
+    //Init skills
+    /*const skillsRef = this.db.collection('skills')
+    skillsRef.doc('AngularJS').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    skillsRef.doc('Java 7').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    skillsRef.doc('React').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    skillsRef.doc('Node').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    skillsRef.doc('PL SQL').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    skillsRef.doc('MongoDB').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    skillsRef.doc('JasperReports').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    skillsRef.doc('JavaScript').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    skillsRef.doc('Sketch').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    skillsRef.doc('Bootstrap').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    skillsRef.doc('HTML5').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    skillsRef.doc('CSS3').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    skillsRef.doc('Illustrator').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    skillsRef.doc('Photoshop').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    skillsRef.doc('Adobe Fireworks').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    skillsRef.doc('JQuery').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })*/
+    //Init levels
+    /*const levelsRef = this.db.firestore.collection('levels')
+    levelsRef.doc('Junior').set({ value: 1, valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    levelsRef.doc('Medium').set({ value: 2, valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    levelsRef.doc('Senior').set({ value: 3, valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    //Init exps
+    const expsRef = this.db.firestore.collection('exps')
+    expsRef.doc('1 Year').set({ value: 1, valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    expsRef.doc('2 Years').set({ value: 2, valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    expsRef.doc('3 Years').set({ value: 3, valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    expsRef.doc('4 Years').set({ value: 4, valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    expsRef.doc('5 Years').set({ value: 5, valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    expsRef.doc('6 Years').set({ value: 6, valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    expsRef.doc('7 Years').set({ value: 7, valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    expsRef.doc('8 Years').set({ value: 8, valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    expsRef.doc('9 Years').set({ value: 9, valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    expsRef.doc('10 Years').set({ value: 10, valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })*/
   }
 }

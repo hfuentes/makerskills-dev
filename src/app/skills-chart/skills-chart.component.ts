@@ -53,7 +53,6 @@ export class SkillsChartComponent implements OnInit, OnChanges, AfterViewInit {
       this.drawExps ? data.push(this.buildExpRow()) : true
       this.drawLevels ? data.push(this.buildLevelRow()) : true
     }
-    console.log(data)
     return data
   }
 

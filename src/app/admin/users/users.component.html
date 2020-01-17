@@ -8,7 +8,8 @@
                       <th scope="col">Email</th>
                       <th scope="col">Name</th>
                       <th scope="col">Active</th>
-                      <th scope="col">Role</th>
+                      <th scope="col">Admin</th>
+                      <th scope="col">Profile</th>
                   </tr>
               </thead>
               <tbody>
@@ -34,10 +35,28 @@
                     </app-loading>
                   </th>
                   <th>
-
+                    <!--<app-loading [loading]="user.loadingUpdateUser" [error]="this.loadingUpdateUser.error">-->
+                      <div class="btn-group btn-group-toggle">
+                        <label [ngClass]="{'btn-success': user.roles.admin, 'btn-danger': !user.roles.admin}" ngbButtonLabel>
+                          <input type="checkbox" ngbButton (click)="onClickRole(user,'admin')">
+                          <span *ngIf="user.roles.admin">Activo</span>
+                          <span *ngIf="!user.roles.admin">Inactivo</span>
+                        </label>
+                      </div>
+                    <!--</app-loading>-->
+                  </th>
+                  <th>
+                    <!--<app-loading [loading]="user.loadingRoleUser" [error]="this.loadingUpdateUser.error">-->
+                      <div class="btn-group btn-group-toggle">
+                        <label [ngClass]="{'btn-success': user.roles.profile, 'btn-danger': !user.roles.profile}" ngbButtonLabel>
+                          <input type="checkbox" ngbButton (click)="onClickRole(user,'profile')">
+                          <span *ngIf="user.roles.profile">Activo</span>
+                          <span *ngIf="!user.roles.profile">Inactivo</span>
+                        </label>
+                      </div>
+                    <!--</app-loading>-->
                   </th>
                 </tr>
-
               </tbody>
           </table>
       </div>

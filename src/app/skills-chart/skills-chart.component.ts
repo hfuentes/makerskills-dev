@@ -75,7 +75,7 @@ export class SkillsChartComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   ngOnChanges(): void {
-    this.htmlElement.innerHTML = ''
+    if (this.htmlElement) this.htmlElement.innerHTML = ''
     this.chartService.setupAndPopulate(
       this.htmlElement,
       this.buildChartData(),

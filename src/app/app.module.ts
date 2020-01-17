@@ -22,6 +22,7 @@ import { SkillsComponent } from './admin/skills/skills.component';
 import { ExpsComponent } from './admin/exps/exps.component';
 import { UsersComponent } from './admin/users/users.component';
 import { LevelsComponent } from './admin/levels/levels.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { LevelsComponent } from './admin/levels/levels.component';
     SkillsComponent,
     ExpsComponent,
     UsersComponent,
-    LevelsComponent
+    LevelsComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

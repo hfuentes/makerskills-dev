@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as firebase from 'firebase'
 import { AngularFirestore } from '@angular/fire/firestore';
+import { User } from './domain/user';
 
 @Injectable({
   providedIn: 'root'
@@ -109,5 +110,64 @@ export class SeedService {
     expsRef.doc('8 Years').set({ value: 8, valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
     expsRef.doc('9 Years').set({ value: 9, valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
     expsRef.doc('10 Years').set({ value: 10, valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })*/
+
+    //Seed: Lionel Olavarría
+    /*this.db.collection("users").doc("lionel.olavarria@imagemaker.com").set({displayName:'Lionel Olavarría',photoURL:'https://www.google.com/s2/u/1/photos/public/AIbEiAIAAABECL_Y97nQ8vKloAEiC3ZjYXJkX3Bob3RvKigzMDJkODcyNzU5Nzg3ZWI5YmNlYjIyYjNiZWRkNTYzNTE1YzI5MmRkMAFn7J1zro-G1LoyADPT8ohHw7X0WQ',roles: {admin:true,profile:true},active:true})
+    const skillsRef = this.db.collection('skills')
+    skillsRef.doc('Business Strategy').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    skillsRef.doc('Entrepreneurship').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    skillsRef.doc('Mobile Applications').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    skillsRef.doc('Business Intelligence').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    skillsRef.doc('SOA').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    skillsRef.doc('Sales').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    skillsRef.doc('Information Security').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    skillsRef.doc('Software Project Management').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    skillsRef.doc('Web Services').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    skillsRef.doc('Software Engineering').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    skillsRef.doc('Architecture').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    skillsRef.doc('Strategic Planning').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    skillsRef.doc('Software Development').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    skillsRef.doc('Business Management').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    skillsRef.doc('Herramientas y tecnologías').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    skillsRef.doc('UML').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    skillsRef.doc('JavaScript').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    skillsRef.doc('Weblogic').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    skillsRef.doc('Java EE').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    skillsRef.doc('Aptitudes interpersonales').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    skillsRef.doc('Team Leadership').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    skillsRef.doc('Otras aptitudes ').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    skillsRef.doc('Service-Oriented Architecture (SOA)').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    skillsRef.doc('Mobile Internet').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
+    skillsRef.doc('Agility').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })*/
+    
+    /*Math.floor(Math.random() * 3)
+    const exps = [{name:'1 Years',value: 1},{name:'2 Years',value: 2},{name:'3 Years',value: 3},{name:'4 Years',value: 4},{name:'5 Years',value: 5},{name:'6 Years',value: 6},{name:'7 Years',value: 7}]
+    const levels = [{name:'Junior',value:1},{name:'Medium',value:2},{name:'Senior',value:3}]
+    const userSkillsRef = this.db.collection('users').doc('lionel.olavarria@imagemaker.com').collection('skills')
+    userSkillsRef.doc('Business Strategy').set({exp:exps[Math.floor(Math.random()*exps.length)],level:levels[Math.floor(Math.random()*levels.length)]})
+    userSkillsRef.doc('Entrepreneurship').set({exp:exps[Math.floor(Math.random()*exps.length)],level:levels[Math.floor(Math.random()*levels.length)]})
+    userSkillsRef.doc('Mobile Applications').set({exp:exps[Math.floor(Math.random()*exps.length)],level:levels[Math.floor(Math.random()*levels.length)]})
+    userSkillsRef.doc('Business Intelligence').set({exp:exps[Math.floor(Math.random()*exps.length)],level:levels[Math.floor(Math.random()*levels.length)]})
+    userSkillsRef.doc('SOA').set({exp:exps[Math.floor(Math.random()*exps.length)],level:levels[Math.floor(Math.random()*levels.length)]})
+    userSkillsRef.doc('Sales').set({exp:exps[Math.floor(Math.random()*exps.length)],level:levels[Math.floor(Math.random()*levels.length)]})
+    userSkillsRef.doc('Information Security').set({exp:exps[Math.floor(Math.random()*exps.length)],level:levels[Math.floor(Math.random()*levels.length)]})
+    userSkillsRef.doc('Software Project Management').set({exp:exps[Math.floor(Math.random()*exps.length)],level:levels[Math.floor(Math.random()*levels.length)]})
+    userSkillsRef.doc('Web Services').set({exp:exps[Math.floor(Math.random()*exps.length)],level:levels[Math.floor(Math.random()*levels.length)]})
+    userSkillsRef.doc('Software Engineering').set({exp:exps[Math.floor(Math.random()*exps.length)],level:levels[Math.floor(Math.random()*levels.length)]})
+    userSkillsRef.doc('Architecture').set({exp:exps[Math.floor(Math.random()*exps.length)],level:levels[Math.floor(Math.random()*levels.length)]})
+    userSkillsRef.doc('Strategic Planning').set({exp:exps[Math.floor(Math.random()*exps.length)],level:levels[Math.floor(Math.random()*levels.length)]})
+    userSkillsRef.doc('Software Development').set({exp:exps[Math.floor(Math.random()*exps.length)],level:levels[Math.floor(Math.random()*levels.length)]})
+    userSkillsRef.doc('Business Management').set({exp:exps[Math.floor(Math.random()*exps.length)],level:levels[Math.floor(Math.random()*levels.length)]})
+    userSkillsRef.doc('Herramientas y tecnologías').set({exp:exps[Math.floor(Math.random()*exps.length)],level:levels[Math.floor(Math.random()*levels.length)]})
+    userSkillsRef.doc('UML').set({exp:exps[Math.floor(Math.random()*exps.length)],level:levels[Math.floor(Math.random()*levels.length)]})
+    userSkillsRef.doc('JavaScript').set({exp:exps[Math.floor(Math.random()*exps.length)],level:levels[Math.floor(Math.random()*levels.length)]})
+    userSkillsRef.doc('Weblogic').set({exp:exps[Math.floor(Math.random()*exps.length)],level:levels[Math.floor(Math.random()*levels.length)]})
+    userSkillsRef.doc('Java EE').set({exp:exps[Math.floor(Math.random()*exps.length)],level:levels[Math.floor(Math.random()*levels.length)]})
+    userSkillsRef.doc('Aptitudes interpersonales').set({exp:exps[Math.floor(Math.random()*exps.length)],level:levels[Math.floor(Math.random()*levels.length)]})
+    userSkillsRef.doc('Team Leadership').set({exp:exps[Math.floor(Math.random()*exps.length)],level:levels[Math.floor(Math.random()*levels.length)]})
+    userSkillsRef.doc('Otras aptitudes ').set({exp:exps[Math.floor(Math.random()*exps.length)],level:levels[Math.floor(Math.random()*levels.length)]})
+    userSkillsRef.doc('Service-Oriented Architecture (SOA)').set({exp:exps[Math.floor(Math.random()*exps.length)],level:levels[Math.floor(Math.random()*levels.length)]})
+    userSkillsRef.doc('Mobile Internet').set({exp:exps[Math.floor(Math.random()*exps.length)],level:levels[Math.floor(Math.random()*levels.length)]})
+    userSkillsRef.doc('Agility').set({exp:exps[Math.floor(Math.random()*exps.length)],level:levels[Math.floor(Math.random()*levels.length)]})*/
   }
 }

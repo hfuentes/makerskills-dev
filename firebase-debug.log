@@ -1,0 +1,80 @@
+[debug] [2020-01-17T15:40:26.972Z] ----------------------------------------------------------------------
+[debug] [2020-01-17T15:40:26.973Z] Command:       /home/hector/.nvm/versions/node/v12.14.0/bin/node /home/hector/.nvm/versions/node/v12.14.0/bin/firebase deploy -P makerskills-develop --only hosting,firestore:rules
+[debug] [2020-01-17T15:40:26.973Z] CLI Version:   7.12.1
+[debug] [2020-01-17T15:40:26.973Z] Platform:      linux
+[debug] [2020-01-17T15:40:26.973Z] Node Version:  v12.14.0
+[debug] [2020-01-17T15:40:26.974Z] Time:          Fri Jan 17 2020 12:40:26 GMT-0300 (Chile Summer Time)
+[debug] [2020-01-17T15:40:26.974Z] ----------------------------------------------------------------------
+[debug] [2020-01-17T15:40:26.974Z] 
+[debug] [2020-01-17T15:40:26.980Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-01-17T15:40:26.981Z] > authorizing via signed-in user
+[debug] [2020-01-17T15:40:26.981Z] [iam] checking project makerskills-develop for permissions ["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2020-01-17T15:40:26.982Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/makerskills-develop:testIamPermissions  
+
+[debug] [2020-01-17T15:40:28.078Z] <<< HTTP RESPONSE 200
+[debug] [2020-01-17T15:40:28.079Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/makerskills-develop  
+ 
+[debug] [2020-01-17T15:40:29.360Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'makerskills-develop'...
+[info] 
+[info] i  deploying firestore, hosting
+[info] i  cloud.firestore: checking firestore.rules for compilation errors...
+[debug] [2020-01-17T15:40:29.363Z] >>> HTTP REQUEST POST https://firebaserules.googleapis.com/v1/projects/makerskills-develop:test  
+
+[debug] [2020-01-17T15:40:30.428Z] <<< HTTP RESPONSE 200
+[info] ✔  cloud.firestore: rules file firestore.rules compiled successfully
+[debug] [2020-01-17T15:40:30.429Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/makerskills-develop/versions  
+
+[debug] [2020-01-17T15:43:57.133Z] ----------------------------------------------------------------------
+[debug] [2020-01-17T15:43:57.134Z] Command:       /home/hector/.nvm/versions/node/v12.14.0/bin/node /home/hector/.nvm/versions/node/v12.14.0/bin/firebase deploy -P makerskills-develop --only hosting,firestore:rules
+[debug] [2020-01-17T15:43:57.134Z] CLI Version:   7.12.1
+[debug] [2020-01-17T15:43:57.134Z] Platform:      linux
+[debug] [2020-01-17T15:43:57.134Z] Node Version:  v12.14.0
+[debug] [2020-01-17T15:43:57.134Z] Time:          Fri Jan 17 2020 12:43:57 GMT-0300 (Chile Summer Time)
+[debug] [2020-01-17T15:43:57.134Z] ----------------------------------------------------------------------
+[debug] [2020-01-17T15:43:57.134Z] 
+[debug] [2020-01-17T15:43:57.139Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-01-17T15:43:57.139Z] > authorizing via signed-in user
+[debug] [2020-01-17T15:43:57.139Z] [iam] checking project makerskills-develop for permissions ["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2020-01-17T15:43:57.140Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/makerskills-develop:testIamPermissions  
+
+[debug] [2020-01-17T15:43:58.244Z] <<< HTTP RESPONSE 200
+[debug] [2020-01-17T15:43:58.245Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/makerskills-develop  
+ 
+[debug] [2020-01-17T15:43:59.429Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'makerskills-develop'...
+[info] 
+[info] i  deploying firestore, hosting
+[info] i  cloud.firestore: checking firestore.rules for compilation errors...
+[debug] [2020-01-17T15:43:59.432Z] >>> HTTP REQUEST POST https://firebaserules.googleapis.com/v1/projects/makerskills-develop:test  
+
+[debug] [2020-01-17T15:44:00.452Z] <<< HTTP RESPONSE 200
+[info] ✔  cloud.firestore: rules file firestore.rules compiled successfully
+[debug] [2020-01-17T15:44:00.453Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/makerskills-develop/versions  
+
+[debug] [2020-01-17T15:44:49.917Z] ----------------------------------------------------------------------
+[debug] [2020-01-17T15:44:49.918Z] Command:       /home/hector/.nvm/versions/node/v12.14.0/bin/node /home/hector/.nvm/versions/node/v12.14.0/bin/firebase deploy -P makerskills-develop --only hosting,firestore:rules
+[debug] [2020-01-17T15:44:49.918Z] CLI Version:   7.12.1
+[debug] [2020-01-17T15:44:49.918Z] Platform:      linux
+[debug] [2020-01-17T15:44:49.919Z] Node Version:  v12.14.0
+[debug] [2020-01-17T15:44:49.919Z] Time:          Fri Jan 17 2020 12:44:49 GMT-0300 (Chile Summer Time)
+[debug] [2020-01-17T15:44:49.919Z] ----------------------------------------------------------------------
+[debug] [2020-01-17T15:44:49.919Z] 
+[debug] [2020-01-17T15:44:49.924Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-01-17T15:44:49.925Z] > authorizing via signed-in user
+[debug] [2020-01-17T15:44:49.925Z] [iam] checking project makerskills-develop for permissions ["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2020-01-17T15:44:49.926Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/makerskills-develop:testIamPermissions  
+
+[debug] [2020-01-17T15:44:51.039Z] <<< HTTP RESPONSE 200
+[debug] [2020-01-17T15:44:51.040Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/makerskills-develop  
+ 
+[debug] [2020-01-17T15:44:52.171Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'makerskills-develop'...
+[info] 
+[info] i  deploying firestore, hosting
+[info] i  cloud.firestore: checking firestore.rules for compilation errors...
+[debug] [2020-01-17T15:44:52.173Z] >>> HTTP REQUEST POST https://firebaserules.googleapis.com/v1/projects/makerskills-develop:test  
+

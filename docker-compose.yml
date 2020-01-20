@@ -1,0 +1,10 @@
+version: "3.5"
+
+services:
+  app:
+    image: makerskills
+    deploy:
+      placement:
+        constraints: [node.labels.name == worker1]
+    ports:
+      - 9999:80

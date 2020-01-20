@@ -8,6 +8,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth'
 import { AngularFirestoreModule } from '@angular/fire/firestore'
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { environment } from '../environments/environment'
 import { LoginComponent } from './login/login.component'
@@ -45,7 +46,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFirestoreModule,
-    NgbModule
+    NgbModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

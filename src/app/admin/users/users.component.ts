@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedService } from '../../core/shared.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { User } from '../../core/domain/user';
 
 @Component({
   selector: 'users',
@@ -7,8 +9,11 @@ import { SharedService } from '../../core/shared.service';
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit {
+  public checkboxGroupForm: FormGroup;
 
-  constructor(public sharedService: SharedService) { }
+  constructor(
+    public sharedService: SharedService,
+    private formBuilder: FormBuilder) { }
 
   public users: Array<any>;
 
@@ -34,7 +39,14 @@ export class UsersComponent implements OnInit {
     this.sharedService.getUsers().then(users => {
       this.loadingGetUsers.loading = false;
       this.users = users;
-      console.log(this.users);
+      users.forEach(user => {
+        user.checkboxGroupForm = this.formBuilder.group({
+          profile: user.roles.profile,
+          admin: user.roles.admin
+        });
+        console.log(user.checkboxGroupForm.value.admin);
+      });
+
     }).catch(err => {
       console.error(err);
       this.loadingGetUsers.loading = false;
@@ -66,4 +78,18 @@ export class UsersComponent implements OnInit {
     });
   }
 
+  onClickRole(user, role){
+      if(user.roles[role] === true){
+        user.roles[role] = false;
+      }else{
+        user.roles[role] = true;
+      }
+
+    this.sharedService.editUser(user.email, {roles: user.roles})
+    .then(() => {
+
+    })
+    .catch(err => {
+    });
+  }
 }

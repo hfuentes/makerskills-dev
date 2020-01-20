@@ -29,6 +29,8 @@ Usage: deploy.sh [
 ]
 ```
 
+Para hacer despliegue por medio de GitHub (develop) tan solo se debe subir el código a la rama: `deploy-firebase-develop`. Luego la configuración del GitHub/Workflow: `/.github/workflows/deploy-firebase-develop.yml` ejecutará el deploy.
+
 ## Componentes transversales
 ### Loading
 ```

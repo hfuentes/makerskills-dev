@@ -81,15 +81,15 @@ elif [ "$TARGET" = "docker" ]; then
     echo ""
 
     echo "Copying \"run.sh\" file [sshpass -p *** scp run.sh root@worker1.linux.server.im:/Proyectos/Imagemaker/MakerSkills/web]"
-    sshpass -p "kubernetes" scp run.sh root@worker1.linux.server.im:/Proyectos/Imagemaker/MakerSkills/web
+    sshpass -p "kubernetes" scp .docker/run.sh root@worker1.linux.server.im:/Proyectos/Imagemaker/MakerSkills/web
     echo ""
 
     echo "Copying \"docker-compose.yml\" file [sshpass -p *** scp docker-compose.yml root@worker1.linux.server.im:/Proyectos/Imagemaker/MakerSkills/web]"
-    sshpass -p "kubernetes" scp docker-compose.yml root@worker1.linux.server.im:/Proyectos/Imagemaker/MakerSkills/web
+    sshpass -p "kubernetes" scp .docker/docker-compose.yml root@worker1.linux.server.im:/Proyectos/Imagemaker/MakerSkills/web
     echo ""
 
     echo "Copying \"Dockerfile\" file [sshpass -p *** scp Dockerfile root@worker1.linux.server.im:/Proyectos/Imagemaker/MakerSkills/web]"
-    sshpass -p "kubernetes" scp Dockerfile root@worker1.linux.server.im:/Proyectos/Imagemaker/MakerSkills/web
+    sshpass -p "kubernetes" scp .docker/Dockerfile root@worker1.linux.server.im:/Proyectos/Imagemaker/MakerSkills/web
     echo ""
 
     echo "Setting up Docker [sshpass -p *** ssh root@worker1.linux.server.im \"sh /Proyectos/Imagemaker/MakerSkills/web/run.sh\"]"

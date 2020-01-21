@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../core/domain/user';
 import { SearchData } from '../search/search.component';
-import { Settings, LoadingStyle, LoadingType, LoadingPlace } from '../loading/loading.component';
+import { Settings, LoadingStyle, LoadingType, LoadingPlace } from '../error-handler/error-handler.component';
 
 @Component({
   selector: 'app-dashboard',

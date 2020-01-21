@@ -37,9 +37,9 @@ Para hacer despliegue por medio de GitHub (develop) tan solo se debe subir el c√
 ### Loading
 
 ```
-<app-loading [loading]="loading: boolean" [error]="error: Error" [settings]="settings: Settings">
+<app-error-handler [loading]="loading: boolean" [error]="error: Error" [settings]="settings: Settings">
   ...<div>contenido a mostrar</div>...
-</app-loading>
+</app-error-handler>
 ```
 
 ### Radar Chart

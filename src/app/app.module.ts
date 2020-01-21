@@ -16,7 +16,7 @@ import { LogoutComponent } from './login/logout.component'
 import { ProfileComponent } from './profile/profile.component'
 import { RestrictedComponent } from './restricted/restricted.component'
 import { SkillsChartComponent } from './skills-chart/skills-chart.component'
-import { LoadingComponent } from './loading/loading.component';
+import { ErrorHandlerComponent } from './error-handler/error-handler.component';
 import { AdminComponent } from './admin/admin.component';
 import { SkillsComponent } from './admin/skills/skills.component';
 import { ExpsComponent } from './admin/exps/exps.component';
@@ -24,6 +24,7 @@ import { UsersComponent } from './admin/users/users.component';
 import { LevelsComponent } from './admin/levels/levels.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SearchComponent } from './search/search.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -33,14 +34,15 @@ import { SearchComponent } from './search/search.component';
     ProfileComponent,
     RestrictedComponent,
     SkillsChartComponent,
-    LoadingComponent,
+    ErrorHandlerComponent,
     AdminComponent,
     SkillsComponent,
     ExpsComponent,
     UsersComponent,
     LevelsComponent,
     DashboardComponent,
-    SearchComponent
+    SearchComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,4 @@
-<app-loading [loading]="this.loadingGetUsers.loading" [error]="this.loadingGetUsers.error">
+<app-error-handler [loading]="this.loadingGetUsers.loading" [error]="this.loadingGetUsers.error">
   <div class="row mt-3">
       <div class="col">
           <table class="table">
@@ -24,7 +24,7 @@
                     {{user.displayName}}
                   </th>
                   <th>
-                    <app-loading [loading]="user.loadingUpdateUser" [error]="this.loadingUpdateUser.error">
+                    <app-error-handler [loading]="user.loadingUpdateUser" [error]="this.loadingUpdateUser.error">
                       <div class="btn-group btn-group-toggle">
                         <label [ngClass]="{'btn-success': user.active, 'btn-danger': !user.active}" ngbButtonLabel>
                           <input type="checkbox" ngbButton (click)="onClick(user)">
@@ -32,10 +32,10 @@
                             <span *ngIf="!user.active">Inactivo</span>
                         </label>
                       </div>
-                    </app-loading>
+                    </app-error-handler>
                   </th>
                   <th>
-                    <!--<app-loading [loading]="user.loadingUpdateUser" [error]="this.loadingUpdateUser.error">-->
+                    <!--<app-error-handler [loading]="user.loadingUpdateUser" [error]="this.loadingUpdateUser.error">-->
                       <div class="btn-group btn-group-toggle">
                         <label [ngClass]="{'btn-success': user.roles.admin, 'btn-danger': !user.roles.admin}" ngbButtonLabel>
                           <input type="checkbox" ngbButton (click)="onClickRole(user,'admin')">
@@ -43,10 +43,10 @@
                           <span *ngIf="!user.roles.admin">Inactivo</span>
                         </label>
                       </div>
-                    <!--</app-loading>-->
+                    <!--</app-error-handler>-->
                   </th>
                   <th>
-                    <!--<app-loading [loading]="user.loadingRoleUser" [error]="this.loadingUpdateUser.error">-->
+                    <!--<app-error-handler [loading]="user.loadingRoleUser" [error]="this.loadingUpdateUser.error">-->
                       <div class="btn-group btn-group-toggle">
                         <label [ngClass]="{'btn-success': user.roles.profile, 'btn-danger': !user.roles.profile}" ngbButtonLabel>
                           <input type="checkbox" ngbButton (click)="onClickRole(user,'profile')">
@@ -54,11 +54,11 @@
                           <span *ngIf="!user.roles.profile">Inactivo</span>
                         </label>
                       </div>
-                    <!--</app-loading>-->
+                    <!--</app-error-handler>-->
                   </th>
                 </tr>
               </tbody>
           </table>
       </div>
   </div>
-</app-loading>
+</app-error-handler>

@@ -1,10 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-loading',
-  templateUrl: './loading.component.html'
+  selector: 'app-error-handler',
+  templateUrl: './error-handler.component.html'
 })
-export class LoadingComponent implements OnInit {
+export class ErrorHandlerComponent implements OnInit {
   @Input() loading: boolean = false
   @Input() error?: Error = null
   @Input() settings?: Settings = new Settings()

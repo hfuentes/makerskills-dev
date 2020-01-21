@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { UserService } from '../core/user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from '../core/domain/user';
-import { Error, ErrorType } from '../loading/loading.component';
+import { Error, ErrorType } from '../error-handler/error-handler.component';
 
 @Component({
   selector: 'app-search',

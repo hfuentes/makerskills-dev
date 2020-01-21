@@ -1,18 +1,21 @@
 import { ProfileService } from './../core/profile.service';
 import { AuthService } from './../core/auth.service';
-import { Component, OnInit, ViewChild } from '@angular/core'
+import { Component, OnInit, ViewChild, Input, OnChanges } from '@angular/core'
 import { SharedService } from '../core/shared.service'
 import { Skill } from '../core/domain/skill'
 import { UserService } from '../core/user.service'
 import { SkillsChartComponent } from '../skills-chart/skills-chart.component'
 import { SeedService } from '../core/seed.service';
+import { User } from '../core/domain/user';
+import { Error } from '../error-handler/error-handler.component';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html'
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnChanges {
 
+  @Input() user: User
   skills: [Skill]
   agregar: boolean
   actualizar: boolean
@@ -44,9 +47,6 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
 
-    this.seed.populate()
-
-    /**************/
     this.loading = true
     this.skillService.getSkills().then(names => {
       this.skillsNames = names
@@ -75,19 +75,33 @@ export class ProfileComponent implements OnInit {
       this.loading = false
     })
 
-    /**************/
-
     this.loading = true
-    console.log(this.auth.userData)
-    this.profileService.getSkills(this.auth.userData).then(skills => {
+    if (!this.user) this.user = this.auth.userData
+    console.log(this.user)
+    this.profileService.getSkills(this.user).then(skills => {
       this.skills = skills
       this.loading = false
     }).catch(err => {
       console.error(err)
-      this.error = { message: 'Error on loading user skills, please try again.' }
+      this.error = new Error('Error on loading user skills, please try again.')
       this.loading = false
     })
 
+  }
+
+  ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
+    console.log('changesssss')
+    this.loading = true
+    if (!this.user) this.user = this.auth.userData
+    console.log(this.user)
+    this.profileService.getSkills(this.user).then(skills => {
+      this.skills = skills
+      this.loading = false
+    }).catch(err => {
+      console.error(err)
+      this.error = new Error('Error on loading user skills, please try again.')
+      this.loading = false
+    })
   }
 
   addItem(): void {
@@ -115,7 +129,7 @@ export class ProfileComponent implements OnInit {
       this.habilidadSeleccionada = ''
       this.experienciaSeleccionada = ''
       this.nivelSeleccionado = ''
-      this.profileService.addNewSkill(skill, this.auth.userData)
+      this.profileService.addNewSkill(skill, this.user)
     }
 
   }
@@ -150,7 +164,7 @@ export class ProfileComponent implements OnInit {
   }
 
   deleteSkill(index: number): void {
-    this.profileService.deleteSkill(this.skills[index], this.auth.userData)
+    this.profileService.deleteSkill(this.skills[index], this.user)
     this.skills.splice(index, 1)
   }
 
@@ -186,11 +200,11 @@ export class ProfileComponent implements OnInit {
         value: +this.nivelSeleccionadoValue
       } 
     }
-    this.profileService.updateSkill(skill, this.auth.userData)
+    this.profileService.updateSkill(skill, this.user)
     
     this.loading = true
-    console.log(this.auth.userData)
-    this.profileService.getSkills(this.auth.userData).then(skills => {
+    console.log(this.user)
+    this.profileService.getSkills(this.user).then(skills => {
       this.skills = skills
       this.loading = false
     }).catch(err => {

@@ -8,13 +8,20 @@
         aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-
-</nav>
-<nav *ngIf="auth.userData" aria-label="breadcrumb">
-    <ol class="breadcrumb float-right">
-        <li class="breadcrumb-item active" aria-current="page" title="{{auth.userData.email}}">
-            Welcome, {{auth.userData.displayName}}!&nbsp;
-            <app-logout></app-logout>
-        </li>
-    </ol>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown" *ngIf="auth.authenticated">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" routerLink="dashboard">Dashboard</a>
+            </li>
+            <li class="nav-item" *ngIf="auth.matchingRoles(['profile'])">
+                <a class="nav-link" routerLink="profile">Profile</a>
+            </li>
+            <li class="nav-item" *ngIf="auth.matchingRoles(['admin'])">
+                <a class="nav-link" routerLink="admin">Admin</a>
+            </li>
+        </ul>
+        <span *ngIf="auth.userData" class="navbar-text" title="{{auth.userData.email}}">
+            Welcome, {{auth.userData.displayName}}!&nbsp;<app-logout></app-logout>
+        </span>
+    </div>
 </nav>

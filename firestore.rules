@@ -9,13 +9,16 @@ service cloud.firestore {
       let auth_roles = get(/databases/$(database)/documents/users/$(auth_email)).data.roles;
       return auth_roles[role];
     }
-    function isOwner() {
+    function isOwner(email) {
     	let auth_email = request.auth.token.email;
-      return resource.id == auth_email;
+      return email == auth_email;
     }
-    match /users/{document=**} {
+    match /users/{email}/skills/{skill=**} {
+    	allow read, write: if isSignedIn() && (hasRole('admin') || (hasRole('profile') && isOwner(email)));
+    }
+    match /users/{email} {
       allow create, delete: if isSignedIn() && hasRole('admin');
-      allow update: if isSignedIn() && (hasRole('admin') || (hasRole('profile') && isOwner()));
+      allow update: if isSignedIn() && (hasRole('admin') || (hasRole('profile') && isOwner(email)));
       allow get, list: if isSignedIn();
     }
     match /skills/{document=**} {

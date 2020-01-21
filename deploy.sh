@@ -84,8 +84,8 @@ elif [ "$TARGET" = "docker" ]; then
     sshpass -p "kubernetes" scp .docker/run.sh root@worker1.linux.server.im:/Proyectos/Imagemaker/MakerSkills/web
     echo ""
 
-    echo "Copying \"docker-compose.yml\" file [sshpass -p *** scp docker-compose.yml root@worker1.linux.server.im:/Proyectos/Imagemaker/MakerSkills/web]"
-    sshpass -p "kubernetes" scp .docker/docker-compose.yml root@worker1.linux.server.im:/Proyectos/Imagemaker/MakerSkills/web
+    echo "Copying \"docker-compose.yml\" file [sshpass -p *** scp docker-compose.yml root@master.server.im:/Proyectos/Imagemaker/MakerSkills/web]"
+    sshpass -p "kubernetes" scp .docker/docker-compose.yml root@master.server.im:/Proyectos/Imagemaker/MakerSkills/web
     echo ""
 
     echo "Copying \"Dockerfile\" file [sshpass -p *** scp Dockerfile root@worker1.linux.server.im:/Proyectos/Imagemaker/MakerSkills/web]"

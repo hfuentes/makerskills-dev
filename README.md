@@ -35,19 +35,12 @@ Para hacer despliegue por medio de GitHub (develop) tan solo se debe subir el c√
 
 ## Componentes transversales
 ### Loading
+
 ```
-<app-loading [loading]="this.loading" [error]="this.error">
+<app-loading [loading]="loading: boolean" [error]="error: Error" [settings]="settings: Settings">
   ...<div>contenido a mostrar</div>...
 </app-loading>
 ```
-
-`loading: boolean` indica al componente si debe mostrar html de carga.
-
-`error: any` variable con los siguientes atributos:
-```
-{ status: number, message: string }
-```
-En caso de inicializar el objeto, se mostrara mensaje de error
 
 ### Radar Chart
 

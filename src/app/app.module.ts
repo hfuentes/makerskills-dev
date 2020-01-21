@@ -23,6 +23,7 @@ import { ExpsComponent } from './admin/exps/exps.component';
 import { UsersComponent } from './admin/users/users.component';
 import { LevelsComponent } from './admin/levels/levels.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     ExpsComponent,
     UsersComponent,
     LevelsComponent,
-    DashboardComponent
+    DashboardComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,

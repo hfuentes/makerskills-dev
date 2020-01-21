@@ -40,11 +40,11 @@ export class UsersComponent implements OnInit {
       this.loadingGetUsers.loading = false;
       this.users = users;
       users.forEach(user => {
-        user.checkboxGroupForm = this.formBuilder.group({
+        /*user.checkboxGroupForm = this.formBuilder.group({
           profile: user.roles.profile,
           admin: user.roles.admin
         });
-        console.log(user.checkboxGroupForm.value.admin);
+        console.log(user.checkboxGroupForm.value.admin);*/
       });
 
     }).catch(err => {

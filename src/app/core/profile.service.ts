@@ -19,8 +19,8 @@ export class ProfileService {
           docs.forEach(doc => {
             skills.push({
               name: doc.id,
-              exp: { ...doc.data().exp },
-              level: { ...doc.data().level }
+              exp: doc.data().exp,
+              level: doc.data().level
             })
           })
           return resolve(skills)

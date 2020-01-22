@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Skill, Exp, Level } from '../core/domain/skill'
+import { Skill } from '../core/domain/skill'
 import { User } from './domain/user';
 
 @Injectable({
@@ -27,7 +27,8 @@ export class SharedService {
 
   getExps() {
     return new Promise<any>((resolve, reject) => {
-      this.db.firestore.collection('exps').where('valid', '==', true).get().then(res => {
+      return resolve([0,1,2,3,4,5,6,7,8,9,10])
+      /*this.db.firestore.collection('exps').where('valid', '==', true).get().then(res => {
         let exps: Array<Exp>  = [];
         res.forEach(doc => {
           exps.push({
@@ -36,13 +37,14 @@ export class SharedService {
           });
         })
         resolve(exps);
-      }).catch(err => reject(err));
+      }).catch(err => reject(err));*/
     });
   }
 
   getLevels() {
     return new Promise<any>((resolve, reject) => {
-      this.db.firestore.collection('levels').where('valid', '==', true).get().then(res => {
+      return resolve([1,2,3,4,5])
+      /*this.db.firestore.collection('levels').where('valid', '==', true).get().then(res => {
         let levels: Array<Level>  = [];
         res.forEach(doc => {
           levels.push({
@@ -51,7 +53,7 @@ export class SharedService {
           });
         })
         resolve(levels);
-      }).catch(err => reject(err));
+      }).catch(err => reject(err));*/
     });
   }
 

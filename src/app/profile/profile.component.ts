@@ -16,7 +16,7 @@ import { Error } from '../error-handler/error-handler.component';
 export class ProfileComponent implements OnInit, OnChanges {
 
   @Input() user: User
-  skills: [Skill]
+  skills: Array<Skill>
   agregar: boolean
   actualizar: boolean
   skillsNames: any
@@ -126,10 +126,10 @@ export class ProfileComponent implements OnInit, OnChanges {
         }
       }
       this.skills.push(skill)
+      console.log(this.skills)
       this.habilidadSeleccionada = ''
       this.experienciaSeleccionada = ''
       this.nivelSeleccionado = ''
-      this.profileService.addNewSkill(skill, this.user)
     }
 
   }

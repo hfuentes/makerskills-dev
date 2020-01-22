@@ -6,7 +6,8 @@ usage() {
     echo "  -e Environment: ['dev','prod'] # default: 'dev'"
     echo "  -p Firebase Project: [string] # default: 'makerskills-develop'"
     echo "  -o Firebase Options: [string] # default: 'hosting,firestore:rules'"
-    echo "]" 1>&2
+    echo "]"
+    echo ""
 }
 exit_abnormal() {
     usage

@@ -73,9 +73,9 @@ export class SharedService {
     });
   }
 
-  addUser(user: User){
+  addUser(email: string ,user: User){
     return new Promise<any>((resolve, reject): any => {
-      this.db.firestore.collection('users').add(user).then(
+      this.db.firestore.collection('users').doc(email).set(user).then(
         respuesta => {
           resolve(respuesta);
         }).catch(error =>{

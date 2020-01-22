@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, OnChanges, Input, ViewChild, AfterViewInit } from '@angular/core'
+import { Component, OnInit, ElementRef, OnChanges, Input, ViewChild, AfterViewInit, DoCheck, IterableDiffers, IterableDiffer } from '@angular/core'
 import { SkillChartNode, Skill, SkillChartRow } from '../core/domain/skill'
 import { RadarChartService } from '../core/radar-chart.service'
 import * as _ from 'lodash'
@@ -8,7 +8,7 @@ import * as _ from 'lodash'
   templateUrl: './skills-chart.component.html',
   styleUrls: ['./skills-chart.component.css']
 })
-export class SkillsChartComponent implements OnInit, OnChanges, AfterViewInit {
+export class SkillsChartComponent implements OnInit, OnChanges, AfterViewInit, DoCheck {
 
   @Input() skills: Array<Skill>
   @Input() drawLevels: boolean = true
@@ -16,8 +16,23 @@ export class SkillsChartComponent implements OnInit, OnChanges, AfterViewInit {
   @ViewChild('skillschartcontainer', { static: true }) element: ElementRef
 
   private htmlElement: HTMLElement
+  private iterableDiffer: IterableDiffer<unknown>
 
-  constructor(private chartService: RadarChartService) { }
+  constructor(
+    private chartService: RadarChartService,
+    private iterableDiffers: IterableDiffers
+  ) {
+    this.iterableDiffer = this.iterableDiffers.find([]).create(null);
+  }
+
+  private setupAndPopulateChart(): void {
+    if (this.htmlElement) this.htmlElement.innerHTML = ''
+    this.chartService.setupAndPopulate(
+      this.htmlElement,
+      this.buildChartData(),
+      this.calculateNumberOfLevels()
+    )
+  }
 
   private buildExpRow(): SkillChartRow {
     let expRow: SkillChartRow = new SkillChartRow()
@@ -71,16 +86,18 @@ export class SkillsChartComponent implements OnInit, OnChanges, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.htmlElement = this.element.nativeElement
-    this.chartService.setup(this.htmlElement)
+    console.log(this.element)
   }
 
   ngOnChanges(): void {
-    if (this.htmlElement) this.htmlElement.innerHTML = ''
-    this.chartService.setupAndPopulate(
-      this.htmlElement,
-      this.buildChartData(),
-      this.calculateNumberOfLevels()
-    )
+    this.setupAndPopulateChart()
+  }
+
+  ngDoCheck(): void {
+    let changes = this.iterableDiffer.diff(this.skills);
+    if (changes) {
+      this.setupAndPopulateChart()
+    }
   }
 
 }

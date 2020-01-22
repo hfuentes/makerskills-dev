@@ -21,15 +21,14 @@
                 </thead>
                 <tbody>
                     <ng-container *ngFor="let skill of skills; let i = index">
-                        <tr>
+                        <tr [formGroup]="updateForm">
                             <th scope="row">{{ i + 1 }}</th>
                             <td>
                                 <div class="input-group mb-3">
                                     {{ skill.name }}
                                 </div>
                             </td>
-                            <ng-container *ngIf="i === indexSelected" [formGroup]="updateForm"
-                                (ngSubmit)="doUpdateSkill()">
+                            <ng-container *ngIf="i === indexSelected">
                                 <td>
                                     <div class="input-group input-group-sm">
                                         <input type="number" class="form-control" placeholder="Exp" aria-label="Exp"
@@ -61,7 +60,7 @@
                                     </span>
                                 </td>
                                 <td>
-                                    <button class="btn btn-success btn-sm mr-1" type="submit">Update</button>
+                                    <button class="btn btn-success btn-sm mr-1" type="submit" (click)="doUpdateSkill(skill, i)">Update</button>
                                     <button class="btn btn-secondary btn-sm"
                                         (click)="doCancelUpdateSkill()">Cancel</button>
                                 </td>

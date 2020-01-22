@@ -177,13 +177,16 @@ export class ProfileComponent implements OnInit, OnChanges {
 
   doUpdateSkill(skill: Skill, index: number): void {
     if (this.updateForm.valid) {
-      this.profileService.updateSkill({
+      const tmp: Skill = {
         name: skill.name,
         exp: this.updateForm.controls.exp.value,
         level: this.updateForm.controls.level.value
-      }, this.user).then(() => {
+      }
+      this.profileService.updateSkill(tmp, this.user).then(() => {
+        this.skills[index] = tmp
+        this.updateForm.controls.exp.setValue(-1)
+        this.updateForm.controls.level.setValue(-1)
         this.indexSelected = null
-        this.skills[index] = skill
       }).catch(err => console.log(err))
     }
   }

@@ -1,9 +1,12 @@
 <div class="row mt-3">
     <div class="col">
-        <h3>Profile Skills</h3>
+        <h3>
+            Profile Skills<br>
+            <small class="text-muted">{{ user.displayName }} - {{ user.email }}</small>
+        </h3>
     </div>
 </div>
-<app-loading [loading]="this.loading" [error]="this.error">
+<app-error-handler [loading]="this.loading" [error]="this.error">
     <div class="row mt-3">
         <div class="col">
             <table class="table">
@@ -130,4 +133,4 @@
             </div>
         </div>
     </div>
-</app-loading>
+</app-error-handler>

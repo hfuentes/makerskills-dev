@@ -2,6 +2,7 @@ import { User } from './domain/user';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Skill } from './domain/skill';
+import * as firebase from 'firebase'
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -12,10 +13,12 @@ export class UserService {
     return new Promise<any>((resolve, reject) => {
       return this.db.firestore.collection('users').doc(email).get()
         .then(doc => {
-          return resolve({
-            email: doc.id,
-            ...doc.data()
-          })
+          if (doc && doc.exists) {
+            return resolve({
+              email: doc.id,
+              ...doc.data()
+            })
+          } else resolve()
         }).catch(err => reject(err))
     })
   }

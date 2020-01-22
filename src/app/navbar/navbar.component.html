@@ -1,0 +1,27 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <span class="navbar-brand">
+        <img src="https://static.wixstatic.com/media/1cbd15_365ed530bdb843248cc8e39024a7a98a~mv2.png/v1/fill/w_362,h_217,al_c,q_85/1cbd15_365ed530bdb843248cc8e39024a7a98a~mv2.webp"
+            width="30" height="30" class="d-inline-block align-top" alt="">
+        Maker<strong>Skills</strong>
+    </span>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown" *ngIf="auth.authenticated">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" routerLink="dashboard">Dashboard</a>
+            </li>
+            <li class="nav-item" *ngIf="auth.matchingRoles(['profile'])">
+                <a class="nav-link" routerLink="profile">Profile</a>
+            </li>
+            <li class="nav-item" *ngIf="auth.matchingRoles(['admin'])">
+                <a class="nav-link" routerLink="admin">Admin</a>
+            </li>
+        </ul>
+        <span *ngIf="auth.userData" class="navbar-text" title="{{auth.userData.email}}">
+            Welcome, {{auth.userData.displayName}}!&nbsp;<app-logout></app-logout>
+        </span>
+    </div>
+</nav>

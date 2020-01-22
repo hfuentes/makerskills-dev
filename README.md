@@ -16,31 +16,31 @@ Prueba concepto Angular 8 + Firebase Auth (Google) + Firebase Firestore
 
 `firebase deploy --only firestore:rules` subir modificación en reglas firestore
 
-### Despliegue en Firebase
+### Despliegues
 
-Ejecutar script `deploy.sh`, instrucciones:
+`sh deploy.sh -t firebase` script despliegue Firebase
 
-`rm -rf dist/`
+```
+Usage: deploy.sh [
+  -t Target: ['firebase', 'docker'] # required
+  -e Environment: ['dev','prod'] # default: 'dev'
+  -p Firebase Project: [string] # default: 'makerskills-develop'
+  -o Firebase Options: [string] # default: 'hosting,firestore:rules'
+]
+```
 
-`ng build --prod`
+Para hacer despliegue por medio de GitHub (develop) tan solo se debe subir el código a la rama: `deploy-firebase-develop`. Luego la configuración del GitHub/Workflow: `/.github/workflows/deploy-firebase-develop.yml` ejecutará el deploy.
 
-`firebase deploy`
+`sh deploy.sh -t docker` script despliegue Docker (requisitos: keychain, sshpass, expect)
 
 ## Componentes transversales
 ### Loading
+
 ```
-<app-loading [loading]="this.loading" [error]="this.error">
+<app-error-handler [loading]="loading: boolean" [error]="error: Error" [settings]="settings: Settings">
   ...<div>contenido a mostrar</div>...
-</app-loading>
+</app-error-handler>
 ```
-
-`loading: boolean` indica al componente si debe mostrar html de carga.
-
-`error: any` variable con los siguientes atributos:
-```
-{ status: number, message: string }
-```
-En caso de inicializar el objeto, se mostrara mensaje de error
 
 ### Radar Chart
 

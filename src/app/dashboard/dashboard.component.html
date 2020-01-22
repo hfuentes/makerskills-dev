@@ -1,1 +1,18 @@
-<p>dashboard works!</p>
+<div class="row mt-3">
+    <div class="col">
+        <h3>Dashboard</h3>
+    </div>
+</div>
+<div class="row mt-3">
+    <div class="col">
+        <app-search [search]="search"></app-search>
+    </div>
+</div>
+<div class="row mt-3">
+    <div class="col">
+        <app-error-handler [loading]="search.loading" [error]="search.error">
+            <app-profile [user]="search.user"></app-profile>
+        </app-error-handler>
+    </div>
+</div>
+

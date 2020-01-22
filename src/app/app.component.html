@@ -1,18 +1,2 @@
-<div>
-  <nav class="navbar navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">
-      <img src="https://static.wixstatic.com/media/1cbd15_365ed530bdb843248cc8e39024a7a98a~mv2.png/v1/fill/w_362,h_217,al_c,q_85/1cbd15_365ed530bdb843248cc8e39024a7a98a~mv2.webp" width="30" height="30" class="d-inline-block align-top"
-        alt="">
-      Maker<strong>Skills</strong>
-    </a>
-  </nav>
-  <nav *ngIf="auth.userData" aria-label="breadcrumb">
-    <ol class="breadcrumb float-right">
-      <li class="breadcrumb-item active" aria-current="page" title="{{auth.userData.email}}">
-        Welcome, {{auth.userData.displayName}}!&nbsp;
-        <app-logout></app-logout>
-      </li>
-    </ol>
-  </nav>
-  <router-outlet></router-outlet>
-</div>
+<app-navbar></app-navbar>
+<router-outlet></router-outlet>

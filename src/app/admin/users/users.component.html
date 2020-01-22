@@ -1,3 +1,114 @@
+<div class="row" *ngIf="!this.addUser">
+    <label class="col-10 col-form-label">&nbsp;</label>
+    <div class="col-2">
+      <button type="button" class="btn btn-primary btn-circle" (click)="addUserView()">
+        +
+      </button>
+    </div>
+</div>
+
+<form *ngIf="this.addUser" [formGroup]="forma" (ngSubmit)="guardarUsuario()">
+  <div class="row mt-3">
+    <div class="col">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Email</th>
+            <th scope="col">Name</th>
+            <th scope="col">Admin</th>
+            <th scope="col">Profile</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <!-- Email -->
+              <div>
+                <div class="form-group row">
+                  <div class="col-12">
+                    <input 
+                      class="form-control"
+                      type="email"
+                      placeholder="Email"
+                      formControlName="email">
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <!-- Name -->
+              <div>
+                <div class="form-group row danger">
+                  <div class="col-10">
+                    <input 
+                      class="form-control"
+                      [ngClass]="{'is-invalid':!forma.get('name').valid}"
+                      type="text"
+                      placeholder="Name"
+                      formControlName="name">
+                    <div *ngIf="!forma.controls['name'].valid" class="invalid-feedback">
+                      Debe ingresar un nombre
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div formGroupName="roles">
+                <div class="btn-group btn-group-toggle">
+                  <label 
+                    [ngClass]="{'btn-success': this.forma.value.roles.admin, 'btn-danger': !this.forma.value.roles.admin}"
+                    ngbButtonLabel>
+                    <input 
+                      type="checkbox"
+                      formControlName="admin"
+                      ngbButton>
+                    <span *ngIf="this.forma.value.roles.admin">Activo</span>
+                    <span *ngIf="!this.forma.value.roles.admin">Inactivo</span>
+                  </label>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div formGroupName="roles">
+                <div class="btn-group btn-group-toggle">
+                  <label 
+                    [ngClass]="{'btn-success': this.forma.value.roles.profile, 'btn-danger': !this.forma.value.roles.profile}"
+                    ngbButtonLabel>
+                    <input 
+                      type="checkbox"
+                      formControlName="profile"
+                      ngbButton>
+                    <span *ngIf="this.forma.value.roles.profile">Activo</span>
+                    <span *ngIf="!this.forma.value.roles.profile">Inactivo</span>
+                  </label>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- Submit -->
+  <div>
+    <div class="form-group row">
+      <div class="input-group" class="col-2">
+        <button type="button" class="btn btn-danger" (click)="addUserView()">
+          Cancelar
+        </button>
+      </div>
+      <label class="col-8 col-form-label">&nbsp;</label>
+      <div class="input-group" class="col-2">
+        <button type="submit" class="btn btn-outline-primary">
+          Guardar
+        </button>
+      </div>
+    </div>
+  </div>
+  {{ forma.valid }}
+</form>
+         
 <app-loading [loading]="this.loadingGetUsers.loading" [error]="this.loadingGetUsers.error">
   <div class="row mt-3">
       <div class="col">
@@ -13,48 +124,48 @@
                   </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let user of this.users; let i = index">
+                <tr *ngFor="let userFront of this.usersFront; let i = index">
                   <th>
                     {{i + 1}}
                   </th>
                   <th>
-                    {{user.email}}
+                    {{userFront.user.email}}
                   </th>
                   <th>
-                    {{user.displayName}}
+                    {{userFront.user.displayName}}
                   </th>
                   <th>
-                    <app-loading [loading]="user.loadingUpdateUser" [error]="this.loadingUpdateUser.error">
+                    <app-loading [loading]="userFront.user.loadingUpdateUser" [error]="this.loadingUpdateUser.error">
                       <div class="btn-group btn-group-toggle">
-                        <label [ngClass]="{'btn-success': user.active, 'btn-danger': !user.active}" ngbButtonLabel>
-                          <input type="checkbox" ngbButton (click)="onClick(user)">
-                            <span *ngIf="user.active">Activo</span>
-                            <span *ngIf="!user.active">Inactivo</span>
+                        <label [ngClass]="{'btn-success': userFront.user.active, 'btn-danger': !userFront.user.active}" ngbButtonLabel>
+                          <input type="checkbox" ngbButton (click)="onClick(userFront)">
+                            <span *ngIf="userFront.user.active">Activo</span>
+                            <span *ngIf="!userFront.user.active">Inactivo</span>
                         </label>
                       </div>
                     </app-loading>
                   </th>
                   <th>
-                    <!--<app-loading [loading]="user.loadingUpdateUser" [error]="this.loadingUpdateUser.error">-->
+                    <app-loading [loading]="userFront.user.adminRoleUserLoading" [error]="this.loadingUpdateUser.error">
                       <div class="btn-group btn-group-toggle">
-                        <label [ngClass]="{'btn-success': user.roles.admin, 'btn-danger': !user.roles.admin}" ngbButtonLabel>
-                          <input type="checkbox" ngbButton (click)="onClickRole(user,'admin')">
-                          <span *ngIf="user.roles.admin">Activo</span>
-                          <span *ngIf="!user.roles.admin">Inactivo</span>
+                        <label [ngClass]="{'btn-success': userFront.user.roles.admin, 'btn-danger': !userFront.user.roles.admin}" ngbButtonLabel>
+                          <input type="checkbox" ngbButton (click)="onClickRole(userFront,'admin')">
+                          <span *ngIf="userFront.user.roles.admin">Activo</span>
+                          <span *ngIf="!userFront.user.roles.admin">Inactivo</span>
                         </label>
                       </div>
-                    <!--</app-loading>-->
+                    </app-loading>
                   </th>
                   <th>
-                    <!--<app-loading [loading]="user.loadingRoleUser" [error]="this.loadingUpdateUser.error">-->
+                    <app-loading [loading]="userFront.user.profileRoleUserLoading" [error]="this.loadingUpdateUser.error">
                       <div class="btn-group btn-group-toggle">
-                        <label [ngClass]="{'btn-success': user.roles.profile, 'btn-danger': !user.roles.profile}" ngbButtonLabel>
-                          <input type="checkbox" ngbButton (click)="onClickRole(user,'profile')">
-                          <span *ngIf="user.roles.profile">Activo</span>
-                          <span *ngIf="!user.roles.profile">Inactivo</span>
+                        <label [ngClass]="{'btn-success': userFront.user.roles.profile, 'btn-danger': !userFront.user.roles.profile}" ngbButtonLabel>
+                          <input type="checkbox" ngbButton (click)="onClickRole(userFront,'profile')">
+                          <span *ngIf="userFront.user.roles.profile">Activo</span>
+                          <span *ngIf="!userFront.user.roles.profile">Inactivo</span>
                         </label>
                       </div>
-                    <!--</app-loading>-->
+                    </app-loading>
                   </th>
                 </tr>
               </tbody>

@@ -1,0 +1,28 @@
+.btn-circle {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+}
+
+.btn-active-circle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  color: #007BFF;
+  border-color: #007BFF;
+  background-color: #FFFFFF;
+}
+
+.btn-enable-circle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  color: #ED0722;
+  border-color: #ED0722;
+  background-color: #FFFFFF;
+
+}
+
+.texto-btn{
+  text-align: center;
+}

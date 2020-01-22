@@ -2,12 +2,13 @@ import { ProfileService } from './../core/profile.service';
 import { AuthService } from './../core/auth.service';
 import { Component, OnInit, ViewChild, Input, OnChanges } from '@angular/core'
 import { SharedService } from '../core/shared.service'
-import { Skill } from '../core/domain/skill'
+import { Skill, Exp } from '../core/domain/skill'
 import { UserService } from '../core/user.service'
 import { SkillsChartComponent } from '../skills-chart/skills-chart.component'
 import { SeedService } from '../core/seed.service';
 import { User } from '../core/domain/user';
 import { Error } from '../error-handler/error-handler.component';
+import { VoronoiPoint } from 'd3';
 
 @Component({
   selector: 'app-profile',
@@ -18,7 +19,6 @@ export class ProfileComponent implements OnInit, OnChanges {
   @Input() user: User
   skills: Array<Skill>
   agregar: boolean
-  actualizar: boolean
   skillsNames: any
   expsNames: any
   levelsNames: any
@@ -29,7 +29,7 @@ export class ProfileComponent implements OnInit, OnChanges {
   nivelSeleccionadoValue: number
   loading: boolean
   error: any
-  indexSelected: number
+  indexSelected: number = null
   chartConfig: any = { //chart config data
     drawLevels: true,
     drawExps: true
@@ -89,11 +89,9 @@ export class ProfileComponent implements OnInit, OnChanges {
 
   }
 
-  ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
-    console.log('changesssss')
+  ngOnChanges(): void {
     this.loading = true
     if (!this.user) this.user = this.auth.userData
-    console.log(this.user)
     this.profileService.getSkills(this.user).then(skills => {
       this.skills = skills
       this.loading = false
@@ -118,11 +116,11 @@ export class ProfileComponent implements OnInit, OnChanges {
         name: this.habilidadSeleccionada,
         exp: {
           name: this.experienciaSeleccionada,
-          value: 1
+          value: this.experienciaSeleccionadaValue
         },
         level: {
           name: this.nivelSeleccionado,
-          value: 2
+          value: this.nivelSeleccionadoValue
         }
       }
       this.skills.push(skill)
@@ -149,7 +147,7 @@ export class ProfileComponent implements OnInit, OnChanges {
       case "inputGroupSelectHabilidad":
         this.habilidadSeleccionada = event.target.value;
         break;
-      case "inputGroupSelectExperiencia":{
+      case "inputGroupSelectExperiencia": {
         this.experienciaSeleccionada = event.target.selectedOptions[0].label;
         this.experienciaSeleccionadaValue = event.target.value;
         break;
@@ -168,17 +166,21 @@ export class ProfileComponent implements OnInit, OnChanges {
     this.skills.splice(index, 1)
   }
 
-  actualizarSkill(index: number): void {
-    this.actualizar = true
-
+  doCancelUpdateSkill(): void {
+    this.indexSelected = null
+    this.habilidadSeleccionada = ''
+    this.nivelSeleccionado = ''
+    this.experienciaSeleccionada = ''
   }
 
-  ejecutarActualizarSkill(index: number): void {
-    let skill: Skill = new Skill()
-    console.log(this.skills);
-    console.log((!this.nivelSeleccionado ))
-    skill = {
-      name: (!this.habilidadSeleccionada || this.habilidadSeleccionada === '') ? this.skills[index].name : this.habilidadSeleccionada,
+  showEditSkill(index: number = null): void {
+    this.indexSelected = index
+  }
+
+  doUpdateSkill(index: number): void {
+    this.indexSelected = null
+    const skill: Skill = {
+      name: this.skills[index].name,
       exp: (!this.experienciaSeleccionada || this.experienciaSeleccionada === '') ?
         {
           name: this.skills[index].exp.name,
@@ -190,31 +192,20 @@ export class ProfileComponent implements OnInit, OnChanges {
           value: +this.experienciaSeleccionadaValue
         },
       level: (!this.nivelSeleccionado || this.nivelSeleccionado === '') ?
-      {
-        name: this.skills[index].level.name,
-        value: this.skills[index].level.value
-      }
-      :
-      {
-        name: this.nivelSeleccionado,
-        value: +this.nivelSeleccionadoValue
-      } 
+        {
+          name: this.skills[index].level.name,
+          value: this.skills[index].level.value
+        }
+        :
+        {
+          name: this.nivelSeleccionado,
+          value: +this.nivelSeleccionadoValue
+        }
     }
-    this.profileService.updateSkill(skill, this.user)
-    
-    this.loading = true
-    console.log(this.user)
-    this.profileService.getSkills(this.user).then(skills => {
-      this.skills = skills
-      this.loading = false
-    }).catch(err => {
-      console.error(err)
-      this.error = { message: 'Error on loading user skills, please try again.' }
-      this.loading = false
-    })
-
-
-    this.actualizar = false
+    this.profileService.updateSkill(skill, this.user).then(() => {
+      this.indexSelected = null
+      this.skills[index] = skill
+    }).catch(err => console.log(err))
   }
 
 }

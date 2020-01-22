@@ -44,15 +44,11 @@ export class ProfileService {
   }
 
   updateSkill(skill: Skill, user: User) {
-    console.log("actualizando")
-    console.log(user);
-    console.log(skill);
-    this.db.firestore.collection('users').doc(user.email).collection('skills').doc(skill.name).set({
-      exp: skill.exp,
-      level: skill.level
-    }).then(
-      function () {
-        console.log('actualizado');
-      }).catch(err => console.log('Error: ' + err))
+    return new Promise<any>((resolve, reject) => {
+      return this.db.firestore.collection('users').doc(user.email).collection('skills').doc(skill.name).set({
+        exp: skill.exp,
+        level: skill.level
+      }).then(() => resolve()).catch(err => reject(err))
+    })
   }
 }

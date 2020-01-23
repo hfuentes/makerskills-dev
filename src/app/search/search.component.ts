@@ -3,6 +3,7 @@ import { UserService } from '../core/user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from '../core/domain/user';
 import { Error, ErrorType } from '../error-handler/error-handler.component';
+import { AuthService } from '../core/auth.service';
 
 @Component({
   selector: 'app-search',
@@ -15,7 +16,8 @@ export class SearchComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private auth: AuthService
   ) {
     this.form = this.formBuilder.group({
       email: ['', Validators.required]

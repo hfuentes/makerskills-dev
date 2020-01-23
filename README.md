@@ -42,6 +42,18 @@ Para hacer despliegue por medio de GitHub (develop) tan solo se debe subir el c√
 </app-error-handler>
 ```
 
+### Mostrar tiene roles
+
+```
+<div *ngIf="auth.matchingRoles(roles: Array<string> = ['profile','dashboard', ...], strict?: boolean)">
+  ...<div>contenido a mostrar</div>...
+</app-error-handler>
+```
+
+`roles` array de roles (string), debe contener al menos uno.
+
+`strict` (estricto) por defecto es `true`, significa que el usuario debe tener todos los roles pedidos, en caso de ser `false`, bastar√° con que tenga uno de los roles pedidos.
+
 ### Radar Chart
 
 Ejemplo: https://jonasrenault.github.io/fortune100/

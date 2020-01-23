@@ -45,7 +45,9 @@ export class ProfileComponent implements OnInit, OnChanges {
     private profileService: ProfileService,
     private formBuilder: FormBuilder,
     private paramsService: ParamsService
-  ) { }
+  ) {
+    this.updateForm = this.formBuilder.group({})
+  }
 
   ngOnInit() {
 

@@ -142,7 +142,13 @@ export class UsersComponent implements OnInit {
   }
 
   addUserView(){
-    if(this.addUser) {
+    this.forma.reset({
+      name: null,
+      photoURL: null,
+      roles: {admin: false, profile: true},
+      active: true
+    });
+    if (this.addUser) {
       this.addUser = false;
     } else {
       this.addUser = true;

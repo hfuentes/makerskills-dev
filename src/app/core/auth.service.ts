@@ -46,11 +46,10 @@ export class AuthService {
     return localStorage.getItem('userData') ? true : false
   }
 
-  matchingRoles(roles: Array<string> = []): boolean {
+  matchingRoles(roles: Array<string> = [], strict = true): boolean {
     if (this.userData.roles) {
-      for (const role of roles) {
-        if (this.userData.roles[role]) return true
-      }
+      const mapper = roles.map(role => this.userData.roles[role])
+      return strict ? mapper.every(role=>role) : mapper.includes(true)
     }
     return false
   }

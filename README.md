@@ -34,7 +34,8 @@ Para hacer despliegue por medio de GitHub (develop) tan solo se debe subir el c√
 `sh deploy.sh -t docker` script despliegue Docker (requisitos: keychain, sshpass, expect)
 
 ## Componentes transversales
-### Loading
+
+### Manejador de errores 
 
 ```
 <app-error-handler [loading]="loading: boolean" [error]="error: Error" [settings]="settings: Settings">

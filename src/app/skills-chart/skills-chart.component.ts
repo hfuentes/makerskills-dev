@@ -92,7 +92,6 @@ export class SkillsChartComponent implements OnInit, AfterViewInit, DoCheck {
 
   ngAfterViewInit(): void {
     this.htmlElement = this.element.nativeElement
-    console.log(this.element)
   }
 
   ngDoCheck(): void {

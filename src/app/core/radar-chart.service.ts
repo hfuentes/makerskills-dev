@@ -57,9 +57,9 @@ export class RadarChartService {
   private setAxis(data: Array<SkillChartRow>): void {
     this.axisLabels = []
     if (data.length <= 0) return
-    for (let i = 0; i < data[0].nodes.length; i++) {
-      this.axisLabels.push(data[0].nodes[i].name)
-      this.axisSlugs.push(data[0].nodes[i].slug)
+    for (const node of data[0].nodes) {
+      this.axisLabels.push(node.name)
+      this.axisSlugs.push(node.slug)
     }
     this.totalAxes = this.axisLabels.length
   }
@@ -84,15 +84,15 @@ export class RadarChartService {
       .attr('class', 'axis-line')
       .attr('x1', this.config.width / 2)
       .attr('y1', this.config.width / 2)
-      .attr('x2', (d, i) => { return this.config.width / 2 * (1 - Math.sin(i * this.config.radians / this.totalAxes)) })
-      .attr('y2', (d, i) => { return this.config.height / 2 * (1 - Math.cos(i * this.config.radians / this.totalAxes)) })
+      .attr('x2', (d, i) => this.config.width / 2 * (1 - Math.sin(i * this.config.radians / this.totalAxes)) )
+      .attr('y2', (d, i) => this.config.height / 2 * (1 - Math.cos(i * this.config.radians / this.totalAxes)) )
 
     this.axes.append('text')
       .attr('class', 'label')
       .text((d: string) => d)
       .attr('text-anchor', 'middle')
-      .attr('x', (d, i) => { return this.config.width / 2 * (1 - 1.3 * Math.sin(i * this.config.radians / this.totalAxes)) })
-      .attr('y', (d, i) => { return this.config.height / 2 * (1 - 1.1 * Math.cos(i * this.config.radians / this.totalAxes)) })
+      .attr('x', (d, i) => this.config.width / 2 * (1 - 1.3 * Math.sin(i * this.config.radians / this.totalAxes)) )
+      .attr('y', (d, i) => this.config.height / 2 * (1 - 1.1 * Math.cos(i * this.config.radians / this.totalAxes)) )
   }
 
   private drawLevels(): void {
@@ -100,17 +100,17 @@ export class RadarChartService {
       .append('g').attr('class', 'levels')
 
     for (let level = 0; level < this.config.levels; level++) {
-      let levelFactor = this.radius * ((level + 1) / this.config.levels)
+      const levelFactor = this.radius * ((level + 1) / this.config.levels)
 
       // build level-lines
       this.levels
         .data(this.axisLabels).enter()
         .append('line')
         .attr('class', 'level')
-        .attr('x1', (d, i) => { return levelFactor * (1 - Math.sin(i * this.config.radians / this.totalAxes)) })
-        .attr('y1', (d, i) => { return levelFactor * (1 - Math.cos(i * this.config.radians / this.totalAxes)) })
-        .attr('x2', (d, i) => { return levelFactor * (1 - Math.sin((i + 1) * this.config.radians / this.totalAxes)) })
-        .attr('y2', (d, i) => { return levelFactor * (1 - Math.cos((i + 1) * this.config.radians / this.totalAxes)) })
+        .attr('x1', (d, i) => levelFactor * (1 - Math.sin(i * this.config.radians / this.totalAxes)) )
+        .attr('y1', (d, i) => levelFactor * (1 - Math.cos(i * this.config.radians / this.totalAxes)) )
+        .attr('x2', (d, i) => levelFactor * (1 - Math.sin((i + 1) * this.config.radians / this.totalAxes)) )
+        .attr('y2', (d, i) => levelFactor * (1 - Math.cos((i + 1) * this.config.radians / this.totalAxes)) )
         .attr('transform', 'translate(' + (this.config.width / 2 - levelFactor) + ', ' + (this.config.height / 2 - levelFactor) + ')')
     }
   }
@@ -124,7 +124,7 @@ export class RadarChartService {
     this.nodes = this.svg.selectAll('.skill-row').data(data, (row: SkillChartRow) => row.slug)
     this.nodes.exit().remove()
 
-    let enterSelection = this.nodes.enter().append('g')
+    const enterSelection = this.nodes.enter().append('g')
       .attr('class', (row: SkillChartRow) => 'skill ' + row.slug)
 
     enterSelection.append('polygon')
@@ -173,7 +173,7 @@ export class RadarChartService {
     this.tooltip.transition().duration(200).style('opacity', .9)
     let html = '<h3 class="header">' + row.name + '</h3>'
     row.nodes.forEach((node) => {
-      html += '<div class="rating">' + node.name + ': ' + node.label + ' (' + node.value + ')</div>'
+      html += '<div class="rating">' + node.name + ': ' + node.label + '</div>'
     })
     this.tooltip.html(html)
     this.tooltip.style('left', (d3.event.pageX) + 'px').style('top', (d3.event.pageY - 28) + 'px')

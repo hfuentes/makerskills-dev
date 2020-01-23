@@ -9,6 +9,5 @@ export class User {
     photoURL?: string
     roles: Roles
     active: boolean
-
     constructor() {}
 }

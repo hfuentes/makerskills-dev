@@ -25,7 +25,6 @@ export class SearchComponent implements OnInit {
   ngOnInit() { }
 
   searchUser() {
-    console.log("click")
     this.search.key = this.form.controls.email.value
     this.search.loading = true
     this.search.user = null
@@ -47,7 +46,7 @@ export class SearchComponent implements OnInit {
 
 export class SearchData {
   key: string
-  loading: boolean = false
+  loading = false
   user: User = null
   error: Error = null
 }

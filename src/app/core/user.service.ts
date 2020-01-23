@@ -37,7 +37,7 @@ export class UserService {
     return new Promise<any>((resolve, reject) => {
       return this.db.firestore.collection('users').doc(email).collection('skills').get()
         .then(docs => {
-          let skills: Array<Skill> = []
+          const skills: Array<Skill> = []
           docs.forEach(doc => {
             skills.push({
               name: doc.id,

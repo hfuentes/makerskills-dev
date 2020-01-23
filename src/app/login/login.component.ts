@@ -18,11 +18,9 @@ export class LoginComponent implements OnInit {
     this.error = undefined
     this.auth.doGoogleLogin()
       .then(() => this.router.navigate(['profile'])).catch(err => {
-        if (err && err.code == 'auth/user-disabled') {
-          this.error = 'Ops! Your account is disabled, please contact the administrator.'
-        } else {
-          this.error = 'Error trying to log in with Google, please try again later.'
-        }
+        this.error = err && err.code === 'auth/user-disabled' ?
+          'Ops! Your account is disabled, please contact the administrator.' :
+          'Error trying to log in with Google, please try again later.'
       })
   }
 

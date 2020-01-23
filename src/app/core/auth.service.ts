@@ -19,7 +19,12 @@ export class AuthService {
     this.afAuth.authState.subscribe(auth => {
       if (auth) {
         this.userService.getUserByEmail(auth.email).then(user => {
-          localStorage.setItem('userData', JSON.stringify(user))
+          if (user) {
+            localStorage.setItem('userData', JSON.stringify(user))
+          } else {
+            localStorage.removeItem('userData')
+            router.navigate(['login'])
+          }
         }).catch(() => {
           localStorage.removeItem('userData')
           router.navigate(['login'])
@@ -42,16 +47,17 @@ export class AuthService {
   }
 
   matchingRoles(roles: Array<string> = []): boolean {
-    for (let i = 0; i < roles.length; i++) {
-      const role = roles[i];
-      if (this.userData.roles && this.userData.roles[role]) return true
+    if (this.userData.roles) {
+      for (const role of roles) {
+        if (this.userData.roles[role]) return true
+      }
     }
     return false
   }
 
   doGoogleLogin() {
     return new Promise<any>((resolve, reject) => {
-      let provider = new firebase.auth.GoogleAuthProvider()
+      const provider = new firebase.auth.GoogleAuthProvider()
       provider.addScope('profile')
       provider.addScope('email')
       return this.afAuth.auth

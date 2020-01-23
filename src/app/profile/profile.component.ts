@@ -59,22 +59,6 @@ export class ProfileComponent implements OnInit, OnChanges {
     })
 
     this.loading = true
-    this.skillService.getExps().then(names => {
-      this.expsNames = names
-      this.loading = false
-    }).catch(() => {
-      this.loading = false
-    })
-
-    this.loading = true
-    this.skillService.getLevels().then(names => {
-      this.levelsNames = names
-      this.loading = false
-    }).catch(() => {
-      this.loading = false
-    })
-
-    this.loading = true
     if (!this.user) this.user = this.auth.userData
     this.profileService.getSkills(this.user).then(skills => {
       this.skills = skills
@@ -140,15 +124,15 @@ export class ProfileComponent implements OnInit, OnChanges {
     //update the ui
     console.log(event)
     switch (event.target.name) {
-      case "inputGroupSelectHabilidad":
+      case 'inputGroupSelectHabilidad':
         this.habilidadSeleccionada = event.target.value;
         break;
-      case "inputGroupSelectExperiencia": {
+      case 'inputGroupSelectExperiencia': {
         this.experienciaSeleccionada = event.target.selectedOptions[0].label;
         this.experienciaSeleccionadaValue = event.target.value;
         break;
       }
-      case "inputGroupSelectNivel":
+      case 'inputGroupSelectNivel':
         this.nivelSeleccionado = event.target.selectedOptions[0].label;
         this.nivelSeleccionadoValue = event.target.value;
         break;

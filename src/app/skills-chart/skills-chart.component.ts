@@ -1,4 +1,6 @@
-import { Component, OnInit, ElementRef, OnChanges, Input, ViewChild, AfterViewInit, DoCheck, IterableDiffers, IterableDiffer } from '@angular/core'
+import {
+  Component, OnInit, ElementRef, Input, ViewChild, AfterViewInit, DoCheck, IterableDiffers, IterableDiffer, KeyValueDiffer, KeyValueDiffers
+} from '@angular/core'
 import { SkillChartNode, Skill, SkillChartRow } from '../core/domain/skill'
 import { RadarChartService } from '../core/radar-chart.service'
 import * as _ from 'lodash'
@@ -8,21 +10,24 @@ import * as _ from 'lodash'
   templateUrl: './skills-chart.component.html',
   styleUrls: ['./skills-chart.component.css']
 })
-export class SkillsChartComponent implements OnInit, OnChanges, AfterViewInit, DoCheck {
+export class SkillsChartComponent implements OnInit, AfterViewInit, DoCheck {
 
   @Input() skills: Array<Skill>
-  @Input() drawLevels: boolean = true
-  @Input() drawExps: boolean = true
+  @Input() drawLevels = true
+  @Input() drawExps = true
   @ViewChild('skillschartcontainer', { static: true }) element: ElementRef
 
   private htmlElement: HTMLElement
   private iterableDiffer: IterableDiffer<unknown>
+  private differ: KeyValueDiffer<string, any>
 
   constructor(
     private chartService: RadarChartService,
-    private iterableDiffers: IterableDiffers
+    private iterableDiffers: IterableDiffers,
+    private differs: KeyValueDiffers
   ) {
     this.iterableDiffer = this.iterableDiffers.find([]).create(null);
+    this.differ = this.differs.find({}).create();
   }
 
   private setupAndPopulateChart(): void {
@@ -35,11 +40,11 @@ export class SkillsChartComponent implements OnInit, OnChanges, AfterViewInit, D
   }
 
   private buildExpRow(): SkillChartRow {
-    let expRow: SkillChartRow = new SkillChartRow()
+    const expRow: SkillChartRow = new SkillChartRow()
     expRow.name = 'Experience'
     expRow.color = '#ff4444'
     expRow.nodes = _.map(this.skills, (skill: Skill) => {
-      let node = new SkillChartNode()
+      const node = new SkillChartNode()
       node.name = skill.name
       node.label = skill.exp + ' Years'
       node.value = skill.exp
@@ -49,37 +54,38 @@ export class SkillsChartComponent implements OnInit, OnChanges, AfterViewInit, D
   }
 
   private buildLevelRow(): SkillChartRow {
-    let levelRow: SkillChartRow = new SkillChartRow()
+    const levelRow: SkillChartRow = new SkillChartRow()
     levelRow.name = 'Level'
     levelRow.color = '#33b5e5'
     levelRow.nodes = _.map(this.skills, (skill: Skill) => {
-      let node = new SkillChartNode()
-      node.name = skill.name
-      node.label = skill.level + ' Level'
-      node.value = skill.level
-      return node
+      return {
+        name: skill.name,
+        label: 'Level ' + skill.level,
+        value: skill.level
+      }
     })
     return levelRow
   }
 
   private buildChartData(): Array<SkillChartRow> {
-    let data: Array<SkillChartRow> = []
+    let data: Array<SkillChartRow>
+    data = []
     if (this.skills && this.skills.length > 0) {
-      this.drawExps ? data.push(this.buildExpRow()) : true
-      this.drawLevels ? data.push(this.buildLevelRow()) : true
+      if (this.drawExps) data.push(this.buildExpRow())
+      if (this.drawLevels) data.push(this.buildLevelRow())
     }
     return data
   }
 
   private calculateNumberOfLevels() {
-    let levels = 3
+    const defaultLevels = 5
     if (this.skills && this.skills.length > 0) {
       return _.max([
-        this.drawExps ? _.maxBy(this.skills, (skill: Skill) => skill.exp).exp : 3,
-        this.drawLevels ? _.maxBy(this.skills, (skill: Skill) => skill.level).level : 3
+        this.drawExps ? _.maxBy(this.skills, (skill: Skill) => skill.exp).exp : defaultLevels,
+        this.drawLevels ? _.maxBy(this.skills, (skill: Skill) => skill.level).level : defaultLevels
       ])
     }
-    return levels
+    return defaultLevels
   }
 
   ngOnInit() { }
@@ -89,13 +95,8 @@ export class SkillsChartComponent implements OnInit, OnChanges, AfterViewInit, D
     console.log(this.element)
   }
 
-  ngOnChanges(): void {
-    this.setupAndPopulateChart()
-  }
-
   ngDoCheck(): void {
-    let changes = this.iterableDiffer.diff(this.skills);
-    if (changes) {
+    if (this.iterableDiffer.diff(this.skills) || this.differ.diff(this)) {
       this.setupAndPopulateChart()
     }
   }

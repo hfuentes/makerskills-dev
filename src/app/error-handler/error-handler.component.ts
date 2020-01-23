@@ -5,7 +5,7 @@ import { Component, OnInit, Input } from '@angular/core';
   templateUrl: './error-handler.component.html'
 })
 export class ErrorHandlerComponent implements OnInit {
-  @Input() loading: boolean = false
+  @Input() loading = false
   @Input() error?: Error = null
   @Input() settings?: Settings = new Settings()
   constructor() { }
@@ -71,5 +71,5 @@ export enum LoadingType {
 export enum LoadingPlace {
   textLeft = 'text-left',
   textRight = 'text-right',
-  textCenter = 'text-center',
+  textCenter = 'text-center'
 }

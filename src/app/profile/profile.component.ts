@@ -7,6 +7,8 @@ import { SkillsChartComponent } from '../skills-chart/skills-chart.component'
 import { User } from '../core/domain/user';
 import { Error } from '../error-handler/error-handler.component';
 import { FormBuilder, Validators, FormControl, FormGroup } from '@angular/forms';
+import { Params } from '../core/domain/params';
+import { ParamsService } from '../core/params.service';
 
 @Component({
   selector: 'app-profile',
@@ -33,6 +35,7 @@ export class ProfileComponent implements OnInit, OnChanges {
     drawExps: true
   }
   updateForm: FormGroup
+  params: Params
 
   @ViewChild('skillsChart', { static: false }) chart: SkillsChartComponent
 
@@ -40,39 +43,46 @@ export class ProfileComponent implements OnInit, OnChanges {
     private skillService: SharedService,
     private auth: AuthService,
     private profileService: ProfileService,
-    private formBuilder: FormBuilder
-  ) {
-    this.updateForm = this.formBuilder.group({
-      exp: new FormControl(-1, [Validators.required, Validators.min(0), Validators.max(30)]),
-      level: new FormControl(-1, [Validators.required, Validators.min(0), Validators.max(5)])
-    })
-  }
+    private formBuilder: FormBuilder,
+    private paramsService: ParamsService
+  ) { }
 
   ngOnInit() {
 
     this.loading = true
-    this.skillService.getSkills().then(names => {
-      this.skillsNames = names
-      this.loading = false
-    }).catch(() => {
-      this.loading = false
-    })
-
-    this.loading = true
-    if (!this.user) this.user = this.auth.userData
-    this.profileService.getSkills(this.user).then(skills => {
-      this.skills = skills
-      this.loading = false
-    }).catch(() => {
-      this.error = new Error('Error on loading user skills, please try again.')
-      this.loading = false
-    })
-
+    this.setUser()
+    this.paramsService.getParams()
+      .then(params => {
+        this.params = params
+        this.updateForm = this.formBuilder.group({
+          exp: new FormControl(-1, [
+            Validators.required,
+            Validators.min(this.params.minExp),
+            Validators.max(this.params.maxExp)]),
+          level: new FormControl(-1, [
+            Validators.required,
+            Validators.min(this.params.minLevel),
+            Validators.max(this.params.maxLevel)])
+        })
+        return this.skillService.getSkills()
+      })
+      .then(names => {
+        this.skillsNames = names
+        return this.profileService.getSkills(this.user)
+      })
+      .then(skills => {
+        this.skills = skills
+        this.loading = false
+      })
+      .catch(() => {
+        this.error = new Error('Error on loading user skills, please try again.')
+        this.loading = false
+      })
   }
 
   ngOnChanges(): void {
+    this.setUser()
     this.loading = true
-    if (!this.user) this.user = this.auth.userData
     this.profileService.getSkills(this.user).then(skills => {
       this.skills = skills
       this.loading = false
@@ -80,6 +90,10 @@ export class ProfileComponent implements OnInit, OnChanges {
       this.error = new Error('Error on loading user skills, please try again.')
       this.loading = false
     })
+  }
+
+  setUser(): void {
+    if (!this.user) this.user = this.auth.userData
   }
 
   addItem(): void {

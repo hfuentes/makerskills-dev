@@ -20,7 +20,7 @@
 }
 
 :host >>> .skill-tooltip {
-  /*position: absolute;*/
+  position: fixed;
   width: 270px;
   padding: 5px;
   font-size: .8rem;

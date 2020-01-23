@@ -33,5 +33,9 @@ service cloud.firestore {
       allow create, update, delete: if isSignedIn() && hasRole('admin');
       allow get, list: if isSignedIn();
     }
+    match /params/{document=**} {
+      allow create, update, delete: if isSignedIn() && hasRole('admin');
+      allow get, list: if isSignedIn();
+    }
   }
 }

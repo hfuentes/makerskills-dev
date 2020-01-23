@@ -86,7 +86,7 @@ export class SharedService {
     });
   }
 
-  editUser(email, data){
+  editUser(email: string, data){
     return new Promise<any>((resolve, reject): any => {
       this.db.firestore.collection('users').doc(email).update(data)
       .then(respuesta => {

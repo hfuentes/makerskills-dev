@@ -111,7 +111,7 @@ export class SeedService {
     expsRef.doc('9 Years').set({ value: 9, valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })
     expsRef.doc('10 Years').set({ value: 10, valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })*/
 
-    //Seed: Lionel Olavarría
+    // Seed: Lionel Olavarría
     /*this.db.collection("users").doc("lionel.olavarria@imagemaker.com").set({displayName:'Lionel Olavarría',photoURL:'https://www.google.com/s2/u/1/photos/public/AIbEiAIAAABECL_Y97nQ8vKloAEiC3ZjYXJkX3Bob3RvKigzMDJkODcyNzU5Nzg3ZWI5YmNlYjIyYjNiZWRkNTYzNTE1YzI5MmRkMAFn7J1zro-G1LoyADPT8ohHw7X0WQ',roles: {admin:true,profile:true},active:true})
     const skillsRef = this.db.collection('skills')
     skillsRef.doc('Business Strategy').set({ valid: true, created: firebase.firestore.FieldValue.serverTimestamp(), roles: { admin: true} })

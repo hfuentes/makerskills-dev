@@ -50,3 +50,6 @@ Thumbs.db
 
 # firebase
 .firebase/*
+
+# lint
+lint-report*

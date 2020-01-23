@@ -4,7 +4,7 @@ export interface Roles {
 }
 
 export class User {
-    email: string
+    email?: string
     displayName: string
     photoURL?: string
     roles: Roles

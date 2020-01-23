@@ -27,7 +27,6 @@ export class UsersComponent implements OnInit {
           Validators.required
         ),
         'activa': new FormControl(true),
-        'photoURL': new FormControl(''),
         'roles': new FormGroup({
           'admin': new FormControl(false),
           'profile': new FormControl(true)
@@ -129,11 +128,10 @@ export class UsersComponent implements OnInit {
   guardarUsuario(){
     console.log(this.forma.value);
 
-    let usuarioGuardar = {
-      displayName:this.forma.value.name,
-      photoURL:this.forma.value.photoURL,
-      roles:this.forma.value.roles,
-      active:true
+    let usuarioGuardar: User = {
+      displayName: this.forma.value.name,
+      roles: this.forma.value.roles,
+      active: true
     };
     console.log(usuarioGuardar);
     console.log(this.forma.value.email);
@@ -150,9 +148,9 @@ export class UsersComponent implements OnInit {
       roles: {admin: false, profile: true},
       active: true
     });
-    if(this.addUser){
+    if (this.addUser) {
       this.addUser = false;
-    }else{
+    } else {
       this.addUser = true;
     }
   }

@@ -1,17 +1,7 @@
-export class Exp {
-  name: string
-  value: number
-}
-
-export class Level {
-  name: string
-  value: number
-}
-
 export class Skill {
   name: string
-  exp: Exp
-  level: Level
+  exp: number
+  level: number
   constructor() { }
 }
 

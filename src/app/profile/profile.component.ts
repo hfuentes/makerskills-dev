@@ -2,13 +2,11 @@ import { ProfileService } from './../core/profile.service';
 import { AuthService } from './../core/auth.service';
 import { Component, OnInit, ViewChild, Input, OnChanges } from '@angular/core'
 import { SharedService } from '../core/shared.service'
-import { Skill, Exp } from '../core/domain/skill'
-import { UserService } from '../core/user.service'
+import { Skill } from '../core/domain/skill'
 import { SkillsChartComponent } from '../skills-chart/skills-chart.component'
-import { SeedService } from '../core/seed.service';
 import { User } from '../core/domain/user';
 import { Error } from '../error-handler/error-handler.component';
-import { VoronoiPoint } from 'd3';
+import { FormBuilder, Validators, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-profile',
@@ -34,55 +32,54 @@ export class ProfileComponent implements OnInit, OnChanges {
     drawLevels: true,
     drawExps: true
   }
+  updateForm: FormGroup
 
   @ViewChild('skillsChart', { static: false }) chart: SkillsChartComponent
 
   constructor(
-    public skillService: SharedService,
-    public userService: UserService,
-    public auth: AuthService,
-    public profileService: ProfileService,
-    private seed: SeedService
-  ) { }
+    private skillService: SharedService,
+    private auth: AuthService,
+    private profileService: ProfileService,
+    private formBuilder: FormBuilder
+  ) {
+    this.updateForm = this.formBuilder.group({
+      exp: new FormControl(-1, [Validators.required, Validators.min(0), Validators.max(30)]),
+      level: new FormControl(-1, [Validators.required, Validators.min(0), Validators.max(5)])
+    })
+  }
 
   ngOnInit() {
 
     this.loading = true
     this.skillService.getSkills().then(names => {
       this.skillsNames = names
-      console.log(this.skillsNames)
       this.loading = false
-    }).catch(err => {
-      console.error(err)
+    }).catch(() => {
       this.loading = false
     })
 
+    this.loading = true
     this.skillService.getExps().then(names => {
       this.expsNames = names
-      console.log(this.expsNames)
       this.loading = false
-    }).catch(err => {
-      console.error(err)
+    }).catch(() => {
       this.loading = false
     })
 
+    this.loading = true
     this.skillService.getLevels().then(names => {
       this.levelsNames = names
-      console.log(this.levelsNames)
       this.loading = false
-    }).catch(err => {
-      console.error(err)
+    }).catch(() => {
       this.loading = false
     })
 
     this.loading = true
     if (!this.user) this.user = this.auth.userData
-    console.log(this.user)
     this.profileService.getSkills(this.user).then(skills => {
       this.skills = skills
       this.loading = false
-    }).catch(err => {
-      console.error(err)
+    }).catch(() => {
       this.error = new Error('Error on loading user skills, please try again.')
       this.loading = false
     })
@@ -95,15 +92,14 @@ export class ProfileComponent implements OnInit, OnChanges {
     this.profileService.getSkills(this.user).then(skills => {
       this.skills = skills
       this.loading = false
-    }).catch(err => {
-      console.error(err)
+    }).catch(() => {
       this.error = new Error('Error on loading user skills, please try again.')
       this.loading = false
     })
   }
 
   addItem(): void {
-    let skill: Skill = new Skill()
+    /*let skill: Skill = new Skill()
     this.agregar = false
     console.log(!this.habilidadSeleccionada ? 'true' : 'false')
     if (!this.habilidadSeleccionada || this.habilidadSeleccionada === '' ||
@@ -128,7 +124,7 @@ export class ProfileComponent implements OnInit, OnChanges {
       this.habilidadSeleccionada = ''
       this.experienciaSeleccionada = ''
       this.nivelSeleccionado = ''
-    }
+    }*/
 
   }
 
@@ -173,39 +169,26 @@ export class ProfileComponent implements OnInit, OnChanges {
     this.experienciaSeleccionada = ''
   }
 
-  showEditSkill(index: number = null): void {
+  showEditSkill(skill: Skill, index: number = null): void {
+    this.updateForm.controls.exp.setValue(skill.exp)
+    this.updateForm.controls.level.setValue(skill.level)
     this.indexSelected = index
   }
 
-  doUpdateSkill(index: number): void {
-    this.indexSelected = null
-    const skill: Skill = {
-      name: this.skills[index].name,
-      exp: (!this.experienciaSeleccionada || this.experienciaSeleccionada === '') ?
-        {
-          name: this.skills[index].exp.name,
-          value: this.skills[index].exp.value
-        }
-        :
-        {
-          name: this.experienciaSeleccionada,
-          value: +this.experienciaSeleccionadaValue
-        },
-      level: (!this.nivelSeleccionado || this.nivelSeleccionado === '') ?
-        {
-          name: this.skills[index].level.name,
-          value: this.skills[index].level.value
-        }
-        :
-        {
-          name: this.nivelSeleccionado,
-          value: +this.nivelSeleccionadoValue
-        }
+  doUpdateSkill(skill: Skill, index: number): void {
+    if (this.updateForm.valid) {
+      const tmp: Skill = {
+        name: skill.name,
+        exp: this.updateForm.controls.exp.value,
+        level: this.updateForm.controls.level.value
+      }
+      this.profileService.updateSkill(tmp, this.user).then(() => {
+        this.skills[index] = tmp
+        this.updateForm.controls.exp.setValue(-1)
+        this.updateForm.controls.level.setValue(-1)
+        this.indexSelected = null
+      }).catch(err => console.log(err))
     }
-    this.profileService.updateSkill(skill, this.user).then(() => {
-      this.indexSelected = null
-      this.skills[index] = skill
-    }).catch(err => console.log(err))
   }
 
 }

@@ -41,8 +41,8 @@ export class SkillsChartComponent implements OnInit, OnChanges, AfterViewInit, D
     expRow.nodes = _.map(this.skills, (skill: Skill) => {
       let node = new SkillChartNode()
       node.name = skill.name
-      node.label = skill.exp.name
-      node.value = skill.exp.value
+      node.label = skill.exp + ' Years'
+      node.value = skill.exp
       return node
     })
     return expRow
@@ -55,8 +55,8 @@ export class SkillsChartComponent implements OnInit, OnChanges, AfterViewInit, D
     levelRow.nodes = _.map(this.skills, (skill: Skill) => {
       let node = new SkillChartNode()
       node.name = skill.name
-      node.label = skill.level.name
-      node.value = skill.level.value
+      node.label = skill.level + ' Level'
+      node.value = skill.level
       return node
     })
     return levelRow
@@ -75,8 +75,8 @@ export class SkillsChartComponent implements OnInit, OnChanges, AfterViewInit, D
     let levels = 3
     if (this.skills && this.skills.length > 0) {
       return _.max([
-        this.drawExps ? _.maxBy(this.skills, (skill: Skill) => skill.exp.value).exp.value : 3,
-        this.drawLevels ? _.maxBy(this.skills, (skill: Skill) => skill.level.value).level.value : 3
+        this.drawExps ? _.maxBy(this.skills, (skill: Skill) => skill.exp).exp : 3,
+        this.drawLevels ? _.maxBy(this.skills, (skill: Skill) => skill.level).level : 3
       ])
     }
     return levels

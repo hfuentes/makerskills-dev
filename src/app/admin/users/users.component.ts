@@ -18,12 +18,12 @@ export class UsersComponent implements OnInit {
     public sharedService: SharedService,
     private formBuilder: FormBuilder) { 
       this.forma = new FormGroup({
-        'email': new FormControl('', [
+        'email': new FormControl(null, [
           Validators.required,
           Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")
         ]
         ),
-        'name': new FormControl('', 
+        'name': new FormControl(null,
           Validators.required
         ),
         'activa': new FormControl(true),
@@ -128,6 +128,19 @@ export class UsersComponent implements OnInit {
 
   guardarUsuario(){
     console.log(this.forma.value);
+
+    let usuarioGuardar = {
+      displayName:this.forma.value.name,
+      photoURL:this.forma.value.photoURL,
+      roles:this.forma.value.roles,
+      active:true
+    };
+    console.log(usuarioGuardar);
+    console.log(this.forma.value.email);
+    this.sharedService.addUser(this.forma.value.email, usuarioGuardar).then()
+    .catch(err => {
+      console.error(err);
+    });
   }
 
   addUserView(){

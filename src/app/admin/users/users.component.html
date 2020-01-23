@@ -28,9 +28,13 @@
                   <div class="col-12">
                     <input 
                       class="form-control"
+                      [ngClass]="{'is-invalid':!forma.get('email').valid && forma.value.email !== null }"
                       type="email"
                       placeholder="Email"
                       formControlName="email">
+                    <div *ngIf="!forma.controls['email'].valid" class="invalid-feedback">
+                      Debe ingresar un mail valido
+                    </div>
                   </div>
                 </div>
               </div>
@@ -42,7 +46,7 @@
                   <div class="col-10">
                     <input 
                       class="form-control"
-                      [ngClass]="{'is-invalid':!forma.get('name').valid}"
+                      [ngClass]="{'is-invalid':!forma.get('name').valid && forma.value.name !== null }"
                       type="text"
                       placeholder="Name"
                       formControlName="name">
@@ -99,8 +103,8 @@
         </button>
       </div>
       <label class="col-8 col-form-label">&nbsp;</label>
-      <div class="input-group" class="col-2">
-        <button type="submit" class="btn btn-outline-primary">
+      <div class="input-group" class="col-2" >
+        <button type="submit" class="btn btn-outline-primary" [disabled]="!forma.valid">
           Guardar
         </button>
       </div>

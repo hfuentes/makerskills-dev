@@ -22,8 +22,8 @@ import { SkillsComponent } from './admin/skills/skills.component'
 import { ExpsComponent } from './admin/exps/exps.component'
 import { UsersComponent } from './admin/users/users.component'
 import { LevelsComponent } from './admin/levels/levels.component'
-import { DashboardComponent } from './dashboard/dashboard.component'
-import { SearchComponent } from './search/search.component'
+import { UsersProfileComponent } from './users-profile/users-profile.component'
+import { UsersSearchComponent } from './users-search/users-search.component'
 import { NavbarComponent } from './navbar/navbar.component'
 
 @NgModule({
@@ -40,8 +40,8 @@ import { NavbarComponent } from './navbar/navbar.component'
     ExpsComponent,
     UsersComponent,
     LevelsComponent,
-    DashboardComponent,
-    SearchComponent,
+    UsersProfileComponent,
+    UsersSearchComponent,
     NavbarComponent
   ],
   imports: [

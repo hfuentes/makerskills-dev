@@ -9,6 +9,35 @@
 <app-error-handler [loading]="this.loading" [error]="this.error">
     <div class="row mt-3">
         <div class="col">
+            <div class="row">
+                <div class="col">
+                    <app-skills-chart [skills]="skills" [drawLevels]="chartConfig.drawLevels"
+                        [drawExps]="chartConfig.drawExps"></app-skills-chart>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-sm btn-primary"
+                            [ngClass]="{'active': chartConfig.drawExps && !chartConfig.drawLevels}">
+                            <input type="radio" name="options" id="profile-chart-option-exp"
+                                (click)="chartConfig.drawExps = true; chartConfig.drawLevels = false"> Exps
+                        </label>
+                        <label class="btn btn-sm btn-secondary"
+                            [ngClass]="{'active': chartConfig.drawExps && chartConfig.drawLevels}">
+                            <input type="radio" name="options" id="profile-chart-option-both" checked
+                                (click)="chartConfig.drawExps = true; chartConfig.drawLevels = true"> Both
+                        </label>
+                        <label class="btn btn-sm btn-danger"
+                            [ngClass]="{'active': !chartConfig.drawExps && chartConfig.drawLevels}">
+                            <input type="radio" name="options" id="profile-chart-option-levels"
+                                (click)="chartConfig.drawExps = false; chartConfig.drawLevels = true"> Levels
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
             <table class="table">
                 <thead>
                     <tr>
@@ -41,26 +70,33 @@
                                         *ngIf="updateForm.controls.exp.invalid && (updateForm.controls.exp.dirty || updateForm.controls.exp.touched)">
                                         <ng-container *ngIf="updateForm.controls.exp.errors.required">Required
                                         </ng-container>
-                                        <ng-container *ngIf="updateForm.controls.exp.errors.min">Min value is {{ params.minExp }}
+                                        <ng-container *ngIf="updateForm.controls.exp.errors.min">Min value is
+                                            {{ params.minExp }}
                                         </ng-container>
-                                        <ng-container *ngIf="updateForm.controls.exp.errors.max">Min value is {{ params.maxExp }}
+                                        <ng-container *ngIf="updateForm.controls.exp.errors.max">Min value is
+                                            {{ params.maxExp }}
                                         </ng-container>
                                     </span>
                                 </td>
                                 <td>
-                                    <ngb-rating placement="top" ngbTooltip="Level {{updateForm.controls.level.value}}" [max]="params.maxLevel" [rate]="updateForm.controls.level.value" formControlName="level"></ngb-rating>
+                                    <ngb-rating placement="top" ngbTooltip="Level {{updateForm.controls.level.value}}"
+                                        [max]="params.maxLevel" [rate]="updateForm.controls.level.value"
+                                        formControlName="level"></ngb-rating>
                                     <span class="badge badge-danger"
                                         *ngIf="updateForm.controls.level.invalid && (updateForm.controls.level.dirty || updateForm.controls.level.touched)">
                                         <ng-container *ngIf="updateForm.controls.level.errors.required">Required
                                         </ng-container>
-                                        <ng-container *ngIf="updateForm.controls.level.errors.min">Min value is {{ params.minLevel }}
+                                        <ng-container *ngIf="updateForm.controls.level.errors.min">Min value is
+                                            {{ params.minLevel }}
                                         </ng-container>
-                                        <ng-container *ngIf="updateForm.controls.level.errors.max">Min value is {{ params.maxLevel }}
+                                        <ng-container *ngIf="updateForm.controls.level.errors.max">Min value is
+                                            {{ params.maxLevel }}
                                         </ng-container>
                                     </span>
                                 </td>
                                 <td>
-                                    <button class="btn btn-success btn-sm mr-1" type="submit" (click)="doUpdateSkill(skill, i)">Update</button>
+                                    <button class="btn btn-success btn-sm mr-1" type="submit"
+                                        (click)="doUpdateSkill(skill, i)">Update</button>
                                     <button class="btn btn-secondary btn-sm"
                                         (click)="doCancelUpdateSkill()">Cancel</button>
                                 </td>
@@ -117,28 +153,6 @@
             <button class="btn btn-primary btn-sm" (click)="this.agregar=true" *ngIf="!agregar">Add</button>
             <button class="btn btn-success btn-sm mr-1" (click)="addItem()" *ngIf="agregar">Save</button>
             <button class="btn btn-danger btn-sm" (click)="cancelAddItem()" *ngIf="agregar">Cancel</button>
-        </div>
-        <div class="col">
-            <div class="row">
-                <div class="col">
-                    <app-skills-chart [skills]="skills" [drawLevels]="chartConfig.drawLevels"
-                        [drawExps]="chartConfig.drawExps"></app-skills-chart>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <button type="button" class="mr-1 btn btn-sm"
-                        [ngClass]="{'btn-outline-secondary': !chartConfig.drawLevels, 'btn-primary': chartConfig.drawLevels}"
-                        [disabled]="!chartConfig.drawExps" (click)="chartConfig.drawLevels = !chartConfig.drawLevels">
-                        Draw Levels
-                    </button>
-                    <button type="button" class="mr-1 btn btn-sm"
-                        [ngClass]="{'btn-outline-secondary': !chartConfig.drawExps, 'btn-danger': chartConfig.drawExps}"
-                        [disabled]="!chartConfig.drawLevels" (click)="chartConfig.drawExps = !chartConfig.drawExps">
-                        Draw Exps
-                    </button>
-                </div>
-            </div>
         </div>
     </div>
 </app-error-handler>

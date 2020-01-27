@@ -50,7 +50,6 @@ export class ProfileComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-
     this.loading = true
     this.setUser()
     this.paramsService.getParams()

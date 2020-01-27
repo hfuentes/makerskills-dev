@@ -10,9 +10,6 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown" *ngIf="auth.authenticated">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" routerLink="dashboard">Dashboard</a>
-            </li>
             <li class="nav-item" *ngIf="auth.matchingRoles(['profile'])">
                 <a class="nav-link" routerLink="profile">Profile</a>
             </li>

@@ -46,7 +46,7 @@ Para hacer despliegue por medio de GitHub (develop) tan solo se debe subir el c√
 ### Mostrar si esta autorizado
 
 ```
-<div *ngIf="auth.matchingRoles(roles: Array<string> = ['profile','dashboard', ...], strict?: boolean)">
+<div *ngIf="auth.matchingRoles(roles: Array<string> = ['profile','admin', ...], strict?: boolean)">
   ...<div>contenido a mostrar</div>...
 </app-error-handler>
 ```

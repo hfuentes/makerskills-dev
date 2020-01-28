@@ -1,7 +1,10 @@
+import { DocumentReference } from '@angular/fire/firestore'
+
 export class Skill {
   name: string
   exp: number
   level: number
+  ref: DocumentReference
   constructor() { }
 }
 
@@ -21,4 +24,10 @@ export class SkillChartRow {
   }
   nodes: Array<SkillChartNode> = []
   color: string
+}
+
+export class SkillName {
+  id: string
+  name: string
+  active = true
 }

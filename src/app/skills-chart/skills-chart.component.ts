@@ -31,12 +31,14 @@ export class SkillsChartComponent implements OnInit, AfterViewInit, DoCheck {
   }
 
   private setupAndPopulateChart(): void {
-    if (this.htmlElement) this.htmlElement.innerHTML = ''
-    this.chartService.setupAndPopulate(
-      this.htmlElement,
-      this.buildChartData(),
-      this.calculateNumberOfLevels()
-    )
+    if (this.skills && this.skills.length > 2) {
+      if (this.htmlElement) this.htmlElement.innerHTML = ''
+      this.chartService.setupAndPopulate(
+        this.htmlElement,
+        this.buildChartData(),
+        this.calculateNumberOfLevels()
+      )
+    }
   }
 
   private buildExpRow(): SkillChartRow {

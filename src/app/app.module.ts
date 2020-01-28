@@ -9,6 +9,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore'
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { AngularFontAwesomeModule } from 'angular-font-awesome'
 
 import { environment } from '../environments/environment'
 import { LoginComponent } from './login/login.component'
@@ -24,7 +25,8 @@ import { UsersComponent } from './admin/users/users.component'
 import { LevelsComponent } from './admin/levels/levels.component'
 import { UsersProfileComponent } from './users-profile/users-profile.component'
 import { UsersSearchComponent } from './users-search/users-search.component'
-import { NavbarComponent } from './navbar/navbar.component'
+import { NavbarComponent } from './navbar/navbar.component';
+import { SkillsSearchComponent } from './skills-search/skills-search.component'
 
 @NgModule({
   declarations: [
@@ -42,7 +44,8 @@ import { NavbarComponent } from './navbar/navbar.component'
     LevelsComponent,
     UsersProfileComponent,
     UsersSearchComponent,
-    NavbarComponent
+    NavbarComponent,
+    SkillsSearchComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +55,8 @@ import { NavbarComponent } from './navbar/navbar.component'
     AngularFirestoreModule,
     NgbModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    AngularFontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -11,23 +11,6 @@ export class ProfileService {
 
   constructor(private db: AngularFirestore) { }
 
-  getSkills(user: User): any {
-    return new Promise<any>((resolve, reject) => {
-      return this.db.firestore.collection('users').doc(user.email).collection('skills').get()
-        .then(docs => {
-          let skills: Array<Skill> = []
-          docs.forEach(doc => {
-            skills.push({
-              name: doc.id,
-              exp: doc.data().exp,
-              level: doc.data().level
-            })
-          })
-          return resolve(skills)
-        }).catch(err => reject(err))
-    })
-  }
-
   addNewSkill(skill: Skill, user: User): any {
     this.db.firestore.collection('users').doc(user.email).collection('skills').doc(skill.name).set({
       exp: skill.exp,

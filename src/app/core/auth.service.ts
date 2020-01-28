@@ -49,7 +49,7 @@ export class AuthService {
   matchingRoles(roles: Array<string> = [], strict = true): boolean {
     if (this.userData.roles) {
       const mapper = roles.map(role => this.userData.roles[role])
-      return strict ? mapper.every(role=>role) : mapper.includes(true)
+      return strict ? mapper.every(role => role) : mapper.includes(true)
     }
     return false
   }
@@ -64,6 +64,7 @@ export class AuthService {
         .then(profile => this.userService.updateUserByGoogleProfile(profile))
         .then(profile => this.userService.getUserByEmail(profile.email))
         .then(user => {
+          delete user.skills //skills has 
           localStorage.setItem('userData', JSON.stringify(user))
           return resolve(user)
         }).catch(err => reject(err))

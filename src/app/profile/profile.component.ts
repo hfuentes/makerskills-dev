@@ -120,10 +120,14 @@ export class ProfileComponent implements OnInit, OnChanges {
         Validators.max(this.params.maxLevel)])
     })
     this.create.form.controls.skillNameText.valueChanges.pipe(
-      debounceTime(200)
+      debounceTime(200),
+      distinctUntilChanged()
     ).subscribe(text => {
       this.skillsNamesFiltered = text ?
-        this.skillsNames.filter(skill => skill.name.toLowerCase().indexOf(text.toLowerCase()) > -1).slice(0, 10) : []
+        this.skillsNames
+          .filter(skill => skill.name.toLowerCase().indexOf(text.toLowerCase()) > -1) // test text search
+          .filter(skill => !this.skills.some(userSkill => userSkill.ref.id === skill.id)) // test not in user skills
+          .slice(0, 10) : []
     })
   }
 
@@ -158,8 +162,11 @@ export class ProfileComponent implements OnInit, OnChanges {
 
   //TODO cambiar esta funcion
   deleteSkill(index: number): void {
-    this.profileService.deleteSkill(this.skills[index], this.user)
-    this.skills.splice(index, 1)
+    const skillsDel: Array<Skill> = this.skills.map(x => x)
+    skillsDel.splice(index, 1)
+    this.userService.setSkills(this.user, skillsDel).then(() => {
+      this.skills = skillsDel
+    }).catch(err => console.log(err))
   }
 
   doCancelUpdateSkill(): void {
@@ -191,6 +198,9 @@ export class ProfileComponent implements OnInit, OnChanges {
   doCancelCreateSkill() {
     this.skillsNamesFiltered = []
     this.create.form.reset()
+    this.create.form.controls.skillNameText.setValue('')
+    this.create.form.controls.exp.setValue(1)
+    this.create.form.controls.level.setValue(1)
     this.create.show = false
   }
 
@@ -198,20 +208,19 @@ export class ProfileComponent implements OnInit, OnChanges {
     if (this.create.form.valid && !this.create.loading) {
       this.create.loading = true
       this.create.error = null
-      let skillsIns: Array<Skill> = this.skills.map(x => x)
-      let newSkill = new Skill()
-      newSkill.exp = this.create.form.controls.exp.value
-      newSkill.level = this.create.form.controls.level.value
-      newSkill.name = this.create.form.controls.name.value
-      newSkill.ref = this.sharedService.getSkillRef(this.create.form.controls.ref.value)
+      const skillsIns: Array<Skill> = this.skills.map(x => x)
+      const newSkill = {
+        exp: this.create.form.controls.exp.value,
+        level: this.create.form.controls.level.value,
+        name: this.create.form.controls.skillName.value.name,
+        ref: this.sharedService.getSkillRef(this.create.form.controls.skillName.value.id),
+      }
       skillsIns.unshift(newSkill)
       this.userService.setSkills(this.user, skillsIns).then(() => {
         this.skills = skillsIns
-        this.create.form.controls.exp.setValue(1)
-        this.create.form.controls.level.setValue(1)
-        this.create.form.controls.name.setValue('')
-        this.create.form.controls.ref.setValue('')
         this.create.loading = false
+        this.create.error = null
+        this.doCancelCreateSkill()
       }).catch(err => {
         this.create.loading = false
         this.create.error = new Error()
@@ -224,7 +233,7 @@ export class ProfileComponent implements OnInit, OnChanges {
     if (this.update.form.valid && !this.update.loading) {
       this.update.loading = true
       this.update.error = null
-      let skillsUp: Array<Skill> = []
+      const skillsUp: Array<Skill> = []
       for (const s of this.skills) {
         if (skill.ref.id == s.ref.id) {
           s.exp = this.update.form.controls.exp.value

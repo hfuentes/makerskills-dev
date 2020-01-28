@@ -184,7 +184,8 @@
                 </td>
                 <td>
                   <app-error-handler [loading]="update.loading" [error]="update.error" [settings]="update.settings">
-                    <button class="btn btn-success btn-sm mr-1" type="submit" (click)="doUpdateSkill(skill)" [disabled]="update.form.invalid">
+                    <button class="btn btn-success btn-sm mr-1" type="submit" (click)="doUpdateSkill(skill)"
+                      [disabled]="update.form.invalid">
                       Update
                     </button>
                     <button class="btn btn-secondary btn-sm" (click)="doCancelUpdateSkill()">

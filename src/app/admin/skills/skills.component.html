@@ -1,6 +1,61 @@
-<p>skills works!</p>
+<div class="row" *ngIf="!this.addSkill">
+    <label class="col-10 col-form-label">&nbsp;</label>
+    <div class="col-2">
+        <button type="button" class="btn btn-primary btn-circle" (click)="viewAddSkill()">
+      +
+    </button>
+    </div>
+</div>
 
+<form *ngIf="this.addSkill" [formGroup]="form" (ngSubmit)="guardarSkill()">
+    <div>
+        <div class="form-group row">
+            <input class="form-control col-7" type="skill" placeholder="Skill" formControlName="skill">
 
-created
-valid
-roles
+            <label class="col-1 col-form-label">&nbsp;</label>
+            <div class="input-group" class="col-2">
+                <button type="button" class="btn btn-danger" (click)="viewAddSkill()">
+                  Cancelar
+                </button>
+            </div>
+
+            <div class="input-group" class="col-2">
+                <button type="submit" class="btn btn-outline-primary" [disabled]="!form.valid">
+                  Guardar
+                </button>
+            </div>
+        </div>
+    </div>
+    {{ form.valid }}
+</form>
+
+<div class="row mt-3">
+    <div class="col">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Skill</th>
+                    <th scope="col">Created</th>
+                    <th scope="col">Valid</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>
+                        1
+                    </th>
+                    <th>
+                        Angular
+                    </th>
+                    <th>
+                        01-01-2020
+                    </th>
+                    <th>
+                        true
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

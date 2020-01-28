@@ -16,7 +16,7 @@ export class UsersComponent implements OnInit {
 
   constructor(
     public sharedService: SharedService,
-    private formBuilder: FormBuilder) { 
+    private formBuilder: FormBuilder) {
       this.forma = new FormGroup({
         'email': new FormControl(null, [
           Validators.required,

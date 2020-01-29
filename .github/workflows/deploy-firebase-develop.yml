@@ -16,7 +16,6 @@ jobs:
       with:
         node-version: '10.x'
     - run: npm install
-    - run: npm run-script lint
     - run: npm run-script build
     - uses: w9jds/firebase-action@master
       with:

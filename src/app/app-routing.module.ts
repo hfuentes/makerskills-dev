@@ -5,14 +5,15 @@ import { AuthGuard } from './core/auth.guard';
 import { ProfileComponent } from './profile/profile.component';
 import { RestrictedComponent } from './restricted/restricted.component';
 import { AdminComponent } from './admin/admin.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { UsersProfileComponent } from './users-profile/users-profile.component';
+import { SkillsSearchComponent } from './skills-search/skills-search.component';
 
 const routes: Routes = [
   { path: '', component: ProfileComponent, canActivate: [AuthGuard], data: { roles: ['profile'] } },
   { path: 'login', component: LoginComponent },
   { path: 'restricted', component: RestrictedComponent, canActivate: [AuthGuard] },
-  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard], data: { roles: ['profile'] } },
-  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] }, //TODO falta agregar roles
+  { path: 'profile', component: UsersProfileComponent, canActivate: [AuthGuard], data: { roles: ['profile'] } },
+  { path: 'searcher', component: SkillsSearchComponent, canActivate: [AuthGuard], data: { roles: ['searcher'] } },
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } }
 ];
 

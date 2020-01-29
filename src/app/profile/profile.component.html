@@ -1,144 +1,217 @@
 <div class="row mt-3">
-    <div class="col">
-        <h3>
-            Profile Skills<br>
-            <small class="text-muted">{{ user.displayName }} - {{ user.email }}</small>
-        </h3>
-    </div>
+  <div class="col">
+    <h3>
+      Profile Skills<br />
+      <small class="text-muted">{{ user.displayName }} - {{ user.email }}</small>
+    </h3>
+  </div>
 </div>
-<app-error-handler [loading]="this.loading" [error]="this.error">
-    <div class="row mt-3">
+<app-error-handler [loading]="loading" [error]="error">
+  <div class="row mt-3">
+    <div class="col" *ngIf="skills && skills.length > 2">
+      <div class="row">
         <div class="col">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Skill</th>
-                        <th scope="col">Exp</th>
-                        <th scope="col">Level</th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <ng-container *ngFor="let skill of skills; let i = index">
-                        <tr [formGroup]="updateForm">
-                            <th scope="row">{{ i + 1 }}</th>
-                            <td>
-                                <div class="input-group mb-3">
-                                    {{ skill.name }}
-                                </div>
-                            </td>
-                            <ng-container *ngIf="i === indexSelected">
-                                <td>
-                                    <div class="input-group input-group-sm">
-                                        <input type="number" class="form-control" placeholder="Exp" aria-label="Exp"
-                                            aria-describedby="text-append-edit-exp" formControlName="exp">
-                                        <div class="input-group-append">
-                                            <span class="input-group-text" id="text-append-edit-exp">Years</span>
-                                        </div>
-                                    </div>
-                                    <span class="badge badge-danger"
-                                        *ngIf="updateForm.controls.exp.invalid && (updateForm.controls.exp.dirty || updateForm.controls.exp.touched)">
-                                        <ng-container *ngIf="updateForm.controls.exp.errors.required">Required
-                                        </ng-container>
-                                        <ng-container *ngIf="updateForm.controls.exp.errors.min">Min value is {{ params.minExp }}
-                                        </ng-container>
-                                        <ng-container *ngIf="updateForm.controls.exp.errors.max">Min value is {{ params.maxExp }}
-                                        </ng-container>
-                                    </span>
-                                </td>
-                                <td>
-                                    <ngb-rating placement="top" ngbTooltip="Level {{updateForm.controls.level.value}}" [max]="params.maxLevel" [rate]="updateForm.controls.level.value" formControlName="level"></ngb-rating>
-                                    <span class="badge badge-danger"
-                                        *ngIf="updateForm.controls.level.invalid && (updateForm.controls.level.dirty || updateForm.controls.level.touched)">
-                                        <ng-container *ngIf="updateForm.controls.level.errors.required">Required
-                                        </ng-container>
-                                        <ng-container *ngIf="updateForm.controls.level.errors.min">Min value is {{ params.minLevel }}
-                                        </ng-container>
-                                        <ng-container *ngIf="updateForm.controls.level.errors.max">Min value is {{ params.maxLevel }}
-                                        </ng-container>
-                                    </span>
-                                </td>
-                                <td>
-                                    <button class="btn btn-success btn-sm mr-1" type="submit" (click)="doUpdateSkill(skill, i)">Update</button>
-                                    <button class="btn btn-secondary btn-sm"
-                                        (click)="doCancelUpdateSkill()">Cancel</button>
-                                </td>
-                            </ng-container>
-                            <ng-container *ngIf="indexSelected != i">
-                                <td>
-                                    <div>
-                                        {{ skill.exp }} Years
-                                    </div>
-                                </td>
-                                <td>
-                                    <ngb-rating [max]="5" [rate]="skill.level" [readonly]="true"></ngb-rating>
-                                </td>
-                                <td>
-                                    <button class="btn btn-danger btn-sm mr-1" (click)="deleteSkill(i)">Delete</button>
-                                    <button class="btn btn-primary btn-sm"
-                                        (click)="showEditSkill(skill, i)">Edit</button>
-                                </td>
-                            </ng-container>
-                        </tr>
-                    </ng-container>
-                    <!--<tr *ngIf="agregar">
-                        <th scope="row"></th>
-                        <td>
-                            <div class="input-group mb-3">
-                                <select class="form-control form-control-sm" id="inputGroupSelectHabilidad"
-                                    name="inputGroupSelectHabilidad" (change)="selectChangeHandler($event)">
-                                    <option selected>Seleccione...</option>
-                                    <option [value]="item.name" *ngFor="let item of skillsNames">{{item.name}}</option>
-                                </select>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="input-group mb-3">
-                                <select class="form-control form-control-sm" id="inputGroupSelectExperiencia"
-                                    name="inputGroupSelectExperiencia" (change)="selectChangeHandler($event)">
-                                    <option selected>Seleccione...</option>
-                                    <option [value]="item.value" *ngFor="let item of expsNames">{{item.name}}</option>
-                                </select>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="input-group mb-3">
-                                <select class="form-control form-control-sm" id="inputGroupSelectNivel"
-                                    name="inputGroupSelectNivel" (change)="selectChangeHandler($event)">
-                                    <option selected>Seleccione...</option>
-                                    <option [value]="item.value" *ngFor="let item of levelsNames">{{item.name}}</option>
-                                </select>
-                            </div>
-                        </td>
-                    </tr>-->
-                </tbody>
-            </table>
-            <button class="btn btn-primary btn-sm" (click)="this.agregar=true" *ngIf="!agregar">Add</button>
-            <button class="btn btn-success btn-sm mr-1" (click)="addItem()" *ngIf="agregar">Save</button>
-            <button class="btn btn-danger btn-sm" (click)="cancelAddItem()" *ngIf="agregar">Cancel</button>
+          <app-skills-chart [skills]="skills" [drawLevels]="chartConfig.drawLevels" [drawExps]="chartConfig.drawExps">
+          </app-skills-chart>
         </div>
+      </div>
+      <div class="row">
         <div class="col">
-            <div class="row">
-                <div class="col">
-                    <app-skills-chart [skills]="skills" [drawLevels]="chartConfig.drawLevels"
-                        [drawExps]="chartConfig.drawExps"></app-skills-chart>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <button type="button" class="mr-1 btn btn-sm"
-                        [ngClass]="{'btn-outline-secondary': !chartConfig.drawLevels, 'btn-primary': chartConfig.drawLevels}"
-                        [disabled]="!chartConfig.drawExps" (click)="chartConfig.drawLevels = !chartConfig.drawLevels">
-                        Draw Levels
-                    </button>
-                    <button type="button" class="mr-1 btn btn-sm"
-                        [ngClass]="{'btn-outline-secondary': !chartConfig.drawExps, 'btn-danger': chartConfig.drawExps}"
-                        [disabled]="!chartConfig.drawLevels" (click)="chartConfig.drawExps = !chartConfig.drawExps">
-                        Draw Exps
-                    </button>
-                </div>
-            </div>
+          <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <label class="btn btn-sm btn-danger" [class.active]="chartConfig.drawExps && !chartConfig.drawLevels">
+              <input type="radio" name="options" id="profile-chart-option-exp" (click)="
+                  chartConfig.drawExps = true; chartConfig.drawLevels = false
+                " />
+              Exps
+            </label>
+            <label class="btn btn-sm btn-secondary" [class.active]="chartConfig.drawExps && chartConfig.drawLevels">
+              <input type="radio" name="options" id="profile-chart-option-both" checked (click)="
+                  chartConfig.drawExps = true; chartConfig.drawLevels = true
+                " />
+              Both
+            </label>
+            <label class="btn btn-sm btn-primary" [class.active]="!chartConfig.drawExps && chartConfig.drawLevels">
+              <input type="radio" name="options" id="profile-chart-option-levels" (click)="
+                  chartConfig.drawExps = false; chartConfig.drawLevels = true
+                " />
+              Levels
+            </label>
+          </div>
         </div>
+      </div>
     </div>
+    <div class="col">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Skill</th>
+            <th scope="col">Exp</th>
+            <th scope="col">Level</th>
+            <th scope="col">
+              <button class="btn btn-primary btn-sm" (click)="create.show = true" *ngIf="!create.show">
+                Add
+              </button>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngIf="create.show">
+            <tr [formGroup]="create.form">
+              <th scope="row">
+                0
+              </th>
+              <td>
+                <div class="form-group input-group-sm">
+                  <input *ngIf="create.form.controls.skillName.value == null" type="text" class="form-control"
+                    formControlName="skillNameText" />
+                  <button *ngIf="create.form.controls.skillName.value != null" type="button"
+                    class="btn btn-outline-dark btn-sm mr-1" (click)="removeSkillNameToForm()">
+                    {{ create.form.controls.skillName.value.name }}
+                    <fa name="minus-circle"></fa>
+                  </button>
+                </div>
+                <ng-container *ngIf="create.form.controls.skillName.value == null">
+                  <ng-container *ngFor="let skillName of skillsNamesFiltered; let i = index">
+                    <button type="button" class="btn btn-outline-dark btn-sm mr-1"
+                      (click)="addSkillNameToForm(skillName)">
+                      {{ skillName.name }} <fa name="plus-circle"></fa>
+                    </button>
+                  </ng-container>
+                </ng-container>
+              </td>
+              <td>
+                <div class="input-group input-group-sm">
+                  <input type="number" class="form-control" placeholder="Exp" aria-label="Exp"
+                    aria-describedby="text-append-edit-exp" formControlName="exp" />
+                  <div class="input-group-append">
+                    <span class="input-group-text" id="text-append-edit-exp">Years</span>
+                  </div>
+                </div>
+                <span class="badge badge-danger" *ngIf="
+                    create.form.controls.exp.invalid &&
+                    (create.form.controls.exp.dirty ||
+                      create.form.controls.exp.touched)
+                  ">
+                  <ng-container *ngIf="create.form.controls.exp.errors.required">Required
+                  </ng-container>
+                  <ng-container *ngIf="create.form.controls.exp.errors.min">Min value is
+                    {{ params.minExp }}
+                  </ng-container>
+                  <ng-container *ngIf="create.form.controls.exp.errors.max">Min value is
+                    {{ params.maxExp }}
+                  </ng-container>
+                </span>
+              </td>
+              <td>
+                <ngb-rating placement="top" ngbTooltip="Level {{ create.form.controls.level.value }}"
+                  [max]="params.maxLevel" [rate]="create.form.controls.level.value" formControlName="level">
+                </ngb-rating>
+                <span class="badge badge-danger" *ngIf="
+                    create.form.controls.level.invalid &&
+                    (create.form.controls.level.dirty ||
+                      create.form.controls.level.touched)
+                  ">
+                  <ng-container *ngIf="create.form.controls.level.errors.required">Required
+                  </ng-container>
+                  <ng-container *ngIf="create.form.controls.level.errors.min">Min value is
+                    {{ params.minLevel }}
+                  </ng-container>
+                  <ng-container *ngIf="create.form.controls.level.errors.max">Min value is
+                    {{ params.maxLevel }}
+                  </ng-container>
+                </span>
+              </td>
+              <td>
+                <app-error-handler [loading]="create.loading" [error]="create.error" [settings]="create.settings">
+                  <button class="btn btn-success btn-sm mr-1" type="submit" (click)="doCreateSkill()"
+                    [disabled]="create.form.invalid">
+                    Save
+                  </button>
+                  <button class="btn btn-secondary btn-sm" (click)="doCancelCreateSkill()">
+                    Cancel
+                  </button>
+                </app-error-handler>
+              </td>
+            </tr>
+          </ng-container>
+          <ng-container *ngFor="let skill of skills; let i = index">
+            <tr [formGroup]="update.form">
+              <th scope="row">{{ i + 1 }}</th>
+              <td>{{ skill.name }}</td>
+              <ng-container *ngIf="i === indexSelected">
+                <td>
+                  <div class="input-group input-group-sm">
+                    <input type="number" class="form-control" placeholder="Exp" aria-label="Exp"
+                      aria-describedby="text-append-edit-exp" formControlName="exp" />
+                    <div class="input-group-append">
+                      <span class="input-group-text" id="text-append-edit-exp">Years</span>
+                    </div>
+                  </div>
+                  <span class="badge badge-danger" *ngIf="
+                      update.form.controls.exp.invalid &&
+                      (update.form.controls.exp.dirty ||
+                        update.form.controls.exp.touched)
+                    ">
+                    <ng-container *ngIf="update.form.controls.exp.errors.required">Required
+                    </ng-container>
+                    <ng-container *ngIf="update.form.controls.exp.errors.min">Min value is
+                      {{ params.minExp }}
+                    </ng-container>
+                    <ng-container *ngIf="update.form.controls.exp.errors.max">Min value is
+                      {{ params.maxExp }}
+                    </ng-container>
+                  </span>
+                </td>
+                <td>
+                  <ngb-rating placement="top" ngbTooltip="Level {{ update.form.controls.level.value }}"
+                    [max]="params.maxLevel" [rate]="update.form.controls.level.value" formControlName="level">
+                  </ngb-rating>
+                  <span class="badge badge-danger" *ngIf="
+                      update.form.controls.level.invalid &&
+                      (update.form.controls.level.dirty ||
+                        update.form.controls.level.touched)
+                    ">
+                    <ng-container *ngIf="update.form.controls.level.errors.required">Required
+                    </ng-container>
+                    <ng-container *ngIf="update.form.controls.level.errors.min">Min value is
+                      {{ params.minLevel }}
+                    </ng-container>
+                    <ng-container *ngIf="update.form.controls.level.errors.max">Min value is
+                      {{ params.maxLevel }}
+                    </ng-container>
+                  </span>
+                </td>
+                <td>
+                  <app-error-handler [loading]="update.loading" [error]="update.error" [settings]="update.settings">
+                    <button class="btn btn-success btn-sm mr-1" type="submit" (click)="doUpdateSkill(skill)"
+                      [disabled]="update.form.invalid">
+                      Update
+                    </button>
+                    <button class="btn btn-secondary btn-sm" (click)="doCancelUpdateSkill()">
+                      Cancel
+                    </button>
+                  </app-error-handler>
+                </td>
+              </ng-container>
+              <ng-container *ngIf="indexSelected != i">
+                <td>{{ skill.exp }} Years</td>
+                <td>
+                  <ngb-rating [max]="5" [rate]="skill.level" [readonly]="true"></ngb-rating>
+                </td>
+                <td>
+                  <button class="btn btn-danger btn-sm mr-1" (click)="deleteSkill(i)">
+                    Delete
+                  </button>
+                  <button class="btn btn-primary btn-sm" (click)="showEditSkill(skill, i)">
+                    Edit
+                  </button>
+                </td>
+              </ng-container>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </app-error-handler>

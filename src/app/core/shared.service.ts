@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Skill } from '../core/domain/skill'
+import { Skill, SkillName } from '../core/domain/skill'
 import { User } from './domain/user';
 
 @Injectable({
@@ -12,17 +12,23 @@ export class SharedService {
 
   getSkills() {
     return new Promise<any>((resolve, reject) => {
-      this.db.firestore.collection('skills').where('valid', '==', true).get().then(res => {
-        const skills: Array<Skill>  = [];
-        res.forEach(doc => {
+      this.db.firestore.collection('skills').where('active', '==', true).get().then(docs => {
+        const skills: Array<SkillName>  = [];
+        docs.forEach(doc => {
           skills.push({
-            name : doc.id,
-            ...doc.data().skill
+            id : doc.id,
+            name: doc.data().name,
+            active: doc.data().active
           })
         });
         resolve(skills);
       }).catch(err => reject(err));
-    });
+    })
+  }
+
+  getSkillRef(id: string = '') {
+    if (id) return this.db.doc('skills/' + id).ref
+    throw 'id is required'
   }
 
   getUsers() {
@@ -37,10 +43,10 @@ export class SharedService {
             active: doc.data().active
           }
           users.push(user);
-        });
+        })
         resolve(users);
       }).catch(err => reject(err));
-    });
+    })
   }
 
   addUser(email: string, user: User) {

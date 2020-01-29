@@ -3,11 +3,7 @@
     <span class="sr-only">Loading...</span>
   </div>
 </div>
-
-<div *ngIf="!loading && !error">
-  <ng-content></ng-content>
-</div>
-
+<ng-content *ngIf="!loading && !error"></ng-content>
 <div *ngIf="error && !loading">
   <div class="alert {{error.type}} alert-dismissible fade show" role="alert">
     {{ error.message }}

@@ -139,7 +139,7 @@
             <tr [formGroup]="update.form">
               <th scope="row">{{ i + 1 }}</th>
               <td>{{ skill.name }}</td>
-              <ng-container *ngIf="i === indexSelected">
+              <ng-container *ngIf="i === update.index">
                 <td>
                   <div class="input-group input-group-sm">
                     <input type="number" class="form-control" placeholder="Exp" aria-label="Exp"
@@ -194,18 +194,21 @@
                   </app-error-handler>
                 </td>
               </ng-container>
-              <ng-container *ngIf="indexSelected != i">
+              <ng-container *ngIf="update.index != i">
                 <td>{{ skill.exp }} Years</td>
                 <td>
                   <ngb-rating [max]="5" [rate]="skill.level" [readonly]="true"></ngb-rating>
                 </td>
                 <td>
-                  <button class="btn btn-danger btn-sm mr-1" (click)="deleteSkill(i)">
-                    Delete
-                  </button>
-                  <button class="btn btn-primary btn-sm" (click)="showEditSkill(skill, i)">
-                    Edit
-                  </button>
+                  <app-error-handler [loading]="delete.index == i ? delete.loading : false"
+                    [error]="delete.index == i ? delete.error : null" [settings]="delete.settings">
+                    <button class="btn btn-danger btn-sm mr-1" (click)="deleteSkill(i)">
+                      Delete
+                    </button>
+                    <button class="btn btn-primary btn-sm" (click)="showEditSkill(skill, i)">
+                      Edit
+                    </button>
+                  </app-error-handler>
                 </td>
               </ng-container>
             </tr>

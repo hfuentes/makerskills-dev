@@ -52,11 +52,11 @@ export class UserService {
     })
   }
 
-  setSkills(user: User = null, skills: Array<Skill> = []) {
+  setSkills(user: User = null, skills: Array<Skill> = []) { //set user's skills
     return new Promise<any>((resolve, reject) => {
       if (user && user.email) {
         return this.db.firestore.collection('users').doc(user.email).update({
-          skills: skills
+          skills: [...skills]
         }).then(() => resolve()).catch(err => reject(err))
       } else reject()
     })

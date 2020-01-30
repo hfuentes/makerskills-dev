@@ -90,6 +90,7 @@ export class ProfileComponent implements OnInit, OnChanges {
         return this.sharedService.getSkills()
       })
       .then(skillsNames => {
+        console.log(skillsNames)
         this.skillsNames = skillsNames // get skills names
         return this.userService.getSkills(this.user)
       })
@@ -225,6 +226,7 @@ export class ProfileComponent implements OnInit, OnChanges {
         level: this.create.form.controls.level.value,
         name: this.create.form.controls.skillName.value.name,
         ref: this.sharedService.getSkillRef(this.create.form.controls.skillName.value.id),
+        tags: this.create.form.controls.skillName.value.tags
       }
       skillsIns.unshift(newSkill)
       this.userService.setSkills(this.user, skillsIns).then(() => {

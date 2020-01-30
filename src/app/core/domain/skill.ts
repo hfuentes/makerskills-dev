@@ -1,10 +1,12 @@
 import { DocumentReference } from '@angular/fire/firestore'
+import { SkillTag } from './tag'
 
 export class Skill {
   name: string
   exp: number
   level: number
   ref: DocumentReference
+  tags: Array<SkillTag>
   constructor() { }
 }
 
@@ -30,4 +32,5 @@ export class SkillName {
   id: string
   name: string
   active = true
+  tags: Array<string>
 }

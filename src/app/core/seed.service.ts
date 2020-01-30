@@ -24,6 +24,34 @@ export class SeedService {
     this.db.collection("users").doc("makerskills.dev@gmail.com").set(JSON.parse(JSON.stringify(new User('','Admin',''))))
     */
 
+    /*console.log('.......SKILLS................')
+    const skills = ['React', 'Ruby', 'Spring', 'Azure', 'Hibernate', 'Git', 'jQuery', 'Maven', 'PostgreSQL', 'Oracle Database', 'Node',
+      'MongoDB', 'Microsoft SQL Server', '.NET', 'C#', 'Entity Framework', 'HTML', 'Ruby on Rails', 'PHP', 'PL/SQL', 'JavaScript',
+      'Android', 'Matlab', 'LINQ', 'ASP.NET', 'Linux', 'C', 'Struts2', 'ASP.NET MVC', 'CSS', 'HTML5', 'JIRA', 'SQL', 'Struts', 'MySQL',
+      'Angular 8', 'WCF Services', 'NHibernate', 'Oracle g11', 'Liquibase', 'Firebase', 'GitHub Continuous Integration']
+    for (const skill of skills) {
+      this.db.firestore.collection('skills').where('name', '==', skill).get().then(docs => {
+        if (docs.empty) this.db.collection('skills').add({name: skill, active: true })
+        else {
+          let i = 0
+          docs.forEach(item => { if (i !== 0) this.db.firestore.collection('skills').doc(item.id).delete(); i++ })
+        }
+      })
+    }*/
+
+    /*console.log('.......TAGS................')
+    const tags = ['Front', 'UX/UI', 'CX', 'Back', 'Full Stack', 'Devops', 'Agility', 'Data Science']
+    for (const tag of tags) {
+      this.db.firestore.collection('tags').where('name', '==', tag).get().then(docs => {
+        if (docs.empty) this.db.collection('tags').add({name: tag, active: true })
+        else {
+          let i = 0
+          docs.forEach(item => { if (i !== 0) this.db.firestore.collection('tags').doc(item.id).delete(); i++ })
+        }
+      })
+    }*/
+
+
     /*
     //Init skills users data
     const ref = this.db.collection('users').doc('hector.fuentes@imagemaker.com').collection('skills')
@@ -74,7 +102,7 @@ export class SeedService {
       userSkillsRef.doc('JQuery').set({exp:{name:'4 Years',value:4},level:{name:'Senior',value:3}})
     })
     */
-   //Init skills
+    //Init skills
     /*const skillsRef = this.db.collection('skills')
     skillsRef.doc('AngularJS').set({valid:true,created:firebase.firestore.FieldValue.serverTimestamp(),roles:{admin:true}})
     skillsRef.doc('Java 7').set({valid:true,created:firebase.firestore.FieldValue.serverTimestamp(),roles:{admin:true}})

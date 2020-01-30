@@ -13,12 +13,9 @@ service cloud.firestore {
     	let auth_email = request.auth.token.email;
       return email == auth_email;
     }
-    match /users/{email}/skills/{skill=**} {
-    	allow read, write: if isSignedIn() && (hasRole('admin') || (hasRole('profile') && isOwner(email)));
-    }
     match /users/{email} {
       allow create, delete: if isSignedIn() && hasRole('admin');
-      allow update: if isSignedIn() && (hasRole('admin') || (hasRole('profile') && isOwner(email)));
+      allow update: if isSignedIn() && (hasRole('admin') || hasRole('seracher') || (hasRole('profile') && isOwner(email)));
       allow get, list: if isSignedIn();
     }
     match /skills/{document=**} {

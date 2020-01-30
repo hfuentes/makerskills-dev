@@ -22,11 +22,7 @@ service cloud.firestore {
       allow create, update, delete: if isSignedIn() && hasRole('admin');
       allow get, list: if isSignedIn();
     }
-    match /exps/{document=**} {
-      allow create, update, delete: if isSignedIn() && hasRole('admin');
-      allow get, list: if isSignedIn();
-    }
-    match /levels/{document=**} {
+    match /tags/{document=**} {
       allow create, update, delete: if isSignedIn() && hasRole('admin');
       allow get, list: if isSignedIn();
     }

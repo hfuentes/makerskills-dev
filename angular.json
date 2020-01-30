@@ -126,5 +126,10 @@
       }
     }
   },
-  "defaultProject": "makerskills"
+  "defaultProject": "makerskills",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
+  }
 }

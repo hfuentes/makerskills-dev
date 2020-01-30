@@ -26,7 +26,8 @@ import { LevelsComponent } from './admin/levels/levels.component'
 import { UsersProfileComponent } from './users-profile/users-profile.component'
 import { UsersSearchComponent } from './users-search/users-search.component'
 import { NavbarComponent } from './navbar/navbar.component';
-import { SkillsSearchComponent } from './skills-search/skills-search.component'
+import { SkillsSearchComponent } from './skills-search/skills-search.component';
+import { DashboardComponent } from './dashboard/dashboard.component'
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { SkillsSearchComponent } from './skills-search/skills-search.component'
     UsersProfileComponent,
     UsersSearchComponent,
     NavbarComponent,
-    SkillsSearchComponent
+    SkillsSearchComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

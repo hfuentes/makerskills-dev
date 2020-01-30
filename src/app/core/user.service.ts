@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core'
 import { AngularFirestore } from '@angular/fire/firestore'
 import { Skill } from './domain/skill'
 import * as firebase from 'firebase'
+import { SkillTag, Tag } from './domain/tag'
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -44,7 +45,19 @@ export class UserService {
       if (user && user.email) {
         return this.db.firestore.collection('users').doc(user.email).get().then(doc => {
           if (doc && doc.exists) {
-            const skills: Array<Skill> = doc.data().skills
+            let skills: Array<Skill> = []
+            if (doc.data().skills && doc.data().skills.length > 0) {
+              skills = doc.data().skills.map(x => {
+                const skill: Skill = {
+                  exp: x.exp,
+                  level: x.level,
+                  name: x.name,
+                  ref: x.ref,
+                  tags: x.tags ? x.tags.map(t => new SkillTag(t.name, t.ref)) : []
+                }
+                return skill
+              })
+            }
             return resolve(skills)
           } else resolve()
         }).catch(err => reject(err))

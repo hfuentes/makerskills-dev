@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import * as firebase from 'firebase'
 import { AngularFirestore } from '@angular/fire/firestore';
 import { User } from './domain/user';
+import { SharedService } from './shared.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SeedService {
 
-  constructor(private db: AngularFirestore) { }
+  constructor(private db: AngularFirestore, private shared: SharedService) { }
 
   //TODO delete seed method
   public populate(): void {
@@ -23,6 +24,48 @@ export class SeedService {
     this.db.collection("users").doc("alexis.veas@imagemaker.com").set(JSON.parse(JSON.stringify(new User('','Alexis Veas',''))))
     this.db.collection("users").doc("makerskills.dev@gmail.com").set(JSON.parse(JSON.stringify(new User('','Admin',''))))
     */
+
+    /*console.log('.......TAGS................')
+    const tags = ['Front', 'UX/UI', 'CX', 'Back', 'Full Stack', 'Devops', 'Agility', 'Data Science']
+    for (const tag of tags) {
+      this.db.firestore.collection('tags').where('name', '==', tag).get().then(docs => {
+        if (docs.empty) this.db.collection('tags').add({name: tag, active: true })
+        else {
+          let i = 0
+          docs.forEach(item => { if (i !== 0) this.db.firestore.collection('tags').doc(item.id).delete(); i++ })
+        }
+      })
+    }*/
+
+    /*this.db.firestore.collection('tags').get().then(tags => {
+      const arrTags = []
+      tags.forEach(itag => {
+        arrTags.push({ name: itag.data().name, id: itag.id })
+      })
+      console.log('.......SKILLS................')
+      const skills = ['React', 'Ruby', 'Spring', 'Azure', 'Hibernate', 'Git', 'jQuery', 'Maven', 'PostgreSQL', 'Oracle Database', 'Node',
+        'MongoDB', 'Microsoft SQL Server', '.NET', 'C#', 'Entity Framework', 'HTML', 'Ruby on Rails', 'PHP', 'PL/SQL', 'JavaScript',
+        'Android', 'Matlab', 'LINQ', 'ASP.NET', 'Linux', 'C', 'Struts2', 'ASP.NET MVC', 'CSS', 'HTML5', 'JIRA', 'SQL', 'Struts', 'MySQL',
+        'Angular 8', 'WCF Services', 'NHibernate', 'Oracle g11', 'Liquibase', 'Firebase', 'GitHub Continuous Integration']
+      for (const skill of skills) {
+        this.db.firestore.collection('skills').where('name', '==', skill).get().then(docs => {
+          if (docs.empty) this.db.collection('skills').add({ name: skill, active: true })
+          else {
+            let i = 0
+            docs.forEach(item => {
+              if (i === 0 && ['React', 'Angular 8', 'jQuery', 'CSS', 'HTML5'].includes(skill)) {
+                this.db.firestore.collection('skills').doc(item.id).update({
+                  //const tagsNames = ['Front', 'UX/UI', 'CX', 'Back', 'Full Stack', 'Devops', 'Agility', 'Data Science']
+                  tags: [{ name: 'Front', ref: this.shared.getTagRef(arrTags.find(x => x.name === 'Front').id)}]
+                })
+              }
+              if (i !== 0) this.db.firestore.collection('skills').doc(item.id).delete()
+              i++
+            })
+          }
+        })
+      }
+    })*/
 
     /*
     //Init skills users data
@@ -74,7 +117,7 @@ export class SeedService {
       userSkillsRef.doc('JQuery').set({exp:{name:'4 Years',value:4},level:{name:'Senior',value:3}})
     })
     */
-   //Init skills
+    //Init skills
     /*const skillsRef = this.db.collection('skills')
     skillsRef.doc('AngularJS').set({valid:true,created:firebase.firestore.FieldValue.serverTimestamp(),roles:{admin:true}})
     skillsRef.doc('Java 7').set({valid:true,created:firebase.firestore.FieldValue.serverTimestamp(),roles:{admin:true}})

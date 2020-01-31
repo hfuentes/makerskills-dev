@@ -24,36 +24,36 @@
           <tbody>
             <tr>
               <td>
-                <!-- Email -->
+                <!-- Name -->
                 <div>
                   <div class="form-group row">
                     <div class="col-12">
                       <input 
                         class="form-control"
-                        [ngClass]="{'is-invalid':!forma.get('email').valid && forma.value.email !== null }"
-                        type="email"
-                        placeholder="Email"
+                        [ngClass]="{'is-invalid':!forma.get('name').valid && forma.value.name !== null }"
+                        type="name"
+                        placeholder="Name"
                         formControlName="email">
-                      <div *ngIf="!forma.controls['email'].valid" class="invalid-feedback">
-                        Debe ingresar un mail valido
-                      </div>
+                        <div *ngIf="!forma.controls['name'].valid" class="invalid-feedback">
+                            Debe ingresar un nombre
+                          </div>
                     </div>
                   </div>
                 </div>
               </td>
               <td>
-                <!-- Name -->
+                <!-- Description -->
                 <div>
                   <div class="form-group row danger">
                     <div class="col-10">
                       <input 
                         class="form-control"
-                        [ngClass]="{'is-invalid':!forma.get('name').valid && forma.value.name !== null }"
+                        [ngClass]="{'is-invalid':!forma.get('description').valid && forma.value.description !== null }"
                         type="text"
-                        placeholder="Name"
-                        formControlName="name">
-                      <div *ngIf="!forma.controls['name'].valid" class="invalid-feedback">
-                        Debe ingresar un nombre
+                        placeholder="Description"
+                        formControlName="description">
+                      <div *ngIf="!forma.controls['description'].valid" class="invalid-feedback">
+                        Debe ingresar una descripcion
                       </div>
                     </div>
                   </div>

@@ -90,7 +90,6 @@ export class ProfileComponent implements OnInit, OnChanges {
         return this.sharedService.getSkills()
       })
       .then(skillsNames => {
-        console.log(skillsNames)
         this.skillsNames = skillsNames // get skills names
         return this.userService.getSkills(this.user)
       })

@@ -1,0 +1,175 @@
+Index: src/app/admin/admin.component.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/app/admin/admin.component.html	(revision ae7c919006ea71e25b171273035432efd45f02ef)
++++ src/app/admin/admin.component.html	(date 1580477694000)
+@@ -7,23 +7,10 @@
+         <users></users>
+     </ng-template>
+   </ngb-tab>
+-    
+-  <ngb-tab title="exps">
+-    <ng-template ngbTabContent>
+-        <exps></exps>
+-    </ng-template>
+-  </ngb-tab>
+ 
+-  <ngb-tab title="levels">
+-    <ng-template ngbTabContent>
+-        <levels></levels>
+-    </ng-template>
+-  </ngb-tab>
+-      
+   <ngb-tab title="skills">
+     <ng-template ngbTabContent>
+         <app-skills></app-skills>
+     </ng-template>
+   </ngb-tab>
+ </ngb-tabset>
+-    
+\ No newline at end of file
+Index: src/app/navbar/navbar.component.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/app/navbar/navbar.component.html	(revision ae7c919006ea71e25b171273035432efd45f02ef)
++++ src/app/navbar/navbar.component.html	(date 1580485489000)
+@@ -5,27 +5,34 @@
+       width="30" height="30" class="d-inline-block align-top" alt="">
+     Maker<strong>Skills</strong>
+   </span>
+-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+-    aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
++  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+     <span class="navbar-toggler-icon"></span>
+   </button>
+-  <div class="collapse navbar-collapse" id="navbarNavDropdown" *ngIf="auth.authenticated">
++  <div class="collapse navbar-collapse" id="navbarSupportedContent" *ngIf="auth.authenticated">
+     <ul class="navbar-nav mr-auto">
+-      <li class="nav-item" *ngIf="auth.matchingRoles(['profile'])">
+-        <a class="nav-link" routerLink="dashboard">Dashboard</a>
+-      </li>
+-      <li class="nav-item" *ngIf="auth.matchingRoles(['searcher'])">
+-        <a class="nav-link" routerLink="searcher">Searcher</a>
+-      </li>
+-      <li class="nav-item" *ngIf="auth.matchingRoles(['profile'])">
+-        <a class="nav-link" routerLink="profile">Profile</a>
+-      </li>
+-      <li class="nav-item" *ngIf="auth.matchingRoles(['admin'])">
+-        <a class="nav-link" routerLink="admin">Admin</a>
++      <li class="nav-item dropdown">
++        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
++          Menú
++        </a>
++        <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
++          <div *ngFor="let item of MENU">
++            <a class="dropdown-item text-light"
++               *ngIf="auth.matchingRoles([item.role])"
++               routerLink="{{item.route}}">{{item.name}}</a>
++          </div>
++        </div>
+       </li>
+     </ul>
+-    <span *ngIf="auth.userData" class="navbar-text" title="{{auth.userData.email}}">
++    <div class="input-group align-content-md-center">
++      <input class="form-control col-8" type="search" value="search" id="search-input">
++      <span class="input-group-append">
++        <div class="input-group-text bg-white"><i class="fa fa-search"></i></div>
++      </span>
++    </div>
++    <ul class="navbar-nav ml-auto">
++      <span *ngIf="auth.userData" class="navbar-text" title="{{auth.userData.email}}">
+       Welcome, {{auth.userData.displayName}}!&nbsp;<app-logout></app-logout>
+     </span>
++    </ul>
+   </div>
+ </nav>
+Index: src/app/navbar/navbar.component.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/app/navbar/navbar.component.ts	(revision ae7c919006ea71e25b171273035432efd45f02ef)
++++ src/app/navbar/navbar.component.ts	(date 1580485489000)
+@@ -1,5 +1,6 @@
+ import { Component, OnInit } from '@angular/core'
+ import { AuthService } from '../core/auth.service'
++import { NavbarMenuConstants } from '../constants/navbar-menu.constants'
+ 
+ @Component({
+   selector: 'app-navbar',
+@@ -7,7 +8,10 @@
+ })
+ export class NavbarComponent implements OnInit {
+ 
+-  constructor(public auth: AuthService) { }
++    MENU = this.navbarConst.getMenuItems();
++
++  constructor(public auth: AuthService, public navbarConst: NavbarMenuConstants) {
++   }
+ 
+   ngOnInit() {
+   }
+Index: src/app/app.module.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/app/app.module.ts	(revision ae7c919006ea71e25b171273035432efd45f02ef)
++++ src/app/app.module.ts	(date 1580477694000)
+@@ -20,14 +20,13 @@
+ import { ErrorHandlerComponent } from './error-handler/error-handler.component'
+ import { AdminComponent } from './admin/admin.component'
+ import { SkillsComponent } from './admin/skills/skills.component'
+-import { ExpsComponent } from './admin/exps/exps.component'
+ import { UsersComponent } from './admin/users/users.component'
+-import { LevelsComponent } from './admin/levels/levels.component'
+ import { UsersProfileComponent } from './users-profile/users-profile.component'
+ import { UsersSearchComponent } from './users-search/users-search.component'
+ import { NavbarComponent } from './navbar/navbar.component'
+ import { SkillsSearchComponent } from './skills-search/skills-search.component'
+ import { DashboardComponent } from './dashboard/dashboard.component'
++import { NavbarMenuConstants} from './constants/navbar-menu.constants'
+ 
+ @NgModule({
+   declarations: [
+@@ -40,9 +39,7 @@
+     ErrorHandlerComponent,
+     AdminComponent,
+     SkillsComponent,
+-    ExpsComponent,
+     UsersComponent,
+-    LevelsComponent,
+     UsersProfileComponent,
+     UsersSearchComponent,
+     NavbarComponent,
+@@ -60,7 +57,7 @@
+     FormsModule,
+     AngularFontAwesomeModule
+   ],
+-  providers: [],
++  providers: [NavbarMenuConstants],
+   bootstrap: [AppComponent]
+ })
+ export class AppModule { }
+Index: src/app/constants/navbar-menu.constants.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/app/constants/navbar-menu.constants.ts	(date 1580480969000)
++++ src/app/constants/navbar-menu.constants.ts	(date 1580480969000)
+@@ -0,0 +1,10 @@
++export class NavbarMenuConstants {
++    public getMenuItems(): Array<object> {
++        return [
++            {name: 'Dashboard', role: 'profile', route: 'dashboard'},
++            {name: 'Searcher', role: 'searcher', route: 'searcher'},
++            {name: 'Profile', role: 'profile', route: 'profile'},
++            {name: 'Admin', role: 'admin', route: 'admin'}
++        ];
++    }
++}

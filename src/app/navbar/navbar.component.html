@@ -5,27 +5,34 @@
       width="30" height="30" class="d-inline-block align-top" alt="">
     Maker<strong>Skills</strong>
   </span>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-    aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="collapse navbar-collapse" id="navbarNavDropdown" *ngIf="auth.authenticated">
+  <div class="collapse navbar-collapse" id="navbarSupportedContent" *ngIf="auth.authenticated">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item" *ngIf="auth.matchingRoles(['profile'])">
-        <a class="nav-link" routerLink="dashboard">Dashboard</a>
-      </li>
-      <li class="nav-item" *ngIf="auth.matchingRoles(['searcher'])">
-        <a class="nav-link" routerLink="searcher">Searcher</a>
-      </li>
-      <li class="nav-item" *ngIf="auth.matchingRoles(['profile'])">
-        <a class="nav-link" routerLink="profile">Profile</a>
-      </li>
-      <li class="nav-item" *ngIf="auth.matchingRoles(['admin'])">
-        <a class="nav-link" routerLink="admin">Admin</a>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
+          Menú
+        </a>
+        <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
+          <div *ngFor="let item of MENU">
+            <a class="dropdown-item text-light"
+               *ngIf="auth.matchingRoles([item.role])"
+               routerLink="{{item.route}}">{{item.name}}</a>
+          </div>
+        </div>
       </li>
     </ul>
-    <span *ngIf="auth.userData" class="navbar-text" title="{{auth.userData.email}}">
+    <div class="input-group align-content-md-center">
+      <input class="form-control col-8" type="search" value="search" id="search-input">
+      <span class="input-group-append">
+        <div class="input-group-text bg-white"><i class="fa fa-search"></i></div>
+      </span>
+    </div>
+    <ul class="navbar-nav ml-auto">
+      <span *ngIf="auth.userData" class="navbar-text" title="{{auth.userData.email}}">
       Welcome, {{auth.userData.displayName}}!&nbsp;<app-logout></app-logout>
     </span>
+    </ul>
   </div>
 </nav>

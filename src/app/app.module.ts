@@ -20,15 +20,14 @@ import { SkillsChartComponent } from './skills-chart/skills-chart.component'
 import { ErrorHandlerComponent } from './error-handler/error-handler.component'
 import { AdminComponent } from './admin/admin.component'
 import { SkillsComponent } from './admin/skills/skills.component'
-import { ExpsComponent } from './admin/exps/exps.component'
 import { UsersComponent } from './admin/users/users.component'
-import { LevelsComponent } from './admin/levels/levels.component'
 import { UsersProfileComponent } from './users-profile/users-profile.component'
 import { UsersSearchComponent } from './users-search/users-search.component'
 import { NavbarComponent } from './navbar/navbar.component';
 import { SkillsSearchComponent } from './skills-search/skills-search.component';
 import { SkillsTagComponent } from './skills-tag/skills-tag.component';
 import { DashboardComponent } from './dashboard/dashboard.component'
+import { NavbarMenuConstants} from './constants/navbar-menu.constants'
 
 @NgModule({
   declarations: [
@@ -41,9 +40,7 @@ import { DashboardComponent } from './dashboard/dashboard.component'
     ErrorHandlerComponent,
     AdminComponent,
     SkillsComponent,
-    ExpsComponent,
     UsersComponent,
-    LevelsComponent,
     UsersProfileComponent,
     UsersSearchComponent,
     NavbarComponent,
@@ -62,7 +59,7 @@ import { DashboardComponent } from './dashboard/dashboard.component'
     FormsModule,
     AngularFontAwesomeModule
   ],
-  providers: [],
+  providers: [NavbarMenuConstants],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

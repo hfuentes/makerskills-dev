@@ -8,10 +8,10 @@ import { NavbarMenuConstants } from '../constants/navbar-menu.constants'
 })
 export class NavbarComponent implements OnInit {
 
-    MENU = this.navbarConst.getMenuItems();
+  MENU = this.navbarConst.getMenuItems();
 
   constructor(public auth: AuthService, public navbarConst: NavbarMenuConstants) {
-   }
+  }
 
   ngOnInit() {
   }

@@ -1,14 +1,30 @@
 <div *ngIf="isVisible()">
+  <app-error-handler [loading]="status.loading" [error]="status.error">
     <div class="row">
-        <div class="col">
+      <div class="col">
+
+        <div class="row">
+          <div class="col">
+
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
             <button class="btn btn-primary" (click)="doGoogleAuth()">Sign in with Google</button>
+          </div>
         </div>
-    </div>
-    <div class="row mt-2">
-        <div class="col">
-            <div *ngIf="error" class="alert alert-danger" role="alert">
-                {{error}}
-            </div>
+
+        <div class="row">
+          <div class="col">
+
+          </div>
         </div>
+
+      </div>
+      <div class="col">
+        FOTO
+      </div>
     </div>
+  </app-error-handler>
 </div>

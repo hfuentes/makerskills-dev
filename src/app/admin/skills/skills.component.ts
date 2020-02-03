@@ -5,7 +5,7 @@ import { Skill } from '../../core/domain/skill';
 @Component({
   selector: 'app-skills',
   templateUrl: './skills.component.html',
-  styleUrls: ['./skills.component.css']
+  styleUrls: ['./skills.component.scss']
 })
 export class SkillsComponent implements OnInit {
 

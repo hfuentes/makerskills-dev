@@ -69,13 +69,26 @@ export class UserService {
     return new Promise<any>((resolve, reject) => {
       if (user && user.email) {
         return this.db.firestore.collection('users').doc(user.email).update({
-          skills: [...skills]
+          skills: [...skills.map(x => {
+            return {
+              exp: x.exp,
+              level: x.level,
+              name: x.name,
+              ref: x.ref,
+              tags: x.tags ? x.tags.map(y => {
+                return {
+                  name: y.name,
+                  ref: y.ref
+                }
+              }) : []
+            }
+          })]
         }).then(() => resolve()).catch(err => reject(err))
       } else reject()
     })
   }
 
   getUsersBySkill(skills: Array<string> = []) {
-    throw 'Not Implemented'
+    throw new Error('Not Implemented')
   }
 }

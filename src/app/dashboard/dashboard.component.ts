@@ -52,9 +52,8 @@ export class DashboardComponent implements OnInit {
       return this.userService.getSkills(this.user)
     }).then(data => {
       this.skills = data
-      this.tags.forEach(tag => {
-        tag.skills = this.skills.filter(skill => skill.tags && skill.tags.some(skillTag => skillTag.ref.id === tag.id))
-      })
+      console.log(this.skills)
+      this.setTagSkills()
       this.state.loading = false
     }).catch(err => {
       this.tags = []
@@ -62,6 +61,22 @@ export class DashboardComponent implements OnInit {
       this.state.loading = false
       console.error(err)
     })
+  }
+
+  setTagSkills() {
+    this.tags.forEach(tag => {
+      tag.skills = this.skills.filter(skill => skill.tags && skill.tags.some(skillTag => skillTag.ref.id === tag.id))
+      tag.calcAvgLeveles()
+    })
+    this.tags.sort(this.compareTagsSort)
+  }
+
+  compareTagsSort(x: Tag, y: Tag) {
+    const xSkills = x.skills ? x.skills.length : 0
+    const ySkills = y.skills ? y.skills.length : 0
+    if (xSkills > ySkills) return -1
+    if (xSkills < ySkills) return 1
+    return 0
   }
 
 }

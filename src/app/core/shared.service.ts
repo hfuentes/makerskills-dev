@@ -82,7 +82,11 @@ export class SharedService {
     return new Promise<Array<Tag>>((resolve, reject): any => {
       this.db.firestore.collection('tags').where('active', '==', true).get().then(docs => {
         const tags: Array<Tag> = []
-        docs.forEach(doc => tags.push({ id: doc.id, name: doc.data().name, active: doc.data().active }))
+        docs.forEach(doc => tags.push(new Tag({
+          id: doc.id,
+          name: doc.data().name,
+          active: doc.data().active
+        })))
         return resolve(tags)
       }).catch(err => reject(err))
     })

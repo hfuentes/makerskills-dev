@@ -6,12 +6,12 @@
           <div class="col-12 col-xl-4">
             <div class="mb-3 p-3 border border-primary rounded">
               # {{ tag.name }}
-              <ngb-rating *ngIf="true" class="pull-right" placement="top" ngbTooltip="Level" [max]="5" [rate]="3">
+              <ngb-rating *ngIf="true" class="pull-right" placement="top"
+                [ngbTooltip]="tag.avgLeveles ? 'Average level is ' + tag.avgLeveles + ' stars' : 'Level'" [max]="5"
+                [rate]="tag.avgLeveles" [readonly]="true">
               </ngb-rating>
               <fa *ngIf="false" name="plus-circle" class="pull-right"></fa>
-              <ng-container *ngFor="let skill of tag.skills">
-                <p>{{ skill.name }}</p>
-              </ng-container>
+              <app-skills-chart [skills]="tag.skills"></app-skills-chart>
             </div>
           </div>
         </ng-container>

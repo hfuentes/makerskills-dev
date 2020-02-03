@@ -10,6 +10,7 @@ import { Params } from '../core/domain/params'
 import { ParamsService } from '../core/params.service'
 import { UserService } from '../core/user.service'
 import { debounceTime, distinctUntilChanged, map, filter, debounce } from 'rxjs/operators';
+import { SeedService } from '../core/seed.service'
 
 @Component({
   selector: 'app-profile',
@@ -73,13 +74,15 @@ export class ProfileComponent implements OnInit, OnChanges {
     private formBuilder: FormBuilder,
     private paramsService: ParamsService,
     private userService: UserService,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private seedService: SeedService
   ) {
     this.update.form = this.formBuilder.group({})
     this.create.form = this.formBuilder.group({})
   }
 
   ngOnInit() {
+    //this.seedService.populate()
     this.loading = true
     this.setUser() // set user src
     this.paramsService.getParams()
@@ -91,6 +94,7 @@ export class ProfileComponent implements OnInit, OnChanges {
       })
       .then(skillsNames => {
         this.skillsNames = skillsNames // get skills names
+        console.log(skillsNames)
         return this.userService.getSkills(this.user)
       })
       .then(skills => {

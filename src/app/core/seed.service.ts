@@ -37,7 +37,7 @@ export class SeedService {
       })
     }*/
 
-    this.db.firestore.collection('tags').get().then(tags => {
+    /*this.db.firestore.collection('tags').get().then(tags => {
       const arrTags = []
       tags.forEach(itag => {
         arrTags.push({ name: itag.data().name, id: itag.id })
@@ -53,13 +53,13 @@ export class SeedService {
           else {
             let i = 0
             docs.forEach(item => {
-              /*if (i === 0 && ['React', 'Angular 8', 'jQuery', 'CSS', 'HTML5'].includes(skill)) {
+              if (false && i === 0 && ['React', 'Angular 8', 'jQuery', 'CSS', 'HTML5'].includes(skill)) {
                 this.db.firestore.collection('skills').doc(item.id).update({
                   //const tagsNames = ['Front', 'UX/UI', 'CX', 'Back', 'Full Stack', 'Devops', 'Agility', 'Data Science']
                   tags: [{ name: 'Front', ref: this.shared.getTagRef(arrTags.find(x => x.name === 'Front').id)}]
                 })
-              }*/
-              if (i === 0 && ['Ruby', 'Spring', 'Hibernate', 'Maven', 'Node', '.NET', 'C#', 'Entity Framework', 'LINQ', 'ASP.NET',
+              }
+              if (true && i === 0 && ['Ruby', 'Spring', 'Hibernate', 'Maven', 'Node', '.NET', 'C#', 'Entity Framework', 'LINQ', 'ASP.NET',
               'C', 'Struts2', 'Struts', 'NHibernate', 'Liquibase'].includes(skill)) {
                 console.log('skill=' + skills + ',tag=Back')
                 this.db.firestore.collection('skills').doc(item.id).update({
@@ -74,7 +74,7 @@ export class SeedService {
           }
         })
       }
-    })
+    })*/
 
     /*
     //Init skills users data

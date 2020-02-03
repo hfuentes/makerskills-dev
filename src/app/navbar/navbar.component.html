@@ -12,13 +12,12 @@
     <ul class="navbar-nav mr-auto">
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
-          Menú
+          Menu
         </a>
         <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
           <div *ngFor="let item of MENU">
-            <a class="dropdown-item text-light"
-               *ngIf="auth.matchingRoles([item.role])"
-               routerLink="{{item.route}}">{{item.name}}</a>
+            <a class="dropdown-item text-light" *ngIf="auth.matchingRoles([item.role])"
+              routerLink="{{item.route}}">{{item.name}}</a>
           </div>
         </div>
       </li>
@@ -31,8 +30,8 @@
     </div>
     <ul class="navbar-nav ml-auto">
       <span *ngIf="auth.userData" class="navbar-text" title="{{auth.userData.email}}">
-      Welcome, {{auth.userData.displayName}}!&nbsp;<app-logout></app-logout>
-    </span>
+        Welcome, {{auth.userData.displayName}}!&nbsp;<app-logout></app-logout>
+      </span>
     </ul>
   </div>
 </nav>

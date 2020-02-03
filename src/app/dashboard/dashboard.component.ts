@@ -52,7 +52,6 @@ export class DashboardComponent implements OnInit {
       return this.userService.getSkills(this.user)
     }).then(data => {
       this.skills = data
-      console.log(this.skills)
       this.setTagSkills()
       this.state.loading = false
     }).catch(err => {

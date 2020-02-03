@@ -6,7 +6,7 @@ import { User } from 'src/app/core/domain/user';
 @Component({
   selector: 'users',
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.css']
+  styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit {
   public checkboxGroupForm: FormGroup;

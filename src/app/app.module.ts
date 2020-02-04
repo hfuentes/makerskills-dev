@@ -17,7 +17,6 @@ import { LogoutComponent } from './login/logout.component'
 import { ProfileComponent } from './profile/profile.component'
 import { RestrictedComponent } from './restricted/restricted.component'
 import { SkillsChartComponent } from './skills-chart/skills-chart.component'
-import { ErrorHandlerComponent } from './error-handler/error-handler.component'
 import { AdminComponent } from './admin/admin.component'
 import { SkillsComponent } from './admin/skills/skills.component'
 import { UsersComponent } from './admin/users/users.component'
@@ -28,6 +27,7 @@ import { SkillsSearchComponent } from './skills-search/skills-search.component';
 import { SkillsTagComponent } from './skills-tag/skills-tag.component';
 import { DashboardComponent } from './dashboard/dashboard.component'
 import { NavbarMenuConstants} from './constants/navbar-menu.constants'
+import {ErrorHandlerModule} from './error-handler/error-handler.module';
 
 @NgModule({
   declarations: [
@@ -37,7 +37,6 @@ import { NavbarMenuConstants} from './constants/navbar-menu.constants'
     ProfileComponent,
     RestrictedComponent,
     SkillsChartComponent,
-    ErrorHandlerComponent,
     AdminComponent,
     SkillsComponent,
     UsersComponent,
@@ -57,7 +56,8 @@ import { NavbarMenuConstants} from './constants/navbar-menu.constants'
     NgbModule,
     ReactiveFormsModule,
     FormsModule,
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
+    ErrorHandlerModule
   ],
   providers: [NavbarMenuConstants],
   bootstrap: [AppComponent]

@@ -4,22 +4,22 @@
     display:block;
 }
 
-:host >>> .level {
+:host ::ng-deep .level {
   stroke: #999;
   stroke-width: .5px;
 }
 
-:host >>> .axis line {
+:host ::ng-deep .axis line {
     stroke: #999;
     stroke-width: 1px;
 }
 
-:host >>> .axis text.label {
+:host ::ng-deep .axis text.label {
   font-size: 11px;
   /*fill: #999;*/
 }
 
-:host >>> .skill-tooltip {
+:host ::ng-deep .skill-tooltip {
   position: fixed;
   width: 270px;
   padding: 5px;
@@ -31,16 +31,16 @@
   color: #373a3c;
 }
 
-:host >>> .skill-tooltip h3 {
+:host ::ng-deep .skill-tooltip h3 {
   font-size: 1.1rem;
   margin-bottom: .2rem;
 }
 
-:host >>> .skill-tooltip .overall {
+:host ::ng-deep .skill-tooltip .overall {
   font-style: italic;
   margin-bottom: .5rem;
 }
 
-:host >>> .skill-tooltip .rating {
+:host ::ng-deep .skill-tooltip .rating {
   font-size: .7rem;
 }

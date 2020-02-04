@@ -6,6 +6,8 @@ import { Skill } from '../core/domain/skill'
 import { UserService } from '../core/user.service'
 import { User } from '../core/domain/user'
 import { AuthService } from '../core/auth.service'
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
+import { ModalEvaluateComponent } from '../modal-evaluate/modal-evaluate.component'
 
 @Component({
   selector: 'app-dashboard',
@@ -14,11 +16,11 @@ import { AuthService } from '../core/auth.service'
 })
 export class DashboardComponent implements OnInit {
 
-  // tags data
-  tags = new Array<Tag>()
-
   // user data
   @Input() user: User
+
+  // tags data
+  tags = new Array<DashboardTag>()
 
   // user skills data
   skills = new Array<Skill>()
@@ -32,7 +34,8 @@ export class DashboardComponent implements OnInit {
   constructor(
     private sharedService: SharedService,
     private userService: UserService,
-    private auth: AuthService
+    private auth: AuthService,
+    private modalService: NgbModal
   ) { }
 
   ngOnInit() {
@@ -47,12 +50,16 @@ export class DashboardComponent implements OnInit {
   loadData() {
     this.state.loading = true
     this.state.error = null
-    this.sharedService.getTags().then(data => {
-      this.tags = data
-      return this.userService.getSkills(this.user)
-    }).then(data => {
+    this.userService.getSkills(this.user).then(data => {
       this.skills = data
-      this.setTagSkills()
+      return this.sharedService.getTags()
+    }).then(data => {
+      if (data && data.length > 0) {
+        this.tags = data.map(tag => new DashboardTag({
+          tag,
+          skills: this.getSkillsByTag(tag)
+        })).sort(this.compareTagsSort)
+      }
       this.state.loading = false
     }).catch(err => {
       this.tags = []
@@ -62,15 +69,11 @@ export class DashboardComponent implements OnInit {
     })
   }
 
-  setTagSkills() {
-    this.tags.forEach(tag => {
-      tag.skills = this.skills.filter(skill => skill.tags && skill.tags.some(skillTag => skillTag.ref.id === tag.id))
-      tag.calcAvgLeveles()
-    })
-    this.tags.sort(this.compareTagsSort)
+  getSkillsByTag(tag: Tag) {
+    return this.skills.filter(skill => skill.tags && skill.tags.some(skillTag => skillTag.ref.id === tag.id))
   }
 
-  compareTagsSort(x: Tag, y: Tag) {
+  compareTagsSort(x: DashboardTag, y: DashboardTag) {
     const xSkills = x.skills ? x.skills.length : 0
     const ySkills = y.skills ? y.skills.length : 0
     if (xSkills > ySkills) return -1
@@ -78,4 +81,39 @@ export class DashboardComponent implements OnInit {
     return 0
   }
 
+  evaluateModal(tag: Tag) {
+    const modalEvaluateRef = this.modalService.open(ModalEvaluateComponent)
+    modalEvaluateRef.componentInstance.tag = tag
+  }
+
+  deleteConfirm(tag: Tag) {
+    alert('Funcionalidad por hacer ...')
+  }
+
+}
+
+export class DashboardTag {
+  tag: Tag
+  skills: Array<Skill>
+  get bg(): string {
+    const bgClassList = [
+      'bg-primary',
+      'bg-success',
+      'bg-danger',
+      'bg-warning',
+      'bg-info']
+    return bgClassList[Math.floor(Math.random() * bgClassList.length)]
+  }
+  get avgLeveles(): number {
+    if (this.skills) {
+      if (this.skills.length === 0) return 0
+      else if (this.skills.length === 1) return this.skills[0].level
+      else return this.skills.map(x => x.level).reduce((p, c) => c += p) / this.skills.length
+    }
+    return null
+  }
+  constructor(data: any) {
+    this.tag = data.tag
+    this.skills = data.skills
+  }
 }

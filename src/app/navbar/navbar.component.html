@@ -11,13 +11,13 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent" *ngIf="auth.authenticated">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
-          Menu
-        </a>
-        <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
-          <div *ngFor="let item of MENU">
-            <a class="dropdown-item text-light" *ngIf="auth.matchingRoles([item.role])"
-              routerLink="{{item.route}}">{{item.name}}</a>
+        <div ngbDropdown class="d-inline-block">
+          <button class="btn nav-link dropdown-toggle btn-outline-dark" id="dropdownBasic1" ngbDropdownToggle>Menu</button>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu bg-dark">
+            <div *ngFor="let item of MENU">
+              <a class="dropdown-item text-light" *ngIf="auth.matchingRoles([item.role])"
+                 routerLink="{{item.route}}" ngbDropdownItem>{{item.name}}</a>
+            </div>
           </div>
         </div>
       </li>

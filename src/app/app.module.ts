@@ -22,17 +22,13 @@ import { SkillsComponent } from './admin/skills/skills.component'
 import { UsersComponent } from './admin/users/users.component'
 import { UsersProfileComponent } from './users-profile/users-profile.component'
 import { UsersSearchComponent } from './users-search/users-search.component'
-import { NavbarComponent } from './navbar/navbar.component';
-import { SkillsSearchComponent } from './skills-search/skills-search.component';
-import { SkillsTagComponent } from './skills-tag/skills-tag.component';
+import { NavbarComponent } from './navbar/navbar.component'
+import { SkillsSearchComponent } from './skills-search/skills-search.component'
+import { SkillsTagComponent } from './skills-tag/skills-tag.component'
 import { DashboardComponent } from './dashboard/dashboard.component'
-<<<<<<< HEAD
-import { NavbarMenuConstants} from './constants/navbar-menu.constants';
-import { ModalEvaluateComponent } from './modal-evaluate/modal-evaluate.component'
-=======
 import { NavbarMenuConstants} from './constants/navbar-menu.constants'
-import {ErrorHandlerModule} from './error-handler/error-handler.module';
->>>>>>> 649a8892f263b749e704c17df6bb8c9fb2b03b32
+import { ModalEvaluateComponent } from './modal-evaluate/modal-evaluate.component'
+import {ErrorHandlerModule} from './error-handler/error-handler.module'
 
 @NgModule({
   declarations: [

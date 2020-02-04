@@ -1,29 +1,29 @@
 :host,
 :host .chart-container {
-    width: 100%;
-    display:block;
+  width: 100%;
+  display: block;
 }
 
 :host ::ng-deep .level {
-  stroke: #999;
-  stroke-width: .5px;
+  stroke: var(--primary);
+  stroke-width: 0.5px;
 }
 
 :host ::ng-deep .axis line {
-    stroke: #999;
-    stroke-width: 1px;
+  stroke: var(--primary);
+  stroke-width: 0.5px;
 }
 
 :host ::ng-deep .axis text.label {
   font-size: 11px;
-  /*fill: #999;*/
+  fill: var(--primary);
 }
 
 :host ::ng-deep .skill-tooltip {
   position: fixed;
   width: 270px;
   padding: 5px;
-  font-size: .8rem;
+  font-size: 0.8rem;
   background: rgba(204, 204, 204, 0.57);
   border: 1px solid;
   border-radius: 5px;
@@ -33,14 +33,14 @@
 
 :host ::ng-deep .skill-tooltip h3 {
   font-size: 1.1rem;
-  margin-bottom: .2rem;
+  margin-bottom: 0.2rem;
 }
 
 :host ::ng-deep .skill-tooltip .overall {
   font-style: italic;
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
 }
 
 :host ::ng-deep .skill-tooltip .rating {
-  font-size: .7rem;
+  font-size: 0.7rem;
 }

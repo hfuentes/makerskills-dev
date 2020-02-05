@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core'
 import { SharedService } from '../core/shared.service'
-import { Tag } from '../core/domain/tag'
+import { Tag, DashboardTag } from '../core/domain/tag'
 import { Error } from '../error-handler/error-handler.component'
 import { Skill } from '../core/domain/skill'
 import { UserService } from '../core/user.service'
@@ -59,6 +59,7 @@ export class DashboardComponent implements OnInit {
           tag,
           skills: this.getSkillsByTag(tag)
         })).sort(this.compareTagsSort)
+        this.tags.forEach(t => t.setBg())
       }
       this.state.loading = false
     }).catch(err => {
@@ -81,7 +82,7 @@ export class DashboardComponent implements OnInit {
     return 0
   }
 
-  evaluateModal(tag: Tag) {
+  evaluateModal(tag: DashboardTag) {
     const modalEvaluateRef = this.modalService.open(ModalEvaluateComponent)
     modalEvaluateRef.componentInstance.tag = tag
   }
@@ -90,30 +91,4 @@ export class DashboardComponent implements OnInit {
     alert('Funcionalidad por hacer ...')
   }
 
-}
-
-export class DashboardTag {
-  tag: Tag
-  skills: Array<Skill>
-  get bg(): string {
-    const bgClassList = [
-      'bg-primary',
-      'bg-success',
-      'bg-danger',
-      'bg-warning',
-      'bg-info']
-    return bgClassList[Math.floor(Math.random() * bgClassList.length)]
-  }
-  get avgLeveles(): number {
-    if (this.skills) {
-      if (this.skills.length === 0) return 0
-      else if (this.skills.length === 1) return this.skills[0].level
-      else return this.skills.map(x => x.level).reduce((p, c) => c += p) / this.skills.length
-    }
-    return null
-  }
-  constructor(data: any) {
-    this.tag = data.tag
-    this.skills = data.skills
-  }
 }

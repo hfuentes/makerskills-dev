@@ -20,3 +20,30 @@ export class SkillTag {
     if (ref) this.ref = ref
   }
 }
+
+export class DashboardTag {
+  tag: Tag
+  skills: Array<Skill>
+  bg: string
+  get avgLeveles(): number {
+    if (this.skills) {
+      if (this.skills.length === 0) return 0
+      else if (this.skills.length === 1) return this.skills[0].level
+      else return this.skills.map(x => x.level).reduce((p, c) => c += p) / this.skills.length
+    }
+    return null
+  }
+  constructor(data: any) {
+    this.tag = data.tag
+    this.skills = data.skills
+  }
+  setBg(): void {
+    const bgClassList = [
+      'bg-primary',
+      'bg-success',
+      'bg-danger',
+      'bg-warning',
+      'bg-info']
+    this.bg = bgClassList[Math.floor(Math.random() * bgClassList.length)]
+  }
+}

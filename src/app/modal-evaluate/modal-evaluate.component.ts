@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Tag } from '../core/domain/tag';
+import { Tag, DashboardTag } from '../core/domain/tag';
 
 @Component({
   selector: 'app-modal-evaluate',
@@ -9,7 +9,7 @@ import { Tag } from '../core/domain/tag';
 })
 export class ModalEvaluateComponent implements OnInit {
 
-  @Input() tag: Tag
+  @Input() tag: DashboardTag
 
   constructor(public activeModal: NgbActiveModal) { }
 

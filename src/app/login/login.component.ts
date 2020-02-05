@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
     this.status.loading = true
     this.status.error = null
     this.auth.doGoogleLogin()
-      .then(() => this.router.navigate(['profile'])).catch(err => {
+      .then(() => this.router.navigate(['dashboard'])).catch(err => {
         this.status.loading = false
         this.status.error = new Error('')
         if (err && err.code === 'auth/user-disabled') {

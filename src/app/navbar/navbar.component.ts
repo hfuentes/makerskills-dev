@@ -10,6 +10,7 @@ import { NavbarMenuConstants } from '../constants/navbar-menu.constants'
 export class NavbarComponent implements OnInit {
 
   MENU = this.navbarConst.getMenuItems();
+  avatar = localStorage.getItem('photoURL');
 
   constructor(public auth: AuthService, public navbarConst: NavbarMenuConstants) {
   }

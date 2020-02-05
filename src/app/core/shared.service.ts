@@ -91,4 +91,21 @@ export class SharedService {
       }).catch(err => reject(err))
     })
   }
+
+  getAllSkills() {
+    return new Promise<any>((resolve, reject) => {
+      this.db.firestore.collection('skills').get().then(docs => {
+        const skills: Array<SkillName>  = [];
+        docs.forEach(doc => {
+          skills.push({
+            id : doc.id,
+            name: doc.data().name,
+            active: doc.data().active,
+            tags: doc.data().tags
+          })
+        });
+        resolve(skills);
+      }).catch(err => reject(err));
+    })
+  }
 }

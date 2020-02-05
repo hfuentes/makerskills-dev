@@ -6,8 +6,8 @@
     </button>
     </div>
 </div>
-
-<form *ngIf="this.addSkill" [formGroup]="form" (ngSubmit)="guardarSkill()">
+<!--
+<form *ngIf="this.addSkill" [formGroup]="formAddSkill" (ngSubmit)="guardarSkill()">
     <div>
         <div class="form-group row">
             <input class="form-control col-7" type="skill" placeholder="Skill" formControlName="skill">
@@ -20,7 +20,7 @@
             </div>
 
             <div class="input-group" class="col-2">
-                <button type="submit" class="btn btn-outline-primary" [disabled]="!form.valid">
+                <button type="submit" class="btn btn-outline-primary" [disabled]="!formAddSkill.valid">
                   Guardar
                 </button>
             </div>
@@ -28,34 +28,56 @@
     </div>
     {{ form.valid }}
 </form>
+-->
 
-<div class="row mt-3">
-    <div class="col">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Skill</th>
-                    <th scope="col">Created</th>
-                    <th scope="col">Valid</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th>
-                        1
-                    </th>
-                    <th>
-                        Angular
-                    </th>
-                    <th>
-                        01-01-2020
-                    </th>
-                    <th>
-                        true
-                    </th>
-                </tr>
-            </tbody>
-        </table>
+
+<div>
+  <div class="skill" *ngFor="let skill of this.skills; let i = index;">
+
+    <div *ngIf="!skill.viewEdit" class="skill-header">
+      <div>
+        <label>Skill: </label>
+        <span>{{skill.name}}</span>
+      </div>
+
+      <div>
+        Estado: {{skill.active}}
+      </div>
     </div>
+
+    <div *ngIf="!skill.viewEdit" class="skill-tags">
+      <span class="m-1 badge badge-info" *ngFor="let tag of skill.tags; let i = index;">
+        {{tag.name}}
+      </span>
+    </div>
+
+    <div *ngIf="!skill.viewEdit" class="skill-footer">
+      <button (click)="skillActiveEdit(i, skill)">Editar</button>
+    </div>
+
+    <div *ngIf="skill.viewEdit" class="skill-header">
+      <div>
+        <label>Skill: </label>
+        <span><input type="text" placeholder="Skill" value="asdasd"></span>
+      </div>
+      <div>
+        <input type="checkbox" class="form-check-input" id="checkbox">
+        <label for="checkbox">Activo</label>
+      </div>
+    </div>
+
+    <div *ngIf="skill.viewEdit" class="skill-tags">
+      <span class="m-1 badge badge-info tag-hover">
+          asdasd
+          <img src="../../../assets/icon/ios-close.svg" class="tag-close" alt="...">
+      </span>
+    </div>
+
+    <div *ngIf="skill.viewEdit" class="skill-footer">
+      <button (click)="skillActiveEdit(i, skill)">Cancelar</button>
+      <button>Eliminar</button>
+      <button>Guardar</button>
+    </div>
+
+  </div>
 </div>

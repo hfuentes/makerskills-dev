@@ -1,4 +1,4 @@
-export class NavbarMenuConstants {
+export class NavbarConstants {
   public getMenuItems(): Array<object> {
     return [
       { name: 'Dashboard', role: 'profile', route: 'dashboard' },

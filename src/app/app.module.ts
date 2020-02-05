@@ -26,7 +26,7 @@ import { NavbarComponent } from './navbar/navbar.component'
 import { SkillsSearchComponent } from './skills-search/skills-search.component'
 import { SkillsTagComponent } from './skills-tag/skills-tag.component'
 import { DashboardComponent } from './dashboard/dashboard.component'
-import { NavbarMenuConstants} from './constants/navbar-menu.constants'
+import { NavbarConstants} from './navbar/navbar.constants'
 import { ModalEvaluateComponent } from './modal-evaluate/modal-evaluate.component'
 import {ErrorHandlerModule} from './error-handler/error-handler.module'
 
@@ -61,7 +61,7 @@ import {ErrorHandlerModule} from './error-handler/error-handler.module'
     AngularFontAwesomeModule,
     ErrorHandlerModule
   ],
-  providers: [NavbarMenuConstants],
+  providers: [NavbarConstants],
   bootstrap: [AppComponent],
   entryComponents: [
     ModalEvaluateComponent

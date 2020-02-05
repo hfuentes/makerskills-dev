@@ -1,9 +1,11 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
   <span class="navbar-brand">
-    <img
-      src="https://static.wixstatic.com/media/1cbd15_365ed530bdb843248cc8e39024a7a98a~mv2.png/v1/fill/w_362,h_217,al_c,q_85/1cbd15_365ed530bdb843248cc8e39024a7a98a~mv2.webp"
-      width="30" height="30" class="d-inline-block align-top" alt="">
-    Maker<strong>Skills</strong>
+    <a href="#">
+      <img
+        src="https://static.wixstatic.com/media/1cbd15_365ed530bdb843248cc8e39024a7a98a~mv2.png/v1/fill/w_362,h_217,al_c,q_85/1cbd15_365ed530bdb843248cc8e39024a7a98a~mv2.webp"
+        width="30" height="30" class="d-inline-block align-top">
+      Maker<strong>Skills</strong>
+    </a>
   </span>
   <button class="navbar-toggler hidden-sm-up" type="button" (click)="isNavbarCollapsed = !isNavbarCollapsed" data-target="#navbarsDefault" aria-controls="navbarsDefault" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -11,7 +13,7 @@
   <div [ngbCollapse]="isNavbarCollapsed" class="collapse navbar-collapse" *ngIf="auth.authenticated" id="navbarsDefault">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item dropdown" ngbDropdown>
-        <a class="nav-link dropdown-toggle" id="id01" href="#" ngbDropdownToggle>Menu</a>
+        <a class="nav-link dropdown-toggle" id="id01" ngbDropdownToggle>Menu</a>
         <div class="dropdown-menu bg-dark" aria-labelledby="id01" ngbDropdownMenu>
           <div *ngFor="let item of MENU">
             <a class="dropdown-item text-light" *ngIf="auth.matchingRoles([item.role])"

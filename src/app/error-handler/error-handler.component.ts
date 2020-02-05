@@ -5,22 +5,26 @@ import { Component, OnInit, Input } from '@angular/core';
   templateUrl: './error-handler.component.html'
 })
 export class ErrorHandlerComponent implements OnInit {
-  @Input() loading = false
-  @Input() error?: Error = null
-  @Input() settings?: Settings = new Settings()
-  constructor() { }
+  @Input() loading = false;
+  @Input() error?: Error = null;
+  @Input() settings?: Settings = new Settings();
+
+  constructor() {
+  }
 
   ngOnInit() {
-    if (!this.settings) this.settings = new Settings()
+    if (!this.settings) {
+      this.settings = new Settings();
+    }
   }
 }
 
 export class Error {
-  message: string
-  type: ErrorType
+  message: string;
+  type: ErrorType;
   constructor(message?: string, type?: ErrorType) {
-    this.message = message || 'Ups! An error occurred, please try again.'
-    this.type = type || ErrorType.danger
+    this.message = message || 'Ups! An error occurred, please try again.';
+    this.type = type || ErrorType.danger;
   }
 }
 
@@ -36,16 +40,16 @@ export enum ErrorType {
 }
 
 export class Settings {
-  style?: LoadingStyle
-  type?: LoadingType
-  place?: LoadingPlace
+  style?: LoadingStyle;
+  type?: LoadingType;
+  place?: LoadingPlace;
   constructor(settings?: any) {
-    this.setProperty('style', settings, LoadingStyle.border)
-    this.setProperty('type', settings, LoadingType.primary)
-    this.setProperty('place', settings, LoadingPlace.textCenter)
+    this.setProperty('style', settings, LoadingStyle.border);
+    this.setProperty('type', settings, LoadingType.primary);
+    this.setProperty('place', settings, LoadingPlace.textCenter);
   }
   private setProperty(property: string, settings: Settings, defaultObj: any) {
-    this[property] = settings && settings[property] ? settings[property] : defaultObj
+    this[property] = settings && settings[property] ? settings[property] : defaultObj;
   }
 }
 

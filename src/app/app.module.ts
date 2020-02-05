@@ -17,17 +17,18 @@ import { LogoutComponent } from './login/logout.component'
 import { ProfileComponent } from './profile/profile.component'
 import { RestrictedComponent } from './restricted/restricted.component'
 import { SkillsChartComponent } from './skills-chart/skills-chart.component'
-import { ErrorHandlerComponent } from './error-handler/error-handler.component'
 import { AdminComponent } from './admin/admin.component'
 import { SkillsComponent } from './admin/skills/skills.component'
 import { UsersComponent } from './admin/users/users.component'
 import { UsersProfileComponent } from './users-profile/users-profile.component'
 import { UsersSearchComponent } from './users-search/users-search.component'
-import { NavbarComponent } from './navbar/navbar.component';
-import { SkillsSearchComponent } from './skills-search/skills-search.component';
-import { SkillsTagComponent } from './skills-tag/skills-tag.component';
+import { NavbarComponent } from './navbar/navbar.component'
+import { SkillsSearchComponent } from './skills-search/skills-search.component'
+import { SkillsTagComponent } from './skills-tag/skills-tag.component'
 import { DashboardComponent } from './dashboard/dashboard.component'
 import { NavbarMenuConstants} from './constants/navbar-menu.constants'
+import { ModalEvaluateComponent } from './modal-evaluate/modal-evaluate.component'
+import {ErrorHandlerModule} from './error-handler/error-handler.module'
 
 @NgModule({
   declarations: [
@@ -37,7 +38,6 @@ import { NavbarMenuConstants} from './constants/navbar-menu.constants'
     ProfileComponent,
     RestrictedComponent,
     SkillsChartComponent,
-    ErrorHandlerComponent,
     AdminComponent,
     SkillsComponent,
     UsersComponent,
@@ -46,7 +46,8 @@ import { NavbarMenuConstants} from './constants/navbar-menu.constants'
     NavbarComponent,
     SkillsSearchComponent,
     SkillsTagComponent,
-    DashboardComponent
+    DashboardComponent,
+    ModalEvaluateComponent
   ],
   imports: [
     BrowserModule,
@@ -57,9 +58,13 @@ import { NavbarMenuConstants} from './constants/navbar-menu.constants'
     NgbModule,
     ReactiveFormsModule,
     FormsModule,
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
+    ErrorHandlerModule
   ],
   providers: [NavbarMenuConstants],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    ModalEvaluateComponent
+  ]
 })
 export class AppModule { }

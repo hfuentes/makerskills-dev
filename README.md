@@ -18,12 +18,14 @@ Prueba concepto Angular 8 + Firebase Auth (Google) + Firebase Firestore
 
 ### Despliegues
 
-`sh deploy.sh -t firebase` script despliegue Firebase
+`sh deploy.sh -t firebase` script despliegue Firebase (iniciado en máquina local o servidor)
+`sh deploy.sh -t docker -s **PASSWORD**` script despliegue Docker
 
 ```
 Usage: deploy.sh [
   -t Target: ['firebase', 'docker'] # required
   -e Environment: ['dev','prod'] # default: 'dev'
+  -s Secret (Server Password): [string] # default: 'dev'
   -p Firebase Project: [string] # default: 'makerskills-develop'
   -o Firebase Options: [string] # default: 'hosting,firestore:rules'
 ]

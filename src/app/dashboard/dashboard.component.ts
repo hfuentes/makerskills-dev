@@ -83,8 +83,9 @@ export class DashboardComponent implements OnInit {
   }
 
   evaluateModal(tag: DashboardTag) {
-    const modalEvaluateRef = this.modalService.open(ModalEvaluateComponent)
+    const modalEvaluateRef = this.modalService.open(ModalEvaluateComponent, { size: 'lg' })
     modalEvaluateRef.componentInstance.tag = tag
+    modalEvaluateRef.componentInstance.userSkills = this.skills
   }
 
   deleteConfirm(tag: Tag) {

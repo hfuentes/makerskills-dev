@@ -14,10 +14,10 @@ export class SharedService {
   getSkills() {
     return new Promise<any>((resolve, reject) => {
       this.db.firestore.collection('skills').where('active', '==', true).get().then(docs => {
-        const skills: Array<SkillName>  = [];
+        const skills: Array<SkillName> = [];
         docs.forEach(doc => {
           skills.push({
-            id : doc.id,
+            id: doc.id,
             name: doc.data().name,
             active: doc.data().active,
             tags: doc.data().tags
@@ -41,7 +41,7 @@ export class SharedService {
   getUsers() {
     return new Promise<Array<User>>((resolve, reject): any => {
       this.db.firestore.collection('users').get().then(res => {
-        const users: Array<User>  = [];
+        const users: Array<User> = [];
         res.forEach(doc => {
           const user: User = {
             email: doc.id,
@@ -70,11 +70,11 @@ export class SharedService {
   editUser(email: string, data) {
     return new Promise<any>((resolve, reject): any => {
       this.db.firestore.collection('users').doc(email).update(data)
-      .then(respuesta => {
-        resolve(respuesta);
-      }).catch(error => {
-        reject(error);
-      });
+        .then(respuesta => {
+          resolve(respuesta);
+        }).catch(error => {
+          reject(error);
+        });
     });
   }
 
@@ -95,10 +95,10 @@ export class SharedService {
   getAllSkills() {
     return new Promise<any>((resolve, reject) => {
       this.db.firestore.collection('skills').get().then(docs => {
-        const skills: Array<SkillName>  = [];
+        const skills: Array<SkillName> = [];
         docs.forEach(doc => {
           skills.push({
-            id : doc.id,
+            id: doc.id,
             name: doc.data().name,
             active: doc.data().active,
             tags: doc.data().tags
@@ -106,6 +106,20 @@ export class SharedService {
         });
         resolve(skills);
       }).catch(err => reject(err));
+    })
+  }
+
+  getSkillsByTag(tag: Tag) {
+    return new Promise<any>((resolve, reject) => {
+      this.db.firestore.collection('skills').get().then(docs => {
+        const res: Array<SkillName> = []
+        docs.forEach(doc => {
+          if (doc.data().tags && doc.data().tags.map(t => t.ref.id).includes(tag.id)) {
+            res.push(new SkillName({ id: doc.id, ...doc.data() }))
+          }
+        })
+        resolve(res)
+      }).catch(err => reject(err))
     })
   }
 }

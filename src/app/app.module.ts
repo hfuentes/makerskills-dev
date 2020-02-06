@@ -17,18 +17,18 @@ import { LogoutComponent } from './login/logout.component'
 import { ProfileComponent } from './profile/profile.component'
 import { RestrictedComponent } from './restricted/restricted.component'
 import { SkillsChartComponent } from './skills-chart/skills-chart.component'
-import { ErrorHandlerComponent } from './error-handler/error-handler.component'
 import { AdminComponent } from './admin/admin.component'
 import { SkillsComponent } from './admin/skills/skills.component'
-import { ExpsComponent } from './admin/exps/exps.component'
 import { UsersComponent } from './admin/users/users.component'
-import { LevelsComponent } from './admin/levels/levels.component'
 import { UsersProfileComponent } from './users-profile/users-profile.component'
 import { UsersSearchComponent } from './users-search/users-search.component'
-import { NavbarComponent } from './navbar/navbar.component';
-import { SkillsSearchComponent } from './skills-search/skills-search.component';
-import { SkillsTagComponent } from './skills-tag/skills-tag.component';
+import { NavbarComponent } from './navbar/navbar.component'
+import { SkillsSearchComponent } from './skills-search/skills-search.component'
+import { SkillsTagComponent } from './skills-tag/skills-tag.component'
 import { DashboardComponent } from './dashboard/dashboard.component'
+import { NavbarConstants} from './navbar/navbar.constants'
+import { ModalEvaluateComponent } from './modal-evaluate/modal-evaluate.component'
+import {ErrorHandlerModule} from './error-handler/error-handler.module'
 
 @NgModule({
   declarations: [
@@ -38,18 +38,16 @@ import { DashboardComponent } from './dashboard/dashboard.component'
     ProfileComponent,
     RestrictedComponent,
     SkillsChartComponent,
-    ErrorHandlerComponent,
     AdminComponent,
     SkillsComponent,
-    ExpsComponent,
     UsersComponent,
-    LevelsComponent,
     UsersProfileComponent,
     UsersSearchComponent,
     NavbarComponent,
     SkillsSearchComponent,
     SkillsTagComponent,
-    DashboardComponent
+    DashboardComponent,
+    ModalEvaluateComponent
   ],
   imports: [
     BrowserModule,
@@ -60,9 +58,13 @@ import { DashboardComponent } from './dashboard/dashboard.component'
     NgbModule,
     ReactiveFormsModule,
     FormsModule,
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
+    ErrorHandlerModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [NavbarConstants],
+  bootstrap: [AppComponent],
+  entryComponents: [
+    ModalEvaluateComponent
+  ]
 })
 export class AppModule { }

@@ -4,14 +4,34 @@
       <div class="row mt-3">
         <ng-container *ngFor="let tag of tags">
           <div class="col-12 col-xl-4">
-            <div class="mb-3 p-3 border border-primary rounded">
-              # {{ tag.name }}
-              <ngb-rating *ngIf="true" class="pull-right" placement="top" ngbTooltip="Level" [max]="5" [rate]="3">
-              </ngb-rating>
-              <fa *ngIf="false" name="plus-circle" class="pull-right"></fa>
-              <ng-container *ngFor="let skill of tag.skills">
-                <p>{{ skill.name }}</p>
-              </ng-container>
+            <div
+              class="mb-3 p-3 border rounded {{ !tag.skills || (tag.skills && tag.skills.length === 0) ? tag.bg : 'border-info' }}">
+              <div class="clearfix">
+                <h4 class="float-left"
+                  [ngClass]="{'text-info': tag.skills && tag.skills.length > 0, 'text-white': !tag.skills || (tag.skills && tag.skills.length === 0)}">
+                  <strong># {{ tag.tag.name }}</strong>
+                </h4>
+                <h4>
+                  <ngb-rating *ngIf="tag.skills && tag.skills.length > 0" class="text-warning float-right"
+                    placement="top"
+                    [ngbTooltip]="tag.avgLeveles ? 'Average level is ' + (tag.avgLeveles | number) + ' stars' : 'Level'"
+                    [max]="5" [rate]="tag.avgLeveles" [readonly]="true">
+                  </ngb-rating>
+                </h4>
+                <h1>
+                  <fa *ngIf="!tag.skills || (tag.skills && tag.skills.length === 0)" name="plus-circle"
+                    class="float-right text-white" (click)="evaluateModal(tag)"></fa>
+                </h1>
+              </div>
+              <div *ngIf="tag.skills && tag.skills.length > 0">
+                <app-skills-chart [skills]="tag.skills"></app-skills-chart>
+              </div>
+              <div *ngIf="tag.skills && tag.skills.length > 0" class="clearfix">
+                <h2 class="float-right">
+                  <fa name="times-circle" class="text-danger mr-1" (click)="deleteConfirm(tag)"></fa>
+                  <fa name="chevron-circle-right" class="text-info" (click)="evaluateModal(tag)"></fa>
+                </h2>
+              </div>
             </div>
           </div>
         </ng-container>

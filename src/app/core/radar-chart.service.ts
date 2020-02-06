@@ -21,12 +21,12 @@ export class RadarChartService {
     this.config = {
       margin: {
         top: 50,
-        right: 150,
+        right: 50,
         bottom: 50,
-        left: 150
+        left: 50
       },
-      width: 250,
-      height: 250,
+      width: 210,
+      height: 210,
       radians: 2 * Math.PI,
       levels: 5, //five levels by default
     }

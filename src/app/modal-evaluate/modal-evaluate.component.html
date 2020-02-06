@@ -1,0 +1,39 @@
+<ng-container *ngIf="tag">
+  <div class="modal-body">
+    <div class="clearfix">
+      <h4 class="float-left text-info pt-3 pl-3"><strong># {{ tag.tag.name }}</strong></h4>
+      <button type="button" class="close float-right" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="p-3">
+      <p>Indicate your level in each skill and years of experience:</p>
+      <div class="row">
+        <ng-container *ngFor="let evaluationSkill of this.evaluationSkills">
+          <div class="col-6">
+            <table class="table table-sm table-borderless">
+              <tr>
+                <td style="width: 40%">
+                  <span class="badge badge-pill badge-primary">{{ evaluationSkill.skill.name }} <fa
+                      name="chevron-circle-right"></fa></span>
+                </td>
+                <td style="width: 30%">
+                  <ngb-rating class="text-warning" placement="top" [ngbTooltip]="Level" [max]="5"
+                    [rate]="evaluationSkill.skill.level">
+                  </ngb-rating>
+                </td>
+                <td style="width: 20%">
+                  <input type="number" class="form-control form-control-sm" placeholder="Years"
+                    [(ngModel)]="evaluationSkill.skill.exp" />
+                </td>
+              </tr>
+            </table>
+          </div>
+        </ng-container>
+      </div>
+      <div class="text-center">
+        <button type="button" class="btn btn-primary" (click)="saveEvaluation()">Save</button>
+      </div>
+    </div>
+  </div>
+</ng-container>

@@ -8,7 +8,7 @@ import * as _ from 'lodash'
 @Component({
   selector: 'app-skills-chart',
   templateUrl: './skills-chart.component.html',
-  styleUrls: ['./skills-chart.component.css']
+  styleUrls: ['./skills-chart.component.scss']
 })
 export class SkillsChartComponent implements OnInit, AfterViewInit, DoCheck {
 

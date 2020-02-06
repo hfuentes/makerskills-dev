@@ -33,4 +33,19 @@ export class SkillName {
   name: string
   active = true
   tags: Array<string>
+  constructor(data?: any) {
+    this.id = data.id
+    this.name = data.name
+    this.active = data.active
+    this.tags = data.tags
+  }
+}
+
+export class EvaluationSkill {
+  skill: Skill
+  check = false
+  constructor(data?: any) {
+    this.skill = data.skill
+    this.check = data.check
+  }
 }

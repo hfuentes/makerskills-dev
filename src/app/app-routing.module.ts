@@ -10,7 +10,7 @@ import { SkillsSearchComponent } from './skills-search/skills-search.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
-  { path: '', component: ProfileComponent, canActivate: [AuthGuard], data: { roles: ['profile'] } },
+  { path: '', component: DashboardComponent, canActivate: [AuthGuard], data: { roles: ['profile'] } },
   { path: 'login', component: LoginComponent },
   { path: 'restricted', component: RestrictedComponent, canActivate: [AuthGuard] },
   { path: 'profile', component: UsersProfileComponent, canActivate: [AuthGuard], data: { roles: ['profile'] } },

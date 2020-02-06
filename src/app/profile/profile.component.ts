@@ -9,7 +9,7 @@ import { FormBuilder, Validators, FormControl, FormGroup } from '@angular/forms'
 import { Params } from '../core/domain/params'
 import { ParamsService } from '../core/params.service'
 import { UserService } from '../core/user.service'
-import { debounceTime, distinctUntilChanged, map, filter, debounce } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, map, filter, debounce } from 'rxjs/operators'
 
 @Component({
   selector: 'app-profile',

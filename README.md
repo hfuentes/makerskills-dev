@@ -19,7 +19,7 @@ Prueba concepto Angular 8 + Firebase Auth (Google) + Firebase Firestore
 ### Despliegues
 
 `sh deploy.sh -t firebase` script despliegue Firebase (iniciado en máquina local o servidor)
-`sh deploy.sh -t docker -s **PASSWORD**` script despliegue Docker
+`sh deploy.sh -t docker -s **PASSWORD**` script despliegue Docker (requisitos: keychain, sshpass, expect)
 
 ```
 Usage: deploy.sh [
@@ -32,8 +32,6 @@ Usage: deploy.sh [
 ```
 
 Para hacer despliegue por medio de GitHub (develop) tan solo se debe subir el código a la rama: `deploy-firebase-develop`. Luego la configuración del GitHub/Workflow: `/.github/workflows/deploy-firebase-develop.yml` ejecutará el deploy.
-
-`sh deploy.sh -t docker` script despliegue Docker (requisitos: keychain, sshpass, expect)
 
 ## Componentes transversales
 

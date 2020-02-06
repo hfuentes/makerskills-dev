@@ -1,8 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Tag, DashboardTag } from '../core/domain/tag';
+import { DashboardTag } from '../core/domain/tag';
 import { SharedService } from '../core/shared.service';
 import { EvaluationSkill, Skill, SkillName } from '../core/domain/skill';
+import { User } from '../core/domain/user';
+import { UserService } from '../core/user.service';
+import { Error } from '../error-handler/error-handler.component';
 
 @Component({
   selector: 'app-modal-evaluate',
@@ -13,20 +16,27 @@ export class ModalEvaluateComponent implements OnInit {
 
   @Input() tag: DashboardTag
   @Input() userSkills: Array<Skill>
+  @Input() user: User
+  @Output() reloadUserSkills = new EventEmitter()
 
   evaluationSkills: Array<EvaluationSkill> = []
 
   state: any = {
     loading: false,
-    error: null
+    error: null,
+    saveLoading: false,
+    saveError: null
   }
 
   constructor(
     private activeModal: NgbActiveModal,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private userService: UserService
   ) { }
 
   ngOnInit() {
+    this.state.loading = true
+    this.state.error = null
     this.sharedService.getSkillsByTag(this.tag.tag).then(data => {
       this.evaluationSkills = []
       if (data && data.length) {
@@ -35,6 +45,11 @@ export class ModalEvaluateComponent implements OnInit {
         })
         this.evaluationSkills.sort(this.compareEvaluationSkills)
       }
+      this.state.loading = false
+    }).catch(err => {
+      this.state.loading = false
+      this.state.error = new Error()
+      console.error(err)
     })
   }
 
@@ -52,13 +67,46 @@ export class ModalEvaluateComponent implements OnInit {
 
   getEvaluationSkill(skill: SkillName): EvaluationSkill {
     const userSkill = this.userSkills && this.userSkills.length > 0 ? this.userSkills.find(x => x.ref.id === skill.id) : null
-    console.log(userSkill)
-    if (userSkill) return new EvaluationSkill({ skill: userSkill, check: true })
-    else return new EvaluationSkill({ skill, check: false })
+    if (userSkill) return new EvaluationSkill({ skill: userSkill })
+    else {
+      return new EvaluationSkill({
+        skill: new Skill({
+          name: skill.name,
+          exp: null,
+          level: null,
+          ref: this.sharedService.getSkillRef(skill.id),
+          tags: skill.tags
+        })
+      })
+    }
   }
 
   saveEvaluation() {
-    alert('Funcionalidad en constracción')
+    this.state.saveLoading = true
+    this.state.saveError = null
+    const removeIds = this.evaluationSkills.filter(x => !x.check).map(x => x.skill.ref.id)
+    this.userSkills = this.userSkills.filter(x => {
+      return !removeIds.includes(x.ref.id)
+    })
+    this.evaluationSkills.filter(x => x.check).forEach(x => {
+      const exist = this.userSkills.find(y => y.ref.id === x.skill.ref.id)
+      if (!exist) this.userSkills.push({ ...x.skill})
+    })
+    this.userService.setSkills(this.user, this.userSkills).then(() => {
+      this.state.saveLoading = false
+      this.evaluationSkills.sort(this.compareEvaluationSkills)
+      this.reloadUserSkills.emit(this.userSkills)
+    }).catch(err => {
+      this.state.saveLoading = false
+      this.state.saveError = new Error()
+      console.error(err)
+    })
+
+  }
+
+  resetEvaluationSkill(evaluationSkill: EvaluationSkill) {
+    evaluationSkill.skill.exp = null
+    evaluationSkill.skill.level = null
   }
 
 }

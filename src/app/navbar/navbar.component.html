@@ -22,67 +22,7 @@
         </div>
       </li>
     </ul>
-    <div class="input-group align-content-md-center ml-5">
-      <input class="form-control col-8" autocomplete="off" type="search" placeholder="search..." id="search-input"
-        [ngbPopover]="popContent" placement="bottom">
-      <span class="input-group-append">
-        <div class="input-group-text bg-white"><i class="fa fa-search"></i></div>
-      </span>
-      <ng-template #popContent>
-        <div class="row">
-          <div class="col">
-            <div class="clearfix">
-              <span class="badge badge-primary float-left mr-1"># Front</span>
-              <span class="badge badge-primary float-left mr-1"># Back</span>
-              <span class="badge badge-primary float-left mr-1"># UX/UI</span>
-              <a href="#" class="float-right text-muted"><u>SEE MORE</u> <fa name="plus-circle"></fa></a>
-            </div>
-            <hr>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <img src="{{auth.userData.photoURL}}" width="35" height="35" class="rounded-circle">
-          </div>
-          <div class="col">
-            <img src="{{auth.userData.photoURL}}" width="35" height="35" class="rounded-circle">
-          </div>
-          <div class="col">
-            <img src="{{auth.userData.photoURL}}" width="35" height="35" class="rounded-circle">
-          </div>
-          <div class="col">
-            <img src="{{auth.userData.photoURL}}" width="35" height="35" class="rounded-circle">
-          </div>
-          <div class="col">
-            <img src="{{auth.userData.photoURL}}" width="35" height="35" class="rounded-circle">
-          </div>
-          <div class="col">
-            <img src="{{auth.userData.photoURL}}" width="35" height="35" class="rounded-circle">
-          </div>
-          <div class="col">
-            <img src="{{auth.userData.photoURL}}" width="35" height="35" class="rounded-circle">
-          </div>
-          <div class="col">
-            <img src="{{auth.userData.photoURL}}" width="35" height="35" class="rounded-circle">
-          </div>
-          <div class="col">
-            <img src="{{auth.userData.photoURL}}" width="35" height="35" class="rounded-circle">
-          </div>
-          <div class="col">
-            <img src="{{auth.userData.photoURL}}" width="35" height="35" class="rounded-circle">
-          </div>
-          <div class="col">
-            <img src="{{auth.userData.photoURL}}" width="35" height="35" class="rounded-circle">
-          </div>
-          <div class="col">
-            <img src="{{auth.userData.photoURL}}" width="35" height="35" class="rounded-circle">
-          </div>
-          <div class="col">
-            <img src="{{auth.userData.photoURL}}" width="35" height="35" class="rounded-circle">
-          </div>
-        </div>
-      </ng-template>
-    </div>
+    <app-navbar-search class="input-group align-content-md-center ml-5"></app-navbar-search>
     <ul class="navbar-nav mr-auto mb-auto mt-auto">
       <li class="nav-item dropdown" ngbDropdown>
         <img src="{{auth.userData.photoURL}}" width="35" height="35" class="rounded-circle" ngbDropdownMenu>

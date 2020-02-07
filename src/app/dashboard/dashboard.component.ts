@@ -21,6 +21,7 @@ export class DashboardComponent implements OnInit {
 
   // tags data
   tags = new Array<DashboardTag>()
+  tagsNames = new Array<Tag>()
 
   // user skills data
   skills = new Array<Skill>()
@@ -55,7 +56,8 @@ export class DashboardComponent implements OnInit {
       return this.sharedService.getTags()
     }).then(data => {
       if (data && data.length > 0) {
-        this.tags = data.map(tag => new DashboardTag({
+        this.tagsNames = data
+        this.tags = this.tagsNames.map(tag => new DashboardTag({
           tag,
           skills: this.getSkillsByTag(tag)
         })).sort(this.compareTagsSort)
@@ -68,6 +70,19 @@ export class DashboardComponent implements OnInit {
       this.state.loading = false
       console.error(err)
     })
+  }
+
+  reloadData(data: Array<Skill>) {
+    this.state.loading = true
+    this.state.error = null
+    this.skills = data
+    this.tags = this.tagsNames.map(tag => new DashboardTag({
+      tag,
+      skills: this.getSkillsByTag(tag)
+    })).sort(this.compareTagsSort)
+    this.tags.forEach(t => t.setBg())
+    window.scrollTo(0, 0)
+    this.state.loading = false
   }
 
   getSkillsByTag(tag: Tag) {
@@ -86,6 +101,8 @@ export class DashboardComponent implements OnInit {
     const modalEvaluateRef = this.modalService.open(ModalEvaluateComponent, { size: 'lg' })
     modalEvaluateRef.componentInstance.tag = tag
     modalEvaluateRef.componentInstance.userSkills = this.skills
+    modalEvaluateRef.componentInstance.user = this.user
+    modalEvaluateRef.componentInstance.reloadUserSkills.subscribe($e => this.reloadData($e))
   }
 
   deleteConfirm(tag: Tag) {

@@ -17,6 +17,10 @@ export class ErrorHandlerComponent implements OnInit {
       this.settings = new Settings();
     }
   }
+
+  close() {
+    this.error = null
+  }
 }
 
 export class Error {

@@ -8,7 +8,7 @@
     <div class="row">
       <div class="col">
         <div class="clearfix">
-          <ng-container *ngFor="let tag of tagsSelected">
+          <ng-container *ngFor="let tag of search.tags">
             <span class="badge badge-primary float-left mr-1"># {{ tag.name }}</span>
           </ng-container>
           <a href="#" class="float-right text-muted"><u>SEE MORE</u>
@@ -19,45 +19,11 @@
       </div>
     </div>
     <div class="row">
-      <div class="col">
-        <img src="{{auth.userData.photoURL}}" width="35" height="35" class="rounded-circle">
-      </div>
-      <div class="col">
-        <img src="{{auth.userData.photoURL}}" width="35" height="35" class="rounded-circle">
-      </div>
-      <div class="col">
-        <img src="{{auth.userData.photoURL}}" width="35" height="35" class="rounded-circle">
-      </div>
-      <div class="col">
-        <img src="{{auth.userData.photoURL}}" width="35" height="35" class="rounded-circle">
-      </div>
-      <div class="col">
-        <img src="{{auth.userData.photoURL}}" width="35" height="35" class="rounded-circle">
-      </div>
-      <div class="col">
-        <img src="{{auth.userData.photoURL}}" width="35" height="35" class="rounded-circle">
-      </div>
-      <div class="col">
-        <img src="{{auth.userData.photoURL}}" width="35" height="35" class="rounded-circle">
-      </div>
-      <div class="col">
-        <img src="{{auth.userData.photoURL}}" width="35" height="35" class="rounded-circle">
-      </div>
-      <div class="col">
-        <img src="{{auth.userData.photoURL}}" width="35" height="35" class="rounded-circle">
-      </div>
-      <div class="col">
-        <img src="{{auth.userData.photoURL}}" width="35" height="35" class="rounded-circle">
-      </div>
-      <div class="col">
-        <img src="{{auth.userData.photoURL}}" width="35" height="35" class="rounded-circle">
-      </div>
-      <div class="col">
-        <img src="{{auth.userData.photoURL}}" width="35" height="35" class="rounded-circle">
-      </div>
-      <div class="col">
-        <img src="{{auth.userData.photoURL}}" width="35" height="35" class="rounded-circle">
-      </div>
+      <ng-container *ngFor="let userTag of search.usersTag">
+        <div class="col">
+          <img src="{{userTag.user.photoURL}}" width="35" height="35" class="rounded-circle">
+        </div>
+      </ng-container>
     </div>
   </ng-template>
 </ng-container>

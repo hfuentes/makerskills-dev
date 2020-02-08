@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { SkillName } from '../core/domain/skill'
-import { User } from './domain/user';
+import { User, UserTagSearch } from './domain/user';
 import { Tag } from './domain/tag';
 
 @Injectable({
@@ -120,6 +120,41 @@ export class SharedService {
         })
         resolve(res)
       }).catch(err => reject(err))
+    })
+  }
+
+  getUsersByTag(tags: Array<Tag> = []) {
+    return new Promise<any>((resolve, reject) => {
+      const res: Array<UserTagSearch> = []
+      if (tags && tags.length > 0) {
+        return this.db.firestore.collection('users')
+          .where('active', '==', true).get().then(docs => {
+            if (docs && !docs.empty) {
+              docs.forEach(doc => {
+                if (doc.data().skills && doc.data().skills.length > 0 && doc.data().skills.some(skill => {
+                  if (skill.tags && skill.tags.length > 0) {
+                    return skill.tags.some(tag => {
+                      return tags.some(x => x.id === tag.ref.id)
+                    })
+                  } else {
+                    return false
+                  }
+                })) {
+                  res.push(new UserTagSearch({
+                    user: new User({
+                      email: doc.id,
+                      displayName: doc.data().displayName,
+                      photoURL: doc.data().photoURL
+                    })
+                  }))
+                }
+              })
+            }
+            return resolve(res)
+          }).catch(err => reject(err))
+      } else {
+        return resolve(res)
+      }
     })
   }
 }

@@ -11,6 +11,7 @@
   </button>
   <div [ngbCollapse]="isNavbarCollapsed" class="collapse navbar-collapse" *ngIf="auth.authenticated"
     id="navbarsDefault">
+    <app-navbar-search class="input-group align-content-md-center ml-5"></app-navbar-search>
     <ul class="navbar-nav mr-auto">
       <li class="nav-item dropdown" ngbDropdown>
         <a class="nav-link dropdown-toggle" id="id01" ngbDropdownToggle>Menu</a>
@@ -22,7 +23,6 @@
         </div>
       </li>
     </ul>
-    <app-navbar-search class="input-group align-content-md-center ml-5"></app-navbar-search>
     <ul class="navbar-nav mr-auto mb-auto mt-auto">
       <li class="nav-item dropdown" ngbDropdown>
         <img src="{{auth.userData.photoURL}}" width="35" height="35" class="rounded-circle" ngbDropdownMenu>

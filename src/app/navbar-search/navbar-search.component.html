@@ -1,6 +1,7 @@
 <ng-container [formGroup]="search.form">
   <input class="form-control col-8" autocomplete="off" type="search" placeholder="Find your maker!"
-    [ngbPopover]="popContent" [autoClose]="'outside'" placement="bottom" formControlName="text">
+    [ngbPopover]="popContent" [autoClose]="'outside'" placement="bottom-left" [popoverClass]="'nav-search-popover'"
+    formControlName="text">
   <span class="input-group-append">
     <div class="input-group-text bg-white"><i class="fa fa-search"></i></div>
   </span>
@@ -19,11 +20,20 @@
       </div>
     </div>
     <div class="row">
-      <ng-container *ngFor="let userTag of search.usersTag">
-        <div class="col">
-          <img src="{{userTag.user.photoURL}}" width="35" height="35" class="rounded-circle">
+      <div class="col">
+        <div class="clearfix">
+          <ng-container *ngFor="let userTag of search.usersTag">
+            <div class="float-left mr-3 text-center">
+              <img src="{{userTag.user.photoURL}}" width="35" height="35" class="rounded-circle">
+              <!--<ng-container *ngFor="let level of userTag.ratings">
+                <br><ngb-rating [max]="5" [rate]="3"></ngb-rating>
+              </ng-container>-->
+              <br><ngb-rating [max]="5" [rate]="3" [readonly]="true"></ngb-rating>
+              <br><ngb-rating [max]="5" [rate]="3" [readonly]="true"s></ngb-rating>
+            </div>
+          </ng-container>
         </div>
-      </ng-container>
+      </div>
     </div>
   </ng-template>
 </ng-container>

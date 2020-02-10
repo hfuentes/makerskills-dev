@@ -131,6 +131,8 @@ export class SharedService {
           .where('active', '==', true).get().then(docs => {
             if (docs && !docs.empty) {
               docs.forEach(doc => {
+                console.log(tags)
+                console.log(doc.data().skills)
                 if (doc.data().skills && doc.data().skills.length > 0 && doc.data().skills.some(skill => {
                   if (skill.tags && skill.tags.length > 0) {
                     return skill.tags.some(tag => {

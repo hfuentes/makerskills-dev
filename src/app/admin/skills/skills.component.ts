@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Skill } from '../../core/domain/skill';
 import { SharedService } from '../../core/shared.service';
+import {Error, LoadingPlace, Settings} from '../../error-handler/error-handler.component';
+import {UserFront} from '../users/users.component';
 
 @Component({
   selector: 'app-skills',
@@ -10,63 +12,82 @@ import { SharedService } from '../../core/shared.service';
 })
 export class SkillsComponent implements OnInit {
 
-  addSkill: boolean;
-  formAddSkill: FormGroup;
-  indexSelected: number = null;
-  public skillsFront: Array<any>;
-  public skills: Array<Skill>;
+  loading = {
+    skills: false,
+    activarSkill: false,
+    actualizarSkill: false
+  };
 
-  viewEdit: boolean;
-  formEditSkill: FormGroup;
-  dummy: [any];
+  error = {
+    skills: {},
+    activarSkill: {},
+    actualizarSkill: {}
+  };
+
+  formAddSkill: FormGroup;
+  addSkill: boolean;
+  public skillsFront: Array<any>;
 
   constructor(public sharedService: SharedService) {
     this.formAddSkill = new FormGroup(
-    {
-      'skill': new FormControl(null, Validators.required)
-    });
+      {
+        skill: new FormControl(null, Validators.required)
+      });
 
     this.formAddSkill = new FormGroup({
-      'name': new FormControl(null, Validators.required),
-      'activo': new FormControl(null, Validators.required),
-      'tags': new FormGroup(
+      name: new FormControl(null, Validators.required),
+      activo: new FormControl(null, Validators.required),
+      tags: new FormGroup(
         //this.dummy.forEach(user => {});
         {
-          'name': new FormControl(false),
-          'ref': new FormControl(true)
+          name: new FormControl(false),
+          ref: new FormControl(true)
         }
       )
     });
   }
 
+
   ngOnInit() {
+    this.loading.skills = true;
+    this.error.skills = false;
     this.addSkill = false;
-    this.sharedService.getAllSkills().then(skills => {
-      console.log(skills);
-      this.skills = skills;
+    this.sharedService.getSkills().then(skills => {
+      this.skillsFront = skills;
       skills.forEach( skill => {
-        skill.viewEdit = false;
+        skill.edit = false;
+        skill.loading = false;
+        skill.error = {};
       });
+
+      this.loading.skills = false;
     }).catch(err => {
+      this.error.skills = new Error('Error on loading skills, please try again.');
+      this.loading.skills = false;
       console.error(err);
 
     });
   }
 
-  guardarSkill() {
-
-  }
-
-  viewAddSkill() {
+  viewAddSkillForm() {
     this.addSkill = !this.addSkill;
   }
 
-
-  skillActiveEdit(index, skill) {
-    skill.viewEdit = !skill.viewEdit;
-    this.indexSelected = index;
-    console.log(this.viewEdit);
-    console.log(this.indexSelected);
+  onClick(skill) {
+    skill.active = !skill.active;
+    skill.error = {};
+    skill.loading = true;
+    this.sharedService.editSkill(skill.id, {active: skill.active})
+      .then(() => {
+        skill.loading = false;
+      })
+      .catch(err => {
+        skill.error = {
+          status: 400,
+          message: 'Servicio no disponible'
+        };
+        skill.loading = false;
+      });
   }
 
 }

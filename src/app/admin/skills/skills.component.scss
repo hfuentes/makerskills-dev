@@ -1,32 +1,28 @@
-.skill {
-  border-style: groove;
-  display:inline-block;
-  margin: 10px;
+.btn-circle {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
 }
 
-.skill-header {
-  border-style: none;
+.btn-active-circle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  color: #007BFF;
+  border-color: #007BFF;
+  background-color: #FFFFFF;
+}
+
+.btn-enable-circle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  color: #ED0722;
+  border-color: #ED0722;
+  background-color: #FFFFFF;
+
+}
+
+.texto-btn{
   text-align: center;
-}
-
-.skill-tags {
-  border-style: none;
-}
-
-.skill-footer {
-  border-style: none;
-  text-align: center;
-}
-
-.tag-close {
-  width: 15px;
-  height: 15px;
-}
-
-.badge-info.tag-hover:hover {
-  background-color: #1390a3;
-}
-
-.badge-info.tag-hover:active{
-  background-color: #0f6875;
 }

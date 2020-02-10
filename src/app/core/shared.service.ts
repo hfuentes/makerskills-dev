@@ -13,6 +13,23 @@ export class SharedService {
 
   getSkills() {
     return new Promise<any>((resolve, reject) => {
+      this.db.firestore.collection('skills').get().then(docs => {
+        const skills: Array<SkillName> = [];
+        docs.forEach(doc => {
+          skills.push({
+            id: doc.id,
+            name: doc.data().name,
+            active: doc.data().active,
+            tags: doc.data().tags
+          })
+        });
+        resolve(skills);
+      }).catch(err => reject(err));
+    })
+  }
+
+  getActiveSkills() {
+    return new Promise<any>((resolve, reject) => {
       this.db.firestore.collection('skills').where('active', '==', true).get().then(docs => {
         const skills: Array<SkillName> = [];
         docs.forEach(doc => {
@@ -92,21 +109,15 @@ export class SharedService {
     })
   }
 
-  getAllSkills() {
-    return new Promise<any>((resolve, reject) => {
-      this.db.firestore.collection('skills').get().then(docs => {
-        const skills: Array<SkillName> = [];
-        docs.forEach(doc => {
-          skills.push({
-            id: doc.id,
-            name: doc.data().name,
-            active: doc.data().active,
-            tags: doc.data().tags
-          })
-        });
-        resolve(skills);
-      }).catch(err => reject(err));
-    })
+  editSkill(id: string, data) {
+    return new Promise<any>((resolve, reject): any => {
+      this.db.firestore.collection('skills').doc(id).update(data)
+        .then(respuesta => {
+          resolve(respuesta);
+        }).catch(error => {
+        reject(error);
+      });
+    });
   }
 
   getSkillsByTag(tag: Tag) {

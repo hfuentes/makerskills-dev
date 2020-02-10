@@ -7,7 +7,7 @@
 <div *ngIf="error && !loading">
   <div class="alert {{error.type}} alert-dismissible fade show" role="alert">
     {{ error.message }}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="close()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>

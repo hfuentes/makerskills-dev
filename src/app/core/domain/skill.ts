@@ -7,7 +7,15 @@ export class Skill {
   level: number
   ref: DocumentReference
   tags: Array<SkillTag>
-  constructor() { }
+  constructor(data?: any) {
+    if (data) {
+      this.name = data.name
+      this.exp = data.exp
+      this.level = data.level
+      this.ref = data.ref
+      this.tags = data.tags
+    }
+  }
 }
 
 export class SkillChartNode {
@@ -43,9 +51,14 @@ export class SkillName {
 
 export class EvaluationSkill {
   skill: Skill
-  check = false
+  get check(): boolean {
+    return this.skill &&
+      this.skill.exp &&
+      this.skill.level &&
+      this.skill.exp > 0 &&
+      this.skill.level > 0
+  }
   constructor(data?: any) {
     this.skill = data.skill
-    this.check = data.check
   }
 }

@@ -131,17 +131,14 @@ export class SharedService {
           .where('active', '==', true).get().then(docs => {
             if (docs && !docs.empty) {
               docs.forEach(doc => {
-                console.log(tags)
-                console.log(doc.data().skills)
-                if (doc.data().skills && doc.data().skills.length > 0 && doc.data().skills.some(skill => {
-                  if (skill.tags && skill.tags.length > 0) {
-                    return skill.tags.some(tag => {
-                      return tags.some(x => x.id === tag.ref.id)
-                    })
-                  } else {
-                    return false
-                  }
-                })) {
+                if (doc.data().skills && doc.data().skills.length > 0 && tags.map(x => x.id).every(x =>
+                  doc.data().skills
+                    .filter(y => y.tags && y.tags.length > 0)
+                    .map(y => y.tags).flat()
+                    .map(y => y.ref.id)
+                    .filter((v, i, s) => s.indexOf(v) === i)
+                    .indexOf(x) >= 0
+                )) {
                   res.push(new UserTagSearch({
                     user: new User({
                       email: doc.id,

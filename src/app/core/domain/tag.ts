@@ -47,3 +47,23 @@ export class DashboardTag {
     this.bg = bgClassList[Math.floor(Math.random() * bgClassList.length)]
   }
 }
+
+export class NavSearchTag {
+  tag: Tag
+  bg: string
+  weight: number
+  constructor(data?: any) {
+    if (!data) return
+    this.tag = data.tag
+    this.setBg()
+  }
+  setBg(): void {
+    const bgClassList = [
+      'primary',
+      'success',
+      'danger',
+      'warning',
+      'info']
+    this.bg = bgClassList[Math.floor(Math.random() * bgClassList.length)]
+  }
+}

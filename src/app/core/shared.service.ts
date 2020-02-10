@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { SkillName } from '../core/domain/skill'
-import { User, UserTagSearch } from './domain/user';
-import { Tag } from './domain/tag';
+import { User, UserTagsSearch, UserTagSearch } from './domain/user';
+import { Tag, NavSearchTag } from './domain/tag';
+import { interpolateBrBG } from 'd3';
 
 @Injectable({
   providedIn: 'root'
@@ -123,15 +124,15 @@ export class SharedService {
     })
   }
 
-  getUsersByTag(tags: Array<Tag> = []) {
+  getUsersByTag(tags: Array<NavSearchTag> = []) {
     return new Promise<any>((resolve, reject) => {
-      const res: Array<UserTagSearch> = []
+      const res: Array<UserTagsSearch> = []
       if (tags && tags.length > 0) {
         return this.db.firestore.collection('users')
           .where('active', '==', true).get().then(docs => {
             if (docs && !docs.empty) {
               docs.forEach(doc => {
-                if (doc.data().skills && doc.data().skills.length > 0 && tags.map(x => x.id).every(x =>
+                if (doc.data().skills && doc.data().skills.length > 0 && tags.map(x => x.tag.id).every(x =>
                   doc.data().skills
                     .filter(y => y.tags && y.tags.length > 0)
                     .map(y => y.tags).flat()
@@ -139,17 +140,33 @@ export class SharedService {
                     .filter((v, i, s) => s.indexOf(v) === i)
                     .indexOf(x) >= 0
                 )) {
-                  res.push(new UserTagSearch({
+                  res.push(new UserTagsSearch({
                     user: new User({
                       email: doc.id,
                       displayName: doc.data().displayName,
                       photoURL: doc.data().photoURL
+                    }),
+                    tags: tags.map(x => {
+                      return new UserTagSearch({
+                        tag: x.tag,
+                        bg: x.bg,
+                        avgLevels: doc.data().skills
+                          .filter(y => y.tags && y.tags.some(z => z.ref.id === x.tag.id))
+                          .map(y => y.level)
+                          .reduce((p, c) => c += p) / doc.data().skills.length,
+                        weight: x.weight
+                      })
                     })
                   }))
                 }
               })
             }
-            return resolve(res)
+            // sort by rating
+            return resolve(res.sort((x, y) => {
+              if (x.rating > y.rating) return -1
+              if (x.rating < y.rating) return 1
+              return 0
+            }))
           }).catch(err => reject(err))
       } else {
         return resolve(res)

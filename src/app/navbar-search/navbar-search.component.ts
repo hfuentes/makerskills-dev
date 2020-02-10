@@ -3,9 +3,9 @@ import { AuthService } from '../core/auth.service';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
-import { Tag } from '../core/domain/tag';
+import { Tag, NavSearchTag } from '../core/domain/tag';
 import { SharedService } from '../core/shared.service';
-import { UserTagSearch } from '../core/domain/user';
+import { UserTagsSearch } from '../core/domain/user';
 
 @Component({
   selector: 'app-navbar-search',
@@ -20,8 +20,8 @@ export class NavbarSearchComponent implements OnInit {
   // search data
   search = {
     form: new FormGroup({}),
-    usersTag: new Array<UserTagSearch>(),
-    tags: new Array<Tag>()
+    usersTag: new Array<UserTagsSearch>(),
+    tags: new Array<NavSearchTag>()
   }
 
 
@@ -43,8 +43,13 @@ export class NavbarSearchComponent implements OnInit {
         distinctUntilChanged(),
         map((text: string) => text.toLocaleLowerCase().trim().split(',').map(x => x.trim()).filter(x => x))
       ).subscribe(searchTags => {
-        this.search.tags = this.tags.filter(x => searchTags.indexOf(x.name.trim().toLocaleLowerCase()) > -1)
+        this.search.tags = this.tags
+          .filter(x => searchTags.indexOf(x.name.trim().toLocaleLowerCase()) > -1)
+          .map(x => new NavSearchTag({ tag: x }))
+        // autogenerate weights
+        if (this.search.tags && this.search.tags.length > 0) this.search.tags.forEach(x => x.weight = 1 / this.search.tags.length)
         this.sharedServices.getUsersByTag(this.search.tags).then(data => {
+          console.log(data)
           this.search.usersTag = data
         })
       })

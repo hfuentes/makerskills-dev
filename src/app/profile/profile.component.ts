@@ -87,7 +87,7 @@ export class ProfileComponent implements OnInit, OnChanges {
         this.params = params //get params data
         this.initUpdateForm()
         this.initCreateForm()
-        return this.sharedService.getSkills()
+        return this.sharedService.getActiveSkills()
       })
       .then(skillsNames => {
         this.skillsNames = skillsNames // get skills names

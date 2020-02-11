@@ -24,7 +24,7 @@
         <div class="clearfix">
           <ng-container *ngFor="let userTag of search.usersTag">
             <div class="float-left mr-3 text-center">
-              <a [routerLink]="['profile']" [state]="{ user: userTag.user }">
+              <a [routerLink]="['profile']" [queryParams]="{ email: userTag.user.email }">
                 <img src="{{userTag.user.photoURL}}" width="35" height="35" class="rounded-circle" [ngbPopover]="userPop"
                 triggers="mouseenter:mouseleave">
                 <ng-template #userPop>

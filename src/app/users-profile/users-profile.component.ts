@@ -1,9 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SearchData } from '../users-search/users-search.component';
-import { User } from '../core/domain/user';
-import { AuthService } from '../core/auth.service';
-import { Router, NavigationStart } from '@angular/router';
-import { filter, map } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-users-profile',
@@ -11,22 +8,18 @@ import { filter, map } from 'rxjs/operators';
 })
 export class UsersProfileComponent implements OnInit {
 
-  user: User = null
+  email = ''
   search: SearchData = new SearchData()
 
   constructor(
-    private auth: AuthService,
-    private router: Router
+    private activatedRoute: ActivatedRoute
   ) {
-    console.log(this.router.getCurrentNavigation().extras.state)
-    if (!this.user) this.user = this.auth.userData
+    // get email in params
+    this.activatedRoute.queryParams.subscribe(params => {
+      if (params.email) this.email = params.email
+    })
   }
 
-  ngOnInit() {
-    const data = this.router.events.pipe(
-      filter(e => e instanceof NavigationStart),
-      map(() => this.router.getCurrentNavigation().extras.state)
-    )
-  }
+  ngOnInit() { }
 
 }

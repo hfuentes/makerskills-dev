@@ -116,8 +116,8 @@ export class SharedService {
         .then(respuesta => {
           resolve(respuesta);
         }).catch(error => {
-        reject(error);
-      });
+          reject(error);
+        });
     });
   }
 
@@ -161,10 +161,12 @@ export class SharedService {
                       return new UserTagSearch({
                         tag: x.tag,
                         bg: x.bg,
-                        avgLevels: doc.data().skills
-                          .filter(y => y.tags && y.tags.some(z => z.ref.id === x.tag.id))
-                          .map(y => y.level)
-                          .reduce((p, c) => c += p) / doc.data().skills.length,
+                        avgLevels: (() => {
+                          const levels = doc.data().skills
+                            .filter(y => y.tags && y.tags.length > 0 && y.tags.some(z => z.ref.id === x.tag.id))
+                            .map(y => y.level)
+                          return levels.reduce((p, c) => c += p) / levels.length
+                        })(),
                         weight: x.weight
                       })
                     })

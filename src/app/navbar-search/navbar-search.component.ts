@@ -49,7 +49,6 @@ export class NavbarSearchComponent implements OnInit {
         // autogenerate weights
         if (this.search.tags && this.search.tags.length > 0) this.search.tags.forEach(x => x.weight = 1 / this.search.tags.length)
         this.sharedServices.getUsersByTag(this.search.tags).then(data => {
-          console.log(data)
           this.search.usersTag = data
         })
       })

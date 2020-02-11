@@ -24,15 +24,16 @@
         <div class="clearfix">
           <ng-container *ngFor="let userTag of search.usersTag">
             <div class="float-left mr-3 text-center">
-
-              <img src="{{userTag.user.photoURL}}" width="35" height="35" class="rounded-circle" [ngbPopover]="userPop"
+              <a [routerLink]="['profile']" [state]="{ user: userTag.user }">
+                <img src="{{userTag.user.photoURL}}" width="35" height="35" class="rounded-circle" [ngbPopover]="userPop"
                 triggers="mouseenter:mouseleave">
-              <ng-template #userPop>
-                {{userTag.user.displayName}}
-              </ng-template>
+                <ng-template #userPop>
+                  {{userTag.user.displayName}}
+                </ng-template>
+              </a>
               <ng-container *ngFor="let tagLevel of userTag.tags">
                 <br>
-                <ngb-rating placement="bottom"
+                <ngb-rating [readonly]="true" placement="bottom"
                   [ngbTooltip]="'# ' + tagLevel.tag.name + ' Level: ' + (tagLevel.avgLevels | number) + '!'" [max]="5"
                   [rate]="tagLevel.avgLevels" class="text-{{tagLevel.bg}}"></ngb-rating>
               </ng-container>

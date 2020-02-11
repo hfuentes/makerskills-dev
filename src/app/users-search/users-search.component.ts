@@ -12,6 +12,7 @@ import { AuthService } from '../core/auth.service';
 export class UsersSearchComponent implements OnInit {
 
   @Input() search: SearchData
+  @Input() user: User = null
   form: FormGroup
 
   constructor(
@@ -26,7 +27,12 @@ export class UsersSearchComponent implements OnInit {
     })
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    if (this.user) {
+      this.form.controls.email.setValue(this.user.email)
+      this.searchUser()
+    }
+  }
 
   findMySelf() {
     this.form.reset()

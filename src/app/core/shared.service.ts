@@ -4,6 +4,7 @@ import { SkillName } from '../core/domain/skill'
 import { User, UserTagsSearch, UserTagSearch } from './domain/user';
 import { Tag, NavSearchTag } from './domain/tag';
 import { interpolateBrBG } from 'd3';
+import { Comment } from './domain/comment';
 
 @Injectable({
   providedIn: 'root'
@@ -184,6 +185,25 @@ export class SharedService {
       } else {
         return resolve(res)
       }
+    })
+  }
+
+  getComments() {
+    return new Promise<Array<Comment>>((resolve, reject) => {
+      return this.db.firestore.collection('comments')
+        .orderBy('createdAt')
+        .limit(200)
+        .get().then(docs => {
+          const comments: Array<Comment> = []
+          docs.forEach(doc => comments.push(new Comment({
+            id: doc.id,
+            email: doc.data().email,
+            name: doc.data().name,
+            createdAt: doc.data().createdAt.toDate(),
+            comment: doc.data().comment
+          })))
+          return resolve(comments)
+        }).catch(err => reject(err))
     })
   }
 }

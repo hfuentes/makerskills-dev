@@ -1,22 +1,42 @@
-<br>
-<br>
-<br>
-<ngb-tabset type="pills">
-  <ngb-tab title="users">
-    <ng-template ngbTabContent>
-        <users></users>
-    </ng-template>
-  </ngb-tab>
-
-  <ngb-tab title="skills">
-    <ng-template ngbTabContent>
-        <app-skills></app-skills>
-    </ng-template>
-  </ngb-tab>
-
-  <ngb-tab title="tags">
-    <ng-template ngbTabContent>
-        <tags></tags>
-    </ng-template>
-  </ngb-tab>
-</ngb-tabset>
+<div class="row mt-3">
+  <div class="col">
+    <ngb-tabset [destroyOnHide]="false">
+      <ngb-tab title="Users">
+        <ng-template ngbTabContent>
+          <div class="row mt-3">
+            <div class="col">
+              <users></users>
+            </div>
+          </div>
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab title="Skills">
+        <ng-template ngbTabContent>
+          <div class="row mt-3">
+            <div class="col">
+              <app-skills></app-skills>
+            </div>
+          </div>
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab title="Tags">
+        <ng-template ngbTabContent>
+          <div class="row mt-3">
+            <div class="col">
+              <tags></tags>
+            </div>
+          </div>
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab title="Comments">
+        <ng-template ngbTabContent>
+          <div class="row mt-3">
+            <div class="col">
+              <app-comments></app-comments>
+            </div>
+          </div>
+        </ng-template>
+      </ngb-tab>
+    </ngb-tabset>
+  </div>
+</div>

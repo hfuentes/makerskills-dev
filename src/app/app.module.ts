@@ -29,7 +29,8 @@ import { DashboardComponent } from './dashboard/dashboard.component'
 import { NavbarConstants} from './navbar/navbar.constants'
 import { ModalEvaluateComponent } from './modal-evaluate/modal-evaluate.component'
 import {ErrorHandlerModule} from './error-handler/error-handler.module';
-import { NavbarSearchComponent } from './navbar-search/navbar-search.component'
+import { NavbarSearchComponent } from './navbar-search/navbar-search.component';
+import { CommentsComponent } from './comments/comments.component'
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { NavbarSearchComponent } from './navbar-search/navbar-search.component'
     SkillsTagComponent,
     DashboardComponent,
     ModalEvaluateComponent,
-    NavbarSearchComponent
+    NavbarSearchComponent,
+    CommentsComponent
   ],
   imports: [
     BrowserModule,

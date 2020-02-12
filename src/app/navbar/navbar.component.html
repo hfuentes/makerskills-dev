@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
+<nav class="navbar navbar-expand-md navbar-light sticky-top" style="background-color: #e3f2fd;">
   <a class="navbar-brand" href="#">
     <img
       src="https://static.wixstatic.com/media/1cbd15_365ed530bdb843248cc8e39024a7a98a~mv2.png/v1/fill/w_362,h_217,al_c,q_85/1cbd15_365ed530bdb843248cc8e39024a7a98a~mv2.webp"
@@ -14,31 +14,26 @@
     <app-navbar-search class="input-group align-content-md-center ml-5"></app-navbar-search>
     <ul class="navbar-nav mr-auto">
       <li class="nav-item dropdown" ngbDropdown>
-        <a class="nav-link dropdown-toggle" id="id01" ngbDropdownToggle>Menu</a>
-        <div class="dropdown-menu bg-dark" aria-labelledby="id01" ngbDropdownMenu>
+        <a class="nav-link dropdown-toggle" id="id01" ngbDropdownToggle>
+          Welcome, {{ auth.userData.displayName }}
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" style="background-color: #f2f9ff;" aria-labelledby="id01" ngbDropdownMenu>
           <div *ngFor="let item of MENU">
-            <a class="dropdown-item text-light" *ngIf="auth.matchingRoles([item.role])" routerLink="{{item.route}}"
-              ngbDropdownItem>{{item.name}}</a>
+            <a class="dropdown-item" *ngIf="auth.matchingRoles([item.role])" [routerLink]="item.route" ngbDropdownItem>
+              {{ item.name }}
+            </a>
           </div>
         </div>
       </li>
     </ul>
     <ul class="navbar-nav mr-auto mb-auto mt-auto">
-      <li class="nav-item dropdown" ngbDropdown>
-        <img src="{{auth.userData.photoURL}}" width="35" height="35" class="rounded-circle" ngbDropdownMenu>
-        <div class="dropdown-menu bg-dark" aria-labelledby="id01" ngbDropdownMenu>
-          <app-logout></app-logout>
-        </div>
+      <li class="nav-item">
+        <img [src]="auth.userData.photoURL" width="35" height="35" class="rounded-circle">
       </li>
     </ul>
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item dropdown" ngbDropdown>
-        <a class="nav-link dropdown-toggle" id="id02" ngbDropdownToggle>
-          <img src="{{auth.userData.photoURL}}" width="35" height="35" class="rounded-circle">
-        </a>
-        <div class="dropdown-menu bg-dark" aria-labelledby="id02" ngbDropdownMenu>
-          <app-logout></app-logout>
-        </div>
+    <ul class="navbar-nav mr-auto mb-auto mt-auto">
+      <li class="nav-item">
+        <app-logout></app-logout>
       </li>
     </ul>
   </div>

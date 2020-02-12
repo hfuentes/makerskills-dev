@@ -1,10 +1,10 @@
 <ng-container [formGroup]="search.form">
+  <span class="input-group-prepend">
+    <div class="input-group-text bg-white"><i class="fa fa-search"></i></div>
+  </span>
   <input class="form-control col-8" autocomplete="off" type="search" placeholder="Find your maker!"
     [ngbPopover]="popContent" [autoClose]="'outside'" placement="bottom-left" [popoverClass]="'nav-search-popover'"
     formControlName="text">
-  <span class="input-group-append">
-    <div class="input-group-text bg-white"><i class="fa fa-search"></i></div>
-  </span>
   <ng-template #popContent>
     <div class="row">
       <div class="col">

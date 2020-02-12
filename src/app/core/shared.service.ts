@@ -3,8 +3,8 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { SkillName } from '../core/domain/skill'
 import { User, UserTagsSearch, UserTagSearch } from './domain/user';
 import { Tag, NavSearchTag } from './domain/tag';
-import { interpolateBrBG } from 'd3';
-import { Comment } from './domain/comment';
+import * as firebase from 'firebase'
+import { Comment, CommentForm } from './domain/comment';
 
 @Injectable({
   providedIn: 'root'
@@ -191,7 +191,7 @@ export class SharedService {
   getComments() {
     return new Promise<Array<Comment>>((resolve, reject) => {
       return this.db.firestore.collection('comments')
-        .orderBy('createdAt')
+        .orderBy('createdAt', 'desc')
         .limit(200)
         .get().then(docs => {
           const comments: Array<Comment> = []
@@ -204,6 +204,17 @@ export class SharedService {
           })))
           return resolve(comments)
         }).catch(err => reject(err))
+    })
+  }
+
+  saveComment(comment: CommentForm) {
+    return new Promise((resolve, reject) => {
+      return this.db.firestore.collection('comments').add({
+        email: comment.user.email,
+        name: comment.user.displayName,
+        comment: comment.comment,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      }).then(res => resolve(res)).catch(err => reject(err))
     })
   }
 }

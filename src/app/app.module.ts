@@ -30,7 +30,10 @@ import { NavbarConstants} from './navbar/navbar.constants'
 import { ModalEvaluateComponent } from './modal-evaluate/modal-evaluate.component'
 import {ErrorHandlerModule} from './error-handler/error-handler.module';
 import { NavbarSearchComponent } from './navbar-search/navbar-search.component';
-import { CommentsComponent } from './comments/comments.component'
+import { CommentsComponent } from './comments/comments.component';
+import { BtnCommentComponent } from './btn-comment/btn-comment.component';
+import { ModalCommentComponent } from './modal-comment/modal-comment.component';
+import { FooterComponent } from './footer/footer.component'
 
 @NgModule({
   declarations: [
@@ -51,7 +54,10 @@ import { CommentsComponent } from './comments/comments.component'
     DashboardComponent,
     ModalEvaluateComponent,
     NavbarSearchComponent,
-    CommentsComponent
+    CommentsComponent,
+    BtnCommentComponent,
+    ModalCommentComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
@@ -68,7 +74,8 @@ import { CommentsComponent } from './comments/comments.component'
   providers: [NavbarConstants],
   bootstrap: [AppComponent],
   entryComponents: [
-    ModalEvaluateComponent
+    ModalEvaluateComponent,
+    ModalCommentComponent
   ]
 })
 export class AppModule { }

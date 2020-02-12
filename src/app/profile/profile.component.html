@@ -96,16 +96,16 @@
                   <ng-container *ngIf="create.form.controls.exp.errors.required">Required
                   </ng-container>
                   <ng-container *ngIf="create.form.controls.exp.errors.min">Min value is
-                    {{ params.minExp }}
+                    {{ constants.minExp }}
                   </ng-container>
                   <ng-container *ngIf="create.form.controls.exp.errors.max">Min value is
-                    {{ params.maxExp }}
+                    {{ constants.maxExp }}
                   </ng-container>
                 </span>
               </td>
               <td>
                 <ngb-rating placement="top" ngbTooltip="Level {{ create.form.controls.level.value }}"
-                  [max]="params.maxLevel" [rate]="create.form.controls.level.value" formControlName="level">
+                  [max]="constants.maxLevel" [rate]="create.form.controls.level.value" formControlName="level">
                 </ngb-rating>
                 <span class="badge badge-danger" *ngIf="
                     create.form.controls.level.invalid &&
@@ -115,10 +115,10 @@
                   <ng-container *ngIf="create.form.controls.level.errors.required">Required
                   </ng-container>
                   <ng-container *ngIf="create.form.controls.level.errors.min">Min value is
-                    {{ params.minLevel }}
+                    {{ constants.minLevel }}
                   </ng-container>
                   <ng-container *ngIf="create.form.controls.level.errors.max">Min value is
-                    {{ params.maxLevel }}
+                    {{ constants.maxLevel }}
                   </ng-container>
                 </span>
               </td>
@@ -156,16 +156,16 @@
                     <ng-container *ngIf="update.form.controls.exp.errors.required">Required
                     </ng-container>
                     <ng-container *ngIf="update.form.controls.exp.errors.min">Min value is
-                      {{ params.minExp }}
+                      {{ constants.minExp }}
                     </ng-container>
                     <ng-container *ngIf="update.form.controls.exp.errors.max">Min value is
-                      {{ params.maxExp }}
+                      {{ constants.maxExp }}
                     </ng-container>
                   </span>
                 </td>
                 <td>
                   <ngb-rating placement="top" ngbTooltip="Level {{ update.form.controls.level.value }}"
-                    [max]="params.maxLevel" [rate]="update.form.controls.level.value" formControlName="level">
+                    [max]="constants.maxLevel" [rate]="update.form.controls.level.value" formControlName="level">
                   </ngb-rating>
                   <span class="badge badge-danger" *ngIf="
                       update.form.controls.level.invalid &&
@@ -175,10 +175,10 @@
                     <ng-container *ngIf="update.form.controls.level.errors.required">Required
                     </ng-container>
                     <ng-container *ngIf="update.form.controls.level.errors.min">Min value is
-                      {{ params.minLevel }}
+                      {{ constants.minLevel }}
                     </ng-container>
                     <ng-container *ngIf="update.form.controls.level.errors.max">Min value is
-                      {{ params.maxLevel }}
+                      {{ constants.maxLevel }}
                     </ng-container>
                   </span>
                 </td>

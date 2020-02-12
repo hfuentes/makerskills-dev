@@ -6,10 +6,9 @@ import { SkillsChartComponent } from '../skills-chart/skills-chart.component'
 import { User } from '../core/domain/user'
 import { Error, Settings, LoadingPlace } from '../error-handler/error-handler.component'
 import { FormBuilder, Validators, FormControl, FormGroup } from '@angular/forms'
-import { Params } from '../core/domain/params'
-import { ParamsService } from '../core/params.service'
 import { UserService } from '../core/user.service'
 import { debounceTime, distinctUntilChanged, map, filter, debounce } from 'rxjs/operators'
+import * as constants from '../core/constants/constants'
 
 @Component({
   selector: 'app-profile',
@@ -31,9 +30,6 @@ export class ProfileComponent implements OnInit, OnChanges {
     drawLevels: true,
     drawExps: true
   }
-
-  // params data
-  params: Params
 
   // update controller data
   create = {
@@ -65,13 +61,15 @@ export class ProfileComponent implements OnInit, OnChanges {
   loading: boolean
   error: any
 
+  //constants
+  constants = constants
+
   //chart child element
   @ViewChild('skillsChart', { static: false }) chart: SkillsChartComponent
 
   constructor(
     private auth: AuthService,
     private formBuilder: FormBuilder,
-    private paramsService: ParamsService,
     private userService: UserService,
     private sharedService: SharedService
   ) {
@@ -82,13 +80,9 @@ export class ProfileComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.loading = true
     this.setUser() // set user src
-    this.paramsService.getParams()
-      .then(params => {
-        this.params = params //get params data
-        this.initUpdateForm()
-        this.initCreateForm()
-        return this.sharedService.getActiveSkills()
-      })
+    this.initUpdateForm()
+    this.initCreateForm()
+    this.sharedService.getActiveSkills()
       .then(skillsNames => {
         this.skillsNames = skillsNames // get skills names
         return this.userService.getSkills(this.user)
@@ -110,12 +104,12 @@ export class ProfileComponent implements OnInit, OnChanges {
         Validators.required]),
       exp: new FormControl(1, [
         Validators.required,
-        Validators.min(this.params.minExp),
-        Validators.max(this.params.maxExp)]),
+        Validators.min(constants.minExp),
+        Validators.max(constants.maxExp)]),
       level: new FormControl(1, [
         Validators.required,
-        Validators.min(this.params.minLevel),
-        Validators.max(this.params.maxLevel)])
+        Validators.min(constants.minLevel),
+        Validators.max(constants.maxLevel)])
     })
     this.create.form.controls.skillNameText.valueChanges.pipe(
       debounceTime(200),
@@ -135,12 +129,12 @@ export class ProfileComponent implements OnInit, OnChanges {
     this.update.form = this.formBuilder.group({ //set update form
       exp: new FormControl(-1, [
         Validators.required,
-        Validators.min(this.params.minExp),
-        Validators.max(this.params.maxExp)]),
+        Validators.min(constants.minExp),
+        Validators.max(constants.maxExp)]),
       level: new FormControl(-1, [
         Validators.required,
-        Validators.min(this.params.minLevel),
-        Validators.max(this.params.maxLevel)])
+        Validators.min(constants.minLevel),
+        Validators.max(constants.maxLevel)])
     })
   }
 

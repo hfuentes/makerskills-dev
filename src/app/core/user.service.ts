@@ -48,13 +48,13 @@ export class UserService {
             let skills: Array<Skill> = []
             if (doc.data().skills && doc.data().skills.length > 0) {
               skills = doc.data().skills.map(x => {
-                const skill: Skill = {
+                const skill = new Skill({
                   exp: x.exp,
                   level: x.level,
                   name: x.name,
                   ref: x.ref,
                   tags: x.tags ? x.tags.map(t => new SkillTag(t.name, t.ref)) : []
-                }
+                })
                 return skill
               })
             }

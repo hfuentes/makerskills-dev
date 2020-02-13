@@ -14,8 +14,8 @@
                 <h4>
                   <ngb-rating *ngIf="tag.skills && tag.skills.length > 0" class="text-warning float-right"
                     placement="top"
-                    [ngbTooltip]="tag.avgLeveles ? 'Average level is ' + (tag.avgLeveles | number) + ' stars' : 'Level'"
-                    [max]="5" [rate]="tag.avgLeveles" [readonly]="true">
+                    [ngbTooltip]="tag.avgLeveles ? tag.avgLevelLabel + ' average level (' + (tag.avgLeveles | number) + ' ★)' : 'Select level!'"
+                    [max]="constants.maxLevel" [rate]="tag.avgLeveles" [readonly]="true">
                   </ngb-rating>
                 </h4>
                 <h1>

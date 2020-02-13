@@ -23,7 +23,7 @@
                   </span>
                 </td>
                 <td style="width: 30%">
-                  <ngb-rating class="text-warning" placement="top" [ngbTooltip]="Level" [max]="5"
+                  <ngb-rating class="text-warning" placement="top" [ngbTooltip]="evaluationSkill.skill.level ? evaluationSkill.skill.levelLabel + ' level' : 'Select level'" [max]="5"
                     [(rate)]="evaluationSkill.skill.level">
                   </ngb-rating>
                 </td>

@@ -31,7 +31,7 @@ export class ProfileComponent implements OnInit, OnChanges {
     drawExps: true
   }
 
-  // update controller data
+  // create controller data
   create = {
     form: new FormGroup({}),
     loading: false,
@@ -61,10 +61,10 @@ export class ProfileComponent implements OnInit, OnChanges {
   loading: boolean
   error: any
 
-  //constants
+  // constants
   constants = constants
 
-  //chart child element
+  // chart child element
   @ViewChild('skillsChart', { static: false }) chart: SkillsChartComponent
 
   constructor(
@@ -214,13 +214,13 @@ export class ProfileComponent implements OnInit, OnChanges {
       this.create.loading = true
       this.create.error = null
       const skillsIns: Array<Skill> = this.skills && this.skills.length ? this.skills.map(x => x) : []
-      const newSkill = {
+      const newSkill = new Skill({
         exp: this.create.form.controls.exp.value,
         level: this.create.form.controls.level.value,
         name: this.create.form.controls.skillName.value.name,
         ref: this.sharedService.getSkillRef(this.create.form.controls.skillName.value.id),
         tags: this.create.form.controls.skillName.value.tags
-      }
+      })
       skillsIns.unshift(newSkill)
       this.userService.setSkills(this.user, skillsIns).then(() => {
         this.skills = skillsIns

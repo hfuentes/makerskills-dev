@@ -1,5 +1,6 @@
 import { DocumentReference } from '@angular/fire/firestore'
 import { SkillTag } from './tag'
+import { getLevelLabel } from '../constants/constants'
 
 export class Skill {
   name: string
@@ -7,6 +8,9 @@ export class Skill {
   level: number
   ref: DocumentReference
   tags: Array<SkillTag>
+  get levelLabel() {
+    return getLevelLabel(this.level)
+  }
   constructor(data?: any) {
     if (data) {
       this.name = data.name

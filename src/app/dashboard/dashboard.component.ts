@@ -8,6 +8,7 @@ import { User } from '../core/domain/user'
 import { AuthService } from '../core/auth.service'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { ModalEvaluateComponent } from '../modal-evaluate/modal-evaluate.component'
+import * as constants from '../core/constants/constants'
 
 @Component({
   selector: 'app-dashboard',
@@ -31,6 +32,9 @@ export class DashboardComponent implements OnInit {
     loading: false,
     error: null
   }
+
+  // constants
+  constants = constants
 
   constructor(
     private sharedService: SharedService,

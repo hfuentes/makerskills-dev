@@ -104,8 +104,7 @@
                 </span>
               </td>
               <td>
-                <ngb-rating placement="top" ngbTooltip="Level {{ create.form.controls.level.value }}"
-                  [max]="constants.maxLevel" [rate]="create.form.controls.level.value" formControlName="level">
+                <ngb-rating [max]="constants.maxLevel" [rate]="create.form.controls.level.value" formControlName="level">
                 </ngb-rating>
                 <span class="badge badge-danger" *ngIf="
                     create.form.controls.level.invalid &&
@@ -164,8 +163,8 @@
                   </span>
                 </td>
                 <td>
-                  <ngb-rating placement="top" ngbTooltip="Level {{ update.form.controls.level.value }}"
-                    [max]="constants.maxLevel" [rate]="update.form.controls.level.value" formControlName="level">
+                  <ngb-rating [max]="constants.maxLevel" [rate]="update.form.controls.level.value"
+                    formControlName="level">
                   </ngb-rating>
                   <span class="badge badge-danger" *ngIf="
                       update.form.controls.level.invalid &&
@@ -197,7 +196,8 @@
               <ng-container *ngIf="update.index != i">
                 <td>{{ skill.exp }} Years</td>
                 <td>
-                  <ngb-rating [max]="5" [rate]="skill.level" [readonly]="true"></ngb-rating>
+                  <ngb-rating [max]="constants.maxLevel" [rate]="skill.level" [readonly]="true" placement="top"
+                    ngbTooltip="Level {{ skill.levelLabel }}"></ngb-rating>
                 </td>
                 <td>
                   <app-error-handler [loading]="delete.index == i ? delete.loading : false"

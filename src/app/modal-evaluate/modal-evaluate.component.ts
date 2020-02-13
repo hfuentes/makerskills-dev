@@ -90,7 +90,7 @@ export class ModalEvaluateComponent implements OnInit {
     })
     this.evaluationSkills.filter(x => x.check).forEach(x => {
       const exist = this.userSkills.find(y => y.ref.id === x.skill.ref.id)
-      if (!exist) this.userSkills.push({ ...x.skill})
+      if (!exist) this.userSkills.push(new Skill({ ...x.skill}))
     })
     this.userService.setSkills(this.user, this.userSkills).then(() => {
       this.state.saveLoading = false

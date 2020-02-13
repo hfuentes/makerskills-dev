@@ -1,11 +1,13 @@
 import { Skill } from './skill'
 import { DocumentReference } from '@angular/fire/firestore'
+import { getLevelLabel } from '../constants/constants'
 
 export class Tag {
   id: string
   name: string
   active: boolean
-  constructor(data: any) {
+  constructor(data?: any) {
+    if (!data) return
     this.id = data.id
     this.name = data.name
     this.active = data.active
@@ -33,7 +35,11 @@ export class DashboardTag {
     }
     return null
   }
-  constructor(data: any) {
+  get avgLevelLabel() {
+    return getLevelLabel(this.avgLeveles)
+  }
+  constructor(data?: any) {
+    if (!data) return
     this.tag = data.tag
     this.skills = data.skills
   }

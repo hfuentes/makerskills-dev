@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/firestore'
 import { SkillName } from '../core/domain/skill'
-import { User, UserTagsSearch, UserTagSearch } from './domain/user';
+import { User, UserTagsSearch, UserTagSearch } from './domain/user'
 import { Tag, NavSearchTag } from './domain/tag';
 import * as firebase from 'firebase'
-import { Comment, CommentForm } from './domain/comment';
+import { Comment, CommentForm } from './domain/comment'
 
 @Injectable({
   providedIn: 'root'

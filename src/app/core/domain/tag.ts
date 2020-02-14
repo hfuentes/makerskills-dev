@@ -27,6 +27,7 @@ export class DashboardTag {
   tag: Tag
   skills: Array<Skill>
   bg: string
+  get maxSkillsChart(): number { return 8 }
   get avgLeveles(): number {
     if (this.skills) {
       if (this.skills.length === 0) return 0

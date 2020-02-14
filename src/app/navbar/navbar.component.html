@@ -11,13 +11,15 @@
   </button>
   <div [ngbCollapse]="isNavbarCollapsed" class="collapse navbar-collapse" *ngIf="auth.authenticated"
     id="navbarsDefault">
-    <app-navbar-search class="input-group align-content-md-center ml-5"></app-navbar-search>
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item dropdown" ngbDropdown>
+    <app-navbar-search *ngIf="auth.matchingRoles(['searcher'])" class="input-group align-content-md-center ml-5">
+    </app-navbar-search>
+    <ul class="navbar-nav mb-auto ml-auto">
+      <li class="nav-item dropdown mt-3" ngbDropdown>
         <a class="nav-link dropdown-toggle" id="id01" ngbDropdownToggle>
           Welcome, {{ auth.userData.displayName }}
         </a>
-        <div class="dropdown-menu dropdown-menu-right" style="background-color: #f2f9ff;" aria-labelledby="id01" ngbDropdownMenu>
+        <div class="dropdown-menu dropdown-menu-right" style="background-color: #f2f9ff;" aria-labelledby="id01"
+          ngbDropdownMenu>
           <div *ngFor="let item of MENU">
             <a class="dropdown-item" *ngIf="auth.matchingRoles([item.role])" [routerLink]="item.route" ngbDropdownItem>
               {{ item.name }}
@@ -25,14 +27,10 @@
           </div>
         </div>
       </li>
-    </ul>
-    <ul class="navbar-nav mr-auto mb-auto mt-auto">
-      <li class="nav-item">
+      <li class="nav-item mt-3">
         <img [src]="auth.userData.photoURL" width="35" height="35" class="rounded-circle">
       </li>
-    </ul>
-    <ul class="navbar-nav mr-auto mb-auto mt-auto">
-      <li class="nav-item">
+      <li class="nav-item mt-3">
         <app-logout></app-logout>
       </li>
     </ul>

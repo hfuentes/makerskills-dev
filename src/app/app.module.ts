@@ -33,7 +33,8 @@ import { NavbarSearchComponent } from './navbar-search/navbar-search.component';
 import { CommentsComponent } from './comments/comments.component';
 import { BtnCommentComponent } from './btn-comment/btn-comment.component';
 import { ModalCommentComponent } from './modal-comment/modal-comment.component';
-import { FooterComponent } from './footer/footer.component'
+import { FooterComponent } from './footer/footer.component';
+import { UserDashboardComponent } from './user-dashboard/user-dashboard.component'
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { FooterComponent } from './footer/footer.component'
     CommentsComponent,
     BtnCommentComponent,
     ModalCommentComponent,
-    FooterComponent
+    FooterComponent,
+    UserDashboardComponent
   ],
   imports: [
     BrowserModule,

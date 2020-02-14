@@ -11,7 +11,7 @@ import { AuthService } from '../core/auth.service';
 })
 export class UsersSearchComponent implements OnInit, OnChanges {
 
-  @Input() search: SearchData
+  @Input() search: SearchData = new SearchData()
   @Input() email = ''
   form: FormGroup
 

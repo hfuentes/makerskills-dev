@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { Skill } from '../../core/domain/skill';
 import { SharedService } from '../../core/shared.service';
 import {Error, LoadingPlace, Settings} from '../../error-handler/error-handler.component';
-import {UserFront} from '../users/users.component';
 
 @Component({
   selector: 'app-skills',

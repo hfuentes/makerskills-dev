@@ -1,164 +1,125 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedService } from '../../core/shared.service';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
-import { User } from 'src/app/core/domain/user';
+import { User, UserAdminItem } from 'src/app/core/domain/user';
+import { Error } from 'src/app/error-handler/error-handler.component';
 
 @Component({
-  selector: 'users',
+  selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit {
-  public checkboxGroupForm: FormGroup;
 
-  forma: FormGroup;
-  addUser: boolean;
+  // users list
+  users: Array<UserAdminItem> = []
+
+  // users list state
+  state = {
+    loading: false,
+    error: null
+  }
+
+  create = {
+    active: false,
+    form: new FormGroup({}),
+    state: {
+      loading: false,
+      error: null,
+      success: false
+    }
+  }
 
   constructor(
-    public sharedService: SharedService,
-    private formBuilder: FormBuilder) {
-      this.forma = new FormGroup({
-        'email': new FormControl(null, [
-          Validators.required,
-          Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")
-        ]
-        ),
-        'name': new FormControl(null,
-          Validators.required
-        ),
-        'activa': new FormControl(true),
-        'roles': new FormGroup({
-          'admin': new FormControl(false),
-          'profile': new FormControl(true)
-        })
-      });
-    }
+    private sharedService: SharedService,
+    private formBuilder: FormBuilder
+  ) {
+    this.initCreateForm()
+  }
 
-  public usersFront: Array<UserFront>;
-  public users: Array<User>;
+  cancel() {
+    this.create.active = false
+    this.create.state.success = false
+    this.initCreateForm()
+  }
 
-  public loading: boolean;
-  public error: any;
-
-  loadingGetUsers = {
-    loading: false,
-    error: null
-  };
-
-  loadingAddUser = {
-    loading: false,
-    error: null
-  };
-
-  loadingUpdateUser = {
-    error: null
-  };
+  initCreateForm() {
+    this.create.form = this.formBuilder.group({
+      email: new FormControl('', [Validators.required, Validators.email]),
+      name: new FormControl(''),
+      active: new FormControl(true),
+      roleAdmin: new FormControl(false),
+      roleProfile: new FormControl(true),
+      roleSearcher: new FormControl(false)
+    })
+  }
 
   ngOnInit() {
-    this.addUser = false;
-    this.usersFront = [];
-    this.loadingGetUsers.loading = true;
+    this.state.error = null
+    this.state.loading = true
     this.sharedService.getUsers().then(users => {
-      this.loadingGetUsers.loading = false;
-      this.users = users;
-      users.forEach(user => {
-
-        let userFront = new UserFront();
-
-        userFront.user = user;
-
-        userFront.checkboxGroupForm = this.formBuilder.group({
-          profile: user.roles.profile,
-          admin: user.roles.admin
-        });
-
-        this.usersFront.push(userFront);
-      });
-
+      this.users = users.map(user => new UserAdminItem({ user }))
+      this.state.loading = false
     }).catch(err => {
-      console.error(err);
-      this.loadingGetUsers.loading = false;
-      this.loadingGetUsers.error = {
-        status: 400,
-        message: 'Servicio no disponible'
-      };
-    });
-  }
-
-  onClick(userFront){
-    if(userFront.user.active){
-      userFront.user.active = false;
-    }else{
-      userFront.user.active = true;
-    }
-
-    userFront.user.loadingUpdateUser = true;
-    this.sharedService.editUser(userFront.user.email, {active: userFront.user.active})
-    .then(() => {
-      userFront.user.loadingUpdateUser = false;
+      this.state.loading = false
+      this.state.error = new Error()
+      console.error(err)
     })
-    .catch(err => {
-      userFront.user.loadingUpdateUser = false;
-      this.loadingUpdateUser.error = {
-        status: 400,
-        message: 'Servicio no disponible'
-      };
-    });
   }
 
-  onClickRole(userFront, role){
-    let loading = role + 'RoleUserLoading';
-    userFront.user[loading] = true;
-
-    if(userFront.user.roles[role] === true){
-      userFront.user.roles[role] = false;
-    }else{
-      userFront.user.roles[role] = true;
-    }
-
-    this.sharedService.editUser(userFront.user.email, {roles: userFront.user.roles})
-    .then(() => {
-      userFront.user[loading] = false;
+  setActive(item: UserAdminItem) {
+    item.state.activeError = null
+    item.state.activeLoading = true
+    this.sharedService.editUser(item.user, { active: !item.user.active }).then(() => {
+      item.user.active = !item.user.active
+      item.state.activeLoading = false
+    }).catch(err => {
+      item.state.activeLoading = false
+      item.state.activeError = new Error()
+      console.error(err)
     })
-    .catch(err => {
-      userFront.user[loading] = false;
-    });
   }
 
-  guardarUsuario(){
-    console.log(this.forma.value);
-
-    let usuarioGuardar: User = {
-      displayName: this.forma.value.name,
-      roles: this.forma.value.roles,
-      active: true
-    };
-    console.log(usuarioGuardar);
-    console.log(this.forma.value.email);
-    this.sharedService.addUser(this.forma.value.email, usuarioGuardar).then()
-    .catch(err => {
-      console.error(err);
-    });
+  setRoles(item: UserAdminItem, role: string) {
+    item.state.rolesLoading = true
+    item.state.rolesError = null
+    const roles = item.user.roles
+    roles[role] = !roles[role]
+    this.sharedService.editUser(item.user, { roles }).then(() => {
+      item.user.roles = roles
+      item.state.rolesLoading = false
+    }).catch(err => {
+      item.state.rolesLoading = false
+      item.state.rolesError = new Error()
+      console.error(err)
+    })
   }
 
-  addUserView(){
-    this.forma.reset({
-      name: null,
-      photoURL: null,
-      roles: {admin: false, profile: true},
-      active: true
-    });
-    if (this.addUser) {
-      this.addUser = false;
-    } else {
-      this.addUser = true;
+  saveUser() {
+    if (this.create.form.valid) {
+      this.create.state.success = false
+      this.create.state.loading = true
+      this.create.state.error = null
+      const newUser = new User({
+        email: this.create.form.controls.email.value,
+        displayName: this.create.form.controls.name.value,
+        active: this.create.form.controls.active.value,
+        roles: {
+          admin: this.create.form.controls.roleAdmin.value,
+          profile: this.create.form.controls.roleProfile.value,
+          searcher: this.create.form.controls.roleSearcher.value
+        }
+      })
+      this.sharedService.addUser(newUser).then(() => {
+        this.users.unshift(new UserAdminItem({ user: newUser }))
+        this.create.state.loading = false
+        this.create.state.success = true
+      }).catch(err => {
+        this.create.state.loading = false
+        this.create.state.error = err && err.type === 'user-exists' ?
+          new Error('Ups! The user you are trying to create already exists') : new Error()
+        console.error(err)
+      })
     }
   }
-}
-
-export class UserFront {
-  user: User;
-  checkboxGroupForm: any;
-
-  constructor() {}
 }

@@ -62,39 +62,44 @@ export class SharedService {
       this.db.firestore.collection('users').get().then(res => {
         const users: Array<User> = [];
         res.forEach(doc => {
-          const user: User = {
+          users.push(new User({
             email: doc.id,
             displayName: doc.data().displayName,
             roles: doc.data().roles,
             active: doc.data().active
-          }
-          users.push(user);
+          }));
         })
         resolve(users);
       }).catch(err => reject(err));
     })
   }
 
-  addUser(email: string, user: User) {
+  addUser(user: User) {
     return new Promise<any>((resolve, reject): any => {
-      this.db.firestore.collection('users').doc(email).set(user).then(
-        respuesta => {
-          resolve(respuesta);
-        }).catch(error => {
-          reject(error);
-        });
+      if (user.email && user.roles) {
+        return this.db.firestore.collection('users').doc(user.email).get().then(doc => {
+          if (doc.exists) return reject({ type: 'user-exists' })
+          return this.db.firestore.collection('users').doc(user.email).set({
+            displayName: user.displayName,
+            active: user.active,
+            roles: user.roles
+          })
+        }).then(res => resolve(res)).catch(err => reject(err));
+      } else return reject()
     });
   }
 
-  editUser(email: string, data) {
+  editUser(user: User, data: any) {
     return new Promise<any>((resolve, reject): any => {
-      this.db.firestore.collection('users').doc(email).update(data)
-        .then(respuesta => {
-          resolve(respuesta);
-        }).catch(error => {
-          reject(error);
-        });
-    });
+      if (user && user.email && data) {
+        return this.db.firestore.collection('users').doc(user.email).update(data)
+          .then(res => {
+            return resolve(res);
+          }).catch(error => {
+            return reject(error);
+          })
+      } else return reject()
+    })
   }
 
   getTags() {

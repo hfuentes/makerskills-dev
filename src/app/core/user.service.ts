@@ -87,8 +87,4 @@ export class UserService {
       } else reject()
     })
   }
-
-  getUsersBySkill(skills: Array<string> = []) {
-    throw new Error('Not Implemented')
-  }
 }

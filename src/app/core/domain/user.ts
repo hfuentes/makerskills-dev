@@ -1,8 +1,10 @@
 import { Tag } from './tag'
+import { Settings, LoadingPlace } from 'src/app/error-handler/error-handler.component'
 
 export interface Roles {
   admin: boolean
   profile: boolean
+  searcher: boolean
 }
 
 export class User {
@@ -18,6 +20,22 @@ export class User {
     this.photoURL = data.photoURL
     this.roles = data.roles
     this.active = data.active
+  }
+}
+
+export class UserAdminItem {
+  user: User
+  state = {
+    activeLoading: false,
+    activeError: null,
+    activeSettings: new Settings({ place: LoadingPlace.textLeft }),
+    rolesLoading: false,
+    rolesError: null,
+    rolesSettings: new Settings({ place: LoadingPlace.textLeft })
+  }
+  constructor(data?: any) {
+    if (!data) return
+    this.user = data.user
   }
 }
 

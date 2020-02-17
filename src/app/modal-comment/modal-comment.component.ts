@@ -22,7 +22,7 @@ export class ModalCommentComponent implements OnInit {
   form: FormGroup
 
   constructor(
-    private activeModal: NgbActiveModal,
+    public activeModal: NgbActiveModal,
     private auth: AuthService,
     private shared: SharedService,
     private formBuilder: FormBuilder

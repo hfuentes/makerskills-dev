@@ -264,5 +264,245 @@ export class SeedService {
       exp:exps[Math.floor(Math.random()*exps.length)],level:levels[Math.floor(Math.random()*levels.length)]})
     userSkillsRef.doc('Agility').set({
       exp:exps[Math.floor(Math.random()*exps.length)],level:levels[Math.floor(Math.random()*levels.length)]})*/
+
+    /*const tagsData = [
+      { name: 'FrontEnd', id: '' },
+      { name: 'BackEnd', id: '' },
+      { name: 'BD', id: '' },
+      { name: 'Control versiones', id: '' },
+      { name: 'Agility', id: '' },
+      { name: 'Data Science', id: '' },
+      { name: 'Full Stack .Net', id: '' },
+      { name: 'Full Stack Java', id: '' },
+      { name: 'Lenguages', id: '' },
+      { name: 'Mobile', id: '' },
+      { name: 'Programming Paradigms', id: '' },
+      { name: 'CI/CD	UX/UI', id: '' }
+    ]
+    const tagsRef = this.db.firestore.collection('tags')
+    tagsData.forEach(tagData => {
+      tagsRef.add({ name: tagData.name, active: true }).then(doc => console.log(JSON.stringify({ id: doc.id, name: tagData.name})))
+    })*/
+
+    //if (true) return
+
+
+    /*const tagsData = {
+      FrontEnd: { ref: this.shared.getTagRef('7HZC7dXo08oILaJRT1LK'), name: 'FrontEnd' },
+      BackEnd: { ref: this.shared.getTagRef('B7Gv3hCSXCmH0NCvf6um'), name: 'BackEnd' },
+      BD: { ref: this.shared.getTagRef('4SJUlDcaxNoOXIz22GSv'), name: 'BD' },
+      'Control versiones': { ref: this.shared.getTagRef('Nh2ftmus2pkb3uSten5h'), name: 'Control versiones' },
+      Agility: { ref: this.shared.getTagRef('PLvwXiGZAIMQ2SkDwQbp'), name: 'Agility' },
+      'Data Science': { ref: this.shared.getTagRef('9EC2LMOyD58FuwexNBhO'), name: 'Data Science' },
+      'Full Stack .Net': { ref: this.shared.getTagRef('lIOR8Er78ftoRZ9fePdv'), name: 'Full Stack .Net' },
+      'Full Stack Java': { ref: this.shared.getTagRef('u73vVW7OKw8W4Ai4NVOY'), name: 'Full Stack Java' },
+      Lenguages: { ref: this.shared.getTagRef('pNDLuKppGF0q1L68MkWB'), name: 'Lenguages' },
+      Mobile: { ref: this.shared.getTagRef('mf3ZzixwIMQMKUfh0EAA'), name: 'Mobile' },
+      'Programming Paradigms': { ref: this.shared.getTagRef('DWFZFqpmfLDof5bF6ZGi'), name: 'Programming Paradigms' },
+      'CI/CD': { ref: this.shared.getTagRef('72bKRLMw4iXcH2f5BXEk'), name: 'CI/CD' },
+      'UX/UI': { ref: this.shared.getTagRef('yh6Z5wd0C1i3oUnuJwcM'), name: 'UX/UI' }
+    }
+
+
+    const skillsData = [
+      { skill: '.NET', tag1: 'BackEnd', tag2: 'Full Stack .Net', tag3: '' },
+      { skill: '.NET MVC', tag1: 'BackEnd', tag2: 'Full Stack .Net', tag3: '' },
+      { skill: 'Android', tag1: 'Mobile', tag2: '', tag3: '' },
+      { skill: 'Angular', tag1: 'FrontEnd', tag2: '', tag3: '' },
+      { skill: 'Angularjs', tag1: 'FrontEnd', tag2: '', tag3: '' },
+      { skill: 'ANT', tag1: 'BackEnd', tag2: 'Full Stack Java', tag3: '' },
+      { skill: 'Apache storm', tag1: 'Data Science', tag2: '', tag3: '' },
+      { skill: 'ASP.NET', tag1: 'Full Stack .Net', tag2: '', tag3: '' },
+      { skill: 'Aspect Oriented', tag1: 'Programming Paradigms', tag2: '', tag3: '' },
+      { skill: 'Bamboo', tag1: 'CI/CD', tag2: '', tag3: '' },
+      { skill: 'Boostrap', tag1: 'FrontEnd', tag2: '', tag3: '' },
+      { skill: 'Bower', tag1: 'FrontEnd', tag2: '', tag3: '' },
+      { skill: 'C', tag1: 'BackEnd', tag2: '', tag3: '' },
+      { skill: 'C#', tag1: 'BackEnd', tag2: 'Full Stack .Net', tag3: '' },
+      { skill: 'C++', tag1: 'BackEnd', tag2: '', tag3: '' },
+      { skill: 'Cassandra', tag1: 'BD', tag2: '', tag3: '' },
+      { skill: 'Chinese', tag1: 'Lenguages', tag2: '', tag3: '' },
+      { skill: 'Chrome', tag1: 'UX/UI', tag2: '', tag3: '' },
+      { skill: 'Clojure', tag1: 'BackEnd', tag2: '', tag3: '' },
+      { skill: 'Cloudera', tag1: 'Data Science', tag2: '', tag3: '' },
+      { skill: 'Cordova', tag1: 'Mobile', tag2: '', tag3: '' },
+      { skill: 'CouchBase', tag1: 'BD', tag2: '', tag3: '' },
+      { skill: 'CouchDB', tag1: 'Data Science', tag2: '', tag3: '' },
+      { skill: 'CSS', tag1: 'FrontEnd', tag2: '', tag3: '' },
+      { skill: 'Directed by Events', tag1: 'Programming Paradigms', tag2: '', tag3: '' },
+      { skill: 'Django', tag1: 'BackEnd', tag2: '', tag3: '' },
+      { skill: 'Docker', tag1: 'CI/CD', tag2: '', tag3: '' },
+      { skill: 'DynamoDB', tag1: 'BD', tag2: '', tag3: '' },
+      { skill: 'Edge', tag1: 'UX/UI', tag2: '', tag3: '' },
+      { skill: 'ElasticSearh', tag1: 'BD', tag2: '', tag3: '' },
+      { skill: 'Elixir', tag1: 'BackEnd', tag2: '', tag3: '' },
+      { skill: 'English', tag1: 'Lenguages', tag2: '', tag3: '' },
+      { skill: 'Entity Framework', tag1: 'BackEnd', tag2: 'Full Stack .Net', tag3: '' },
+      { skill: 'Enzyme', tag1: 'FrontEnd', tag2: '', tag3: '' },
+      { skill: 'Firefox', tag1: 'UX/UI', tag2: '', tag3: '' },
+      { skill: 'Flash', tag1: 'UX/UI', tag2: '', tag3: '' },
+      { skill: 'Flask', tag1: 'BackEnd', tag2: '', tag3: '' },
+      { skill: 'Flink', tag1: 'Data Science', tag2: '', tag3: '' },
+      { skill: 'French', tag1: 'Lenguages', tag2: '', tag3: '' },
+      { skill: 'Fundation', tag1: 'FrontEnd', tag2: '', tag3: '' },
+      { skill: 'German', tag1: 'Lenguages', tag2: '', tag3: '' },
+      { skill: 'Git', tag1: 'Control versiones', tag2: 'Full Stack .Net', tag3: 'Full Stack Java' },
+      { skill: 'GitFlow', tag1: 'Control versiones', tag2: '', tag3: '' },
+      { skill: 'GitLab CI', tag1: 'CI/CD', tag2: '', tag3: '' },
+      { skill: 'Golang', tag1: 'BackEnd', tag2: '', tag3: '' },
+      { skill: 'Gradle', tag1: 'BackEnd', tag2: 'Full Stack Java', tag3: '' },
+      { skill: 'Graphql', tag1: 'BackEnd', tag2: '', tag3: '' },
+      { skill: 'Grunt', tag1: 'FrontEnd', tag2: 'FrontEnd', tag3: '' },
+      { skill: 'Hadoop', tag1: 'Data Science', tag2: '', tag3: '' },
+      { skill: 'Harvest', tag1: 'Control versiones', tag2: '', tag3: '' },
+      { skill: 'HPCC', tag1: 'Data Science', tag2: '', tag3: '' },
+      { skill: 'HTML5', tag1: 'FrontEnd', tag2: '', tag3: '' },
+      { skill: 'Hudson', tag1: 'CI/CD', tag2: '', tag3: '' },
+      { skill: 'IBM DB2', tag1: 'BD', tag2: '', tag3: '' },
+      { skill: 'IE 10', tag1: 'UX/UI', tag2: '', tag3: '' },
+      { skill: 'IE 11', tag1: 'UX/UI', tag2: '', tag3: '' },
+      { skill: 'IE 6', tag1: 'UX/UI', tag2: '', tag3: '' },
+      { skill: 'IE 7', tag1: 'UX/UI', tag2: '', tag3: '' },
+      { skill: 'IE8', tag1: 'UX/UI', tag2: '', tag3: '' },
+      { skill: 'Illustrator', tag1: 'UX/UI', tag2: '', tag3: '' },
+      { skill: 'Informix', tag1: 'BD', tag2: '', tag3: '' },
+      { skill: 'Integration Services', tag1: 'Data Science', tag2: '', tag3: '' },
+      { skill: 'Ionic', tag1: 'Mobile', tag2: '', tag3: '' },
+      { skill: 'iOS', tag1: 'Mobile', tag2: '', tag3: '' },
+      { skill: 'Jasmine', tag1: 'FrontEnd', tag2: '', tag3: '' },
+      { skill: 'Java', tag1: 'Mobile', tag2: '', tag3: '' },
+      { skill: 'Java 7', tag1: 'BackEnd', tag2: 'Full Stack Java', tag3: '' },
+      { skill: 'Java 8', tag1: 'BackEnd', tag2: 'Full Stack Java', tag3: '' },
+      { skill: 'JavaScript', tag1: 'FrontEnd', tag2: '', tag3: '' },
+      { skill: 'Jboos', tag1: 'Full Stack Java', tag2: '', tag3: '' },
+      { skill: 'Jenkins', tag1: 'CI/CD', tag2: '', tag3: '' },
+      { skill: 'Jest', tag1: 'FrontEnd', tag2: '', tag3: '' },
+      { skill: 'JQuery', tag1: 'FrontEnd', tag2: '', tag3: '' },
+      { skill: 'JSF', tag1: 'BackEnd', tag2: '', tag3: '' },
+      { skill: 'Kanban', tag1: 'Agility', tag2: '', tag3: '' },
+      { skill: 'Karma', tag1: 'FrontEnd', tag2: '', tag3: '' },
+      { skill: 'Kettle', tag1: 'Data Science', tag2: '', tag3: '' },
+      { skill: 'Kotlin', tag1: 'Mobile', tag2: '', tag3: '' },
+      { skill: 'Kubernetes', tag1: 'CI/CD', tag2: '', tag3: '' },
+      { skill: 'Lean', tag1: 'Agility', tag2: '', tag3: '' },
+      { skill: 'Less', tag1: 'FrontEnd', tag2: '', tag3: '' },
+      { skill: 'Less', tag1: 'Agility', tag2: '', tag3: '' },
+      { skill: 'Liquibase', tag1: 'BD', tag2: '', tag3: '' },
+      { skill: 'Logical Functional', tag1: 'Programming Paradigms', tag2: '', tag3: '' },
+      { skill: 'Maerial Design', tag1: 'FrontEnd', tag2: '', tag3: '' },
+      { skill: 'Maven', tag1: 'BackEnd', tag2: 'Full Stack Java', tag3: '' },
+      { skill: 'Mercurial', tag1: 'Control versiones', tag2: '', tag3: '' },
+      { skill: 'Meteor', tag1: 'BackEnd', tag2: '', tag3: '' },
+      { skill: 'Mobile MockUp', tag1: 'UX/UI', tag2: '', tag3: '' },
+      { skill: 'Mocha', tag1: 'FrontEnd', tag2: '', tag3: '' },
+      { skill: 'MockUp', tag1: 'UX/UI', tag2: '', tag3: '' },
+      { skill: 'Mongo', tag1: 'BD', tag2: '', tag3: '' },
+      { skill: 'MySql', tag1: 'BD', tag2: '', tag3: '' },
+      { skill: 'NativeScript', tag1: 'Mobile', tag2: '', tag3: '' },
+      { skill: 'Neo4j', tag1: 'BD', tag2: '', tag3: '' },
+      { skill: 'NodeJs', tag1: 'BackEnd', tag2: '', tag3: '' },
+      { skill: 'Npm', tag1: 'FrontEnd', tag2: 'BackEnd', tag3: '' },
+      { skill: 'Nuget', tag1: 'BackEnd', tag2: 'Full Stack .Net', tag3: '' },
+      { skill: 'Object Oriented', tag1: 'Full Stack .Net', tag2: 'Full Stack Java', tag3: 'Programming Paradigms' },
+      { skill: 'OpenRifane', tag1: 'Data Science', tag2: '', tag3: '' },
+      { skill: 'OpenShift', tag1: 'CI/CD', tag2: '', tag3: '' },
+      { skill: 'Opera', tag1: 'UX/UI', tag2: '', tag3: '' },
+      { skill: 'Oracle', tag1: 'BD', tag2: '', tag3: '' },
+      { skill: 'PentaHo', tag1: 'Data Science', tag2: '', tag3: '' },
+      { skill: 'Phoenix', tag1: 'BackEnd', tag2: '', tag3: '' },
+      { skill: 'PhoneGap', tag1: 'Mobile', tag2: '', tag3: '' },
+      { skill: 'Photoshop', tag1: 'UX/UI', tag2: '', tag3: '' },
+      { skill: 'PL/SQL', tag1: 'BD', tag2: '', tag3: '' },
+      { skill: 'Portuguese', tag1: 'Lenguages', tag2: '', tag3: '' },
+      { skill: 'PostgreSQL', tag1: 'BD', tag2: '', tag3: '' },
+      { skill: 'Power Center', tag1: 'Data Science', tag2: '', tag3: '' },
+      { skill: 'Proactor', tag1: 'FrontEnd', tag2: '', tag3: '' },
+      { skill: 'Python', tag1: 'BackEnd', tag2: '', tag3: '' },
+      { skill: 'Qubole', tag1: 'Data Science', tag2: '', tag3: '' },
+      { skill: 'React', tag1: 'FrontEnd', tag2: '', tag3: '' },
+      { skill: 'ReactNative', tag1: 'Mobile', tag2: '', tag3: '' },
+      { skill: 'Redis', tag1: 'BD', tag2: '', tag3: '' },
+      { skill: 'Responsive', tag1: 'UX/UI', tag2: '', tag3: '' },
+      { skill: 'RethinkBD', tag1: 'BD', tag2: '', tag3: '' },
+      { skill: 'Ruby', tag1: 'BackEnd', tag2: '', tag3: '' },
+      { skill: 'Ruby on Rails', tag1: 'BackEnd', tag2: '', tag3: '' },
+      { skill: 'RUP', tag1: 'Agility', tag2: '', tag3: '' },
+      { skill: 'Rust', tag1: 'BackEnd', tag2: '', tag3: '' },
+      { skill: 'Safari', tag1: 'UX/UI', tag2: '', tag3: '' },
+      { skill: 'Safe', tag1: 'Agility', tag2: '', tag3: '' },
+      { skill: 'SAP', tag1: 'BD', tag2: '', tag3: '' },
+      { skill: 'Sass', tag1: 'FrontEnd', tag2: '', tag3: '' },
+      { skill: 'Scala', tag1: 'BackEnd', tag2: '', tag3: '' },
+      { skill: 'Scrum', tag1: 'Agility', tag2: '', tag3: '' },
+      { skill: 'Servicios WCF', tag1: 'Full Stack .Net', tag2: '', tag3: '' },
+      { skill: 'SOAP', tag1: 'BackEnd', tag2: '', tag3: '' },
+      { skill: 'Spanish', tag1: 'Lenguages', tag2: '', tag3: '' },
+      { skill: 'Spark', tag1: 'Data Science', tag2: '', tag3: '' },
+      { skill: 'Spiral', tag1: 'Agility', tag2: '', tag3: '' },
+      { skill: 'Spring', tag1: 'BackEnd', tag2: 'Full Stack Java', tag3: '' },
+      { skill: 'Spring Boot', tag1: 'BackEnd', tag2: 'Full Stack Java', tag3: '' },
+      { skill: 'Sql Server', tag1: 'BD', tag2: '', tag3: '' },
+      { skill: 'SqLite', tag1: 'BD', tag2: '', tag3: '' },
+      { skill: 'Statwing', tag1: 'Data Science', tag2: '', tag3: '' },
+      { skill: 'Structured Imperative', tag1: 'Programming Paradigms', tag2: '', tag3: '' },
+      { skill: 'Struts', tag1: 'BackEnd', tag2: '', tag3: '' },
+      { skill: 'SVN', tag1: 'Control versiones', tag2: '', tag3: '' },
+      { skill: 'Swing', tag1: 'BackEnd', tag2: '', tag3: '' },
+      { skill: 'Sybase', tag1: 'BD', tag2: '', tag3: '' },
+      { skill: 'Talent', tag1: 'Data Science', tag2: '', tag3: '' },
+      { skill: 'Team Foundation', tag1: 'CI/CD', tag2: '', tag3: '' },
+      { skill: 'Teradata', tag1: 'BD', tag2: '', tag3: '' },
+      { skill: 'TFVC', tag1: 'Control versiones', tag2: '', tag3: '' },
+      { skill: 'Tomcat', tag1: 'BackEnd', tag2: 'Full Stack Java', tag3: '' },
+      { skill: 'Tortoise', tag1: 'Control versiones', tag2: '', tag3: '' },
+      { skill: 'Travis', tag1: 'CI/CD', tag2: '', tag3: '' },
+      { skill: 'TypeScript', tag1: 'FrontEnd', tag2: '', tag3: '' },
+      { skill: 'VB.NET', tag1: 'BackEnd', tag2: 'Full Stack .Net', tag3: '' },
+      { skill: 'Vuejs', tag1: 'FrontEnd', tag2: '', tag3: '' },
+      { skill: 'WAS', tag1: 'Full Stack Java', tag2: '', tag3: '' },
+      { skill: 'Waterfall', tag1: 'Agility', tag2: '', tag3: '' },
+      { skill: 'WebLogic', tag1: 'Full Stack Java', tag2: '', tag3: '' },
+      { skill: 'WebPack', tag1: 'FrontEnd', tag2: '', tag3: '' },
+      { skill: 'Windows Phone', tag1: 'Mobile', tag2: '', tag3: '' },
+      { skill: 'Wireframe', tag1: 'UX/UI', tag2: '', tag3: '' },
+      { skill: 'Xamarin', tag1: 'Mobile', tag2: '', tag3: '' },
+      { skill: 'Xtreme Programming', tag1: 'Agility', tag2: '', tag3: '' },
+      { skill: 'Yarn', tag1: 'FrontEnd', tag2: '', tag3: '' }
+    ]*/
+
+    /*const skillsRef = this.db.firestore.collection('skills')
+    skillsData.forEach(skillData => {
+      const skill = { name: skillData.skill, tags: [] }
+      if (skillData.tag1 && skillData.tag1 !== '') {
+        skill.tags.push({
+          name: tagsData[skillData.tag1].name,
+          ref: tagsData[skillData.tag1].ref
+        })
+      }
+      if (skillData.tag2 && skillData.tag2 !== '') {
+        skill.tags.push({
+          name: tagsData[skillData.tag2].name,
+          ref: tagsData[skillData.tag2].ref
+        })
+      }
+      if (skillData.tag3 && skillData.tag3 !== '') {
+        skill.tags.push({
+          name: tagsData[skillData.tag3].name,
+          ref: tagsData[skillData.tag3].ref
+        })
+      }
+      if (skill.tags.length === 0) delete skill.tags
+      console.log(skill)
+      skillsRef.add(skill)
+    });*/
+
+    /*const usersRef = this.db.firestore.collection('users')
+    usersRef.get().then(docs => {
+      docs.forEach(doc => {
+        doc.ref.update({ skills: []}).then(() => {
+          console.log(doc.id)
+        })
+      });
+    })*/
   }
 }

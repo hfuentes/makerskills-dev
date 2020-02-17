@@ -7,10 +7,10 @@
             <div
               class="mb-3 p-3 border rounded {{ !tag.skills || (tag.skills && tag.skills.length === 0) ? tag.bg : 'border-info' }}">
               <div class="clearfix">
-                <h4 class="float-left"
+                <h5 class="float-left"
                   [ngClass]="{'text-info': tag.skills && tag.skills.length > 0, 'text-white': !tag.skills || (tag.skills && tag.skills.length === 0)}">
                   <strong># {{ tag.tag.name }}</strong>
-                </h4>
+                </h5>
                 <h4>
                   <ngb-rating *ngIf="tag.skills && tag.skills.length > 0" class="text-warning float-right"
                     placement="top"
@@ -38,9 +38,9 @@
         <div class="col-12 col-xl-4">
           <div class="mb-3 p-3 border rounded border-info">
             <div class="clearfix">
-              <h4 class="float-left text-info">
+              <h5 class="float-left text-info">
                 <strong># Full Profile</strong>
-              </h4>
+              </h5>
               <h1>
                 <fa name="chevron-circle-right" class="float-right text-info" routerLink="/profile"></fa>
               </h1>

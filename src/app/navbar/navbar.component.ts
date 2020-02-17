@@ -11,6 +11,7 @@ export class NavbarComponent implements OnInit {
 
   MENU = this.navbarConst.getMenuItems();
   avatar = localStorage.getItem('photoURL');
+  isNavbarCollapsed: boolean
 
   constructor(public auth: AuthService, public navbarConst: NavbarConstants) {
   }

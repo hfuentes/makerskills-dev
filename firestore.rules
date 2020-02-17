@@ -31,10 +31,7 @@ service cloud.firestore {
       allow get, list: if isSignedIn();
     }
     match /comments/{document=**} {
-      allow create, update, delete, get, list: if isSignedIn() && hasRole('admin');
-    }
-    match /test/{document=**} {
-      allow create, update, delete, get, list: if isSignedIn() && hasRole('admin');
+      allow create, update, delete, get, list: if isSignedIn();
     }
   }
 }

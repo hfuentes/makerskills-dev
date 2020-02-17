@@ -29,7 +29,7 @@ export class ModalEvaluateComponent implements OnInit {
   }
 
   constructor(
-    private activeModal: NgbActiveModal,
+    public activeModal: NgbActiveModal,
     private sharedService: SharedService,
     private userService: UserService
   ) { }

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-light sticky-top" style="background-color: #e3f2fd;">
+<nav class="navbar navbar-expand-md navbar-light sticky-top" style="background-color: #e3f2fd;" *ngIf="auth.authenticated">
   <a class="navbar-brand" href="#">
     <img
       src="https://static.wixstatic.com/media/1cbd15_365ed530bdb843248cc8e39024a7a98a~mv2.png/v1/fill/w_362,h_217,al_c,q_85/1cbd15_365ed530bdb843248cc8e39024a7a98a~mv2.webp"
@@ -9,7 +9,7 @@
     data-target="#navbarsDefault" aria-controls="navbarsDefault" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div [ngbCollapse]="isNavbarCollapsed" class="collapse navbar-collapse" *ngIf="auth.authenticated"
+  <div [ngbCollapse]="isNavbarCollapsed" class="collapse navbar-collapse"
     id="navbarsDefault">
     <app-navbar-search *ngIf="auth.matchingRoles(['searcher'])" class="input-group align-content-md-center ml-5">
     </app-navbar-search>

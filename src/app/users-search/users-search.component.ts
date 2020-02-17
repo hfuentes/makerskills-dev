@@ -18,7 +18,7 @@ export class UsersSearchComponent implements OnInit, OnChanges {
   constructor(
     private userService: UserService,
     private formBuilder: FormBuilder,
-    private auth: AuthService
+    public auth: AuthService
   ) {
     this.form = this.formBuilder.group({
       email: new FormControl('', [

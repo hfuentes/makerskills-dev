@@ -10,6 +10,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { ModalEvaluateComponent } from '../modal-evaluate/modal-evaluate.component'
 import * as constants from '../core/constants/constants'
 import { SearchData } from '../users-search/users-search.component'
+import { SeedService } from '../core/seed.service'
 
 @Component({
   selector: 'app-dashboard',
@@ -43,10 +44,13 @@ export class DashboardComponent implements OnInit, OnChanges {
     private sharedService: SharedService,
     private userService: UserService,
     private auth: AuthService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    //borrar
+    private seed: SeedService
   ) { }
 
   ngOnInit() {
+    this.seed.populate()
     this.setUser()
     this.loadData()
   }

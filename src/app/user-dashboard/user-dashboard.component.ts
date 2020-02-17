@@ -9,6 +9,7 @@ import { SearchData } from '../users-search/users-search.component';
 export class UserDashboardComponent implements OnInit {
 
   search: SearchData = new SearchData()
+  email = ''
 
   constructor() { }
 

@@ -24,10 +24,10 @@ pipeline {
                 sh 'npm install'
                 script {
                     if (BRANCH_NAME == "master"){
-                      sh 'npm build --prod'
+                      sh 'ng build --prod'
                     }
                     else {
-                      sh 'npm build'  
+                      sh 'ng build'  
                     }
                 }
                 // Realizar paquete y archivar
@@ -83,7 +83,7 @@ EOF
                           break
                       case ~/develop/:
                           println "Branch es develop"
-                          PORT_FRONT = 9999
+                          PORT_FRONT = 9997
                           break
                       default: 
                           println "branch no mapeado"

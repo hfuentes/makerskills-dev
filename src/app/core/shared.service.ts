@@ -170,7 +170,7 @@ export class SharedService {
       if (searchItems && searchItems.length > 0) {
         return this.getCollectionSkills().then(docs => {
           searchItems.forEach(tag => {
-            if (tag.item.constructor.name === 'Tag') {
+            if (tag.item.constructor.name === Tag.name) {
               let count = 0
               docs.forEach(doc => {
                 if (doc.data().tags && doc.data().tags.map(t => t.ref.id).includes(tag.item.id)) {
@@ -187,14 +187,14 @@ export class SharedService {
               if (doc.data().skills && doc.data().skills.length > 0) {
                 const oks = []
                 searchItems.forEach(searchItem => {
-                  if (searchItem.item.constructor.name === 'Tag' && (doc.data().skills
+                  if (searchItem.item.constructor.name === Tag.name && (doc.data().skills
                     .filter(x => x.tags && x.tags.length > 0)
                     .map(x => x.tags).flat()
                     .map(x => x.ref.id)
                     .filter((v, i, s) => s.indexOf(v) === i)
                     .indexOf(searchItem.item.id) >= 0)) {
                     oks.push(true)
-                  } else if (searchItem.item.constructor.name === 'SkillName' && (doc.data().skills
+                  } else if (searchItem.item.constructor.name === SkillName.name && (doc.data().skills
                     .find(x => x.ref.id === searchItem.item.id) !== undefined)) {
                     oks.push(true)
                   } else {
@@ -213,13 +213,13 @@ export class SharedService {
                         item: searchItem.item.name,
                         bg: searchItem.bg,
                         avgLevels: (() => {
-                          if (searchItem.item.constructor.name === 'Tag') {
+                          if (searchItem.item.constructor.name === Tag.name) {
                             // tag case
                             const levels = doc.data().skills
                               .filter(y => y.tags && y.tags.length > 0 && y.tags.some(z => z.ref.id === searchItem.item.id))
                               .map(y => y.level)
                             return levels.reduce((p, c) => c += p) / searchItem.skillsCount
-                          } else if (searchItem.item.constructor.name === 'SkillName') {
+                          } else if (searchItem.item.constructor.name === SkillName.name) {
                             // skill case
                             return doc.data().skills.find(x => x.ref.id === searchItem.item.id).level
                           } else {

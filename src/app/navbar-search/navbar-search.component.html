@@ -9,8 +9,8 @@
     <div class="row">
       <div class="col">
         <div class="clearfix">
-          <ng-container *ngFor="let searchTag of search.tags">
-            <span class="badge badge-{{ searchTag.bg }} float-left mr-1"># {{ searchTag.tag.name }}</span>
+          <ng-container *ngFor="let searchTag of search.items">
+            <span class="badge badge-{{ searchTag.bg }} float-left mr-1"># {{ searchTag.item.name }}</span>
           </ng-container>
           <a href="#" class="float-right text-muted"><u>SEE MORE</u>
             <fa name="plus-circle"></fa>
@@ -22,23 +22,25 @@
     <div class="row">
       <div class="col">
         <div class="clearfix">
-          <ng-container *ngFor="let userTag of search.usersTag">
-            <div class="float-left mr-3 text-center">
-              <a [routerLink]="['profile']" [queryParams]="{ email: userTag.user.email }">
-                <img src="{{userTag.user.photoURL}}" width="35" height="35" class="rounded-circle" [ngbPopover]="userPop"
-                triggers="mouseenter:mouseleave">
-                <ng-template #userPop>
-                  {{userTag.user.displayName}}
-                </ng-template>
-              </a>
-              <ng-container *ngFor="let tagLevel of userTag.tags">
-                <br>
-                <ngb-rating [readonly]="true" placement="bottom"
-                  [ngbTooltip]="'# ' + tagLevel.tag.name + ' Level: ' + (tagLevel.avgLevels | number) + '!'" [max]="5"
-                  [rate]="tagLevel.avgLevels" class="text-{{tagLevel.bg}}"></ngb-rating>
-              </ng-container>
-            </div>
-          </ng-container>
+          <app-error-handler [loading]="search.userState.loading" [error]="search.userState.error">
+            <ng-container *ngFor="let userItem of search.usersItems">
+              <div class="float-left mr-3 text-center">
+                <a [routerLink]="['profile']" [queryParams]="{ email: userItem.user.email }">
+                  <img src="{{userItem.user.photoURL}}" width="35" height="35" class="rounded-circle"
+                    [ngbPopover]="userPop" triggers="mouseenter:mouseleave">
+                  <ng-template #userPop>
+                    {{userItem.user.displayName}}
+                  </ng-template>
+                </a>
+                <ng-container *ngFor="let itemLevel of userItem.items">
+                  <br>
+                  <ngb-rating [readonly]="true" placement="bottom"
+                    [ngbTooltip]="'# ' + itemLevel.item + ' Level: ' + (itemLevel.avgLevels | number) + '!'"
+                    [max]="5" [rate]="itemLevel.avgLevels" class="text-{{itemLevel.bg}}"></ngb-rating>
+                </ng-container>
+              </div>
+            </ng-container>
+          </app-error-handler>
         </div>
       </div>
     </div>

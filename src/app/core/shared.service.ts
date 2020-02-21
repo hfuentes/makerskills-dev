@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore'
 import { SkillName } from '../core/domain/skill'
-import { User, UserTagsSearch, UserTagSearch } from './domain/user'
-import { Tag, NavSearchTag } from './domain/tag';
+import { User, UserItemsSearch, UserItemSearch } from './domain/user'
+import { Tag, NavSearchItem } from './domain/tag';
 import * as firebase from 'firebase'
 import { Comment, CommentForm } from './domain/comment'
 
@@ -11,6 +11,9 @@ import { Comment, CommentForm } from './domain/comment'
 })
 export class SharedService {
 
+  usersCache: firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData> = null
+  skillsCache: firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData> = null
+
   constructor(private db: AngularFirestore) { }
 
   getSkills() {
@@ -18,12 +21,12 @@ export class SharedService {
       this.db.firestore.collection('skills').get().then(docs => {
         const skills: Array<SkillName> = [];
         docs.forEach(doc => {
-          skills.push({
+          skills.push(new SkillName({
             id: doc.id,
             name: doc.data().name,
             active: doc.data().active,
             tags: doc.data().tags
-          })
+          }))
         });
         resolve(skills);
       }).catch(err => reject(err));
@@ -129,7 +132,7 @@ export class SharedService {
 
   getSkillsByTag(tag: Tag) {
     return new Promise<any>((resolve, reject) => {
-      this.db.firestore.collection('skills').get().then(docs => {
+      this.getCollectionSkills().then(docs => {
         const res: Array<SkillName> = []
         docs.forEach(doc => {
           if (doc.data().tags && doc.data().tags.map(t => t.ref.id).includes(tag.id)) {
@@ -141,52 +144,104 @@ export class SharedService {
     })
   }
 
-  getUsersByTag(tags: Array<NavSearchTag> = []) {
+  getCollectionSkills() {
+    return new Promise<firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>>((resolve, reject) => {
+      if (this.skillsCache && !this.skillsCache.empty) return resolve(this.skillsCache)
+      return this.db.firestore.collection('skills').where('active', '==', true).get().then(docs => {
+        this.skillsCache = docs
+        resolve(docs)
+      }).catch(err => reject(err))
+    })
+  }
+
+  getCollectionUsers() {
+    return new Promise<firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>>((resolve, reject) => {
+      if (this.usersCache && !this.usersCache.empty) return resolve(this.usersCache)
+      return this.db.firestore.collection('users').where('active', '==', true).get().then(docs => {
+        this.usersCache = docs
+        resolve(docs)
+      }).catch(err => reject(err))
+    })
+  }
+
+  getUsersBySearchItem(searchItems: Array<NavSearchItem> = []) {
     return new Promise<any>((resolve, reject) => {
-      const res: Array<UserTagsSearch> = []
-      if (tags && tags.length > 0) {
-        return this.db.firestore.collection('users')
-          .where('active', '==', true).get().then(docs => {
-            if (docs && !docs.empty) {
+      const res: Array<UserItemsSearch> = []
+      if (searchItems && searchItems.length > 0) {
+        return this.getCollectionSkills().then(docs => {
+          searchItems.forEach(tag => {
+            if (tag.item.constructor.name === 'Tag') {
+              let count = 0
               docs.forEach(doc => {
-                if (doc.data().skills && doc.data().skills.length > 0 && tags.map(x => x.tag.id).every(x =>
-                  doc.data().skills
-                    .filter(y => y.tags && y.tags.length > 0)
-                    .map(y => y.tags).flat()
-                    .map(y => y.ref.id)
+                if (doc.data().tags && doc.data().tags.map(t => t.ref.id).includes(tag.item.id)) {
+                  count++
+                }
+              })
+              tag.skillsCount = count
+            }
+          })
+          return this.getCollectionUsers()
+        }).then(docs => {
+          if (docs && !docs.empty) {
+            docs.forEach(doc => {
+              if (doc.data().skills && doc.data().skills.length > 0) {
+                const oks = []
+                searchItems.forEach(searchItem => {
+                  if (searchItem.item.constructor.name === 'Tag' && (doc.data().skills
+                    .filter(x => x.tags && x.tags.length > 0)
+                    .map(x => x.tags).flat()
+                    .map(x => x.ref.id)
                     .filter((v, i, s) => s.indexOf(v) === i)
-                    .indexOf(x) >= 0
-                )) {
-                  res.push(new UserTagsSearch({
+                    .indexOf(searchItem.item.id) >= 0)) {
+                    oks.push(true)
+                  } else if (searchItem.item.constructor.name === 'SkillName' && (doc.data().skills
+                    .find(x => x.ref.id === searchItem.item.id) !== undefined)) {
+                    oks.push(true)
+                  } else {
+                    oks.push(false)
+                  }
+                })
+                if (oks.every(x => x)) {
+                  res.push(new UserItemsSearch({
                     user: new User({
                       email: doc.id,
                       displayName: doc.data().displayName,
                       photoURL: doc.data().photoURL
                     }),
-                    tags: tags.map(x => {
-                      return new UserTagSearch({
-                        tag: x.tag,
-                        bg: x.bg,
+                    items: searchItems.map(searchItem => {
+                      return new UserItemSearch({
+                        item: searchItem.item.name,
+                        bg: searchItem.bg,
                         avgLevels: (() => {
-                          const levels = doc.data().skills
-                            .filter(y => y.tags && y.tags.length > 0 && y.tags.some(z => z.ref.id === x.tag.id))
-                            .map(y => y.level)
-                          return levels.reduce((p, c) => c += p) / levels.length
+                          if (searchItem.item.constructor.name === 'Tag') {
+                            // tag case
+                            const levels = doc.data().skills
+                              .filter(y => y.tags && y.tags.length > 0 && y.tags.some(z => z.ref.id === searchItem.item.id))
+                              .map(y => y.level)
+                            return levels.reduce((p, c) => c += p) / searchItem.skillsCount
+                          } else if (searchItem.item.constructor.name === 'SkillName') {
+                            // skill case
+                            return doc.data().skills.find(x => x.ref.id === searchItem.item.id).level
+                          } else {
+                            console.error('getUsersBySearchItem: item is not tag or skill.')
+                            return 0
+                          }
                         })(),
-                        weight: x.weight
+                        weight: searchItem.weight
                       })
                     })
                   }))
                 }
-              })
-            }
-            // sort by rating
-            return resolve(res.sort((x, y) => {
-              if (x.rating > y.rating) return -1
-              if (x.rating < y.rating) return 1
-              return 0
-            }))
-          }).catch(err => reject(err))
+              }
+            })
+          }
+          // sort by rating
+          return resolve(res.sort((x, y) => {
+            if (x.rating > y.rating) return -1
+            if (x.rating < y.rating) return 1
+            return 0
+          }))
+        }).catch(err => reject(err))
       } else {
         return resolve(res)
       }

@@ -8,6 +8,9 @@ export class Skill {
   level: number
   ref: DocumentReference
   tags: Array<SkillTag>
+  get id() {
+    return this.ref ? this.ref.id : null
+  }
   get levelLabel() {
     return getLevelLabel(this.level)
   }

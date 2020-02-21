@@ -1,4 +1,4 @@
-import { Skill } from './skill'
+import { Skill, SkillName } from './skill'
 import { DocumentReference } from '@angular/fire/firestore'
 import { getLevelLabel } from '../constants/constants'
 
@@ -55,13 +55,15 @@ export class DashboardTag {
   }
 }
 
-export class NavSearchTag {
-  tag: Tag
+export class NavSearchItem {
+  item: Tag | SkillName
   bg: string
   weight: number
+  skillsCount?: number
   constructor(data?: any) {
     if (!data) return
-    this.tag = data.tag
+    this.item = data.item
+    this.weight = 1
     this.setBg()
   }
   setBg(): void {

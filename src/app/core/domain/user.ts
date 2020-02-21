@@ -39,30 +39,30 @@ export class UserAdminItem {
   }
 }
 
-export class UserTagsSearch {
+export class UserItemsSearch {
   user: User
-  tags: Array<UserTagSearch>
+  items: Array<UserItemSearch>
   get rating(): number {
-    if (this.tags && this.tags.length > 0) {
-      return this.tags.map(x => x.weight * x.avgLevels).reduce((p, c) => c += p)
+    if (this.items && this.items.length > 0) {
+      return this.items.map(x => x.weight * x.avgLevels).reduce((p, c) => c += p)
     }
     return 0
   }
   constructor(data?: any) {
     if (!data) return
     this.user = data.user
-    this.tags = data.tags
+    this.items = data.items
   }
 }
 
-export class UserTagSearch {
-  tag: Tag
+export class UserItemSearch {
+  item: string
   bg: string
   avgLevels: number
   weight: number
   constructor(data?: any) {
     if (!data) return
-    this.tag = data.tag
+    this.item = data.item
     this.bg = data.bg
     this.avgLevels = data.avgLevels
     this.weight = data.weight

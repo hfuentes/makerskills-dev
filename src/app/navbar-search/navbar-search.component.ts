@@ -3,10 +3,11 @@ import { AuthService } from '../core/auth.service';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
-import { Tag, NavSearchTag } from '../core/domain/tag';
+import { Tag, NavSearchItem } from '../core/domain/tag';
 import { SharedService } from '../core/shared.service';
-import { UserTagsSearch } from '../core/domain/user';
+import { UserItemsSearch } from '../core/domain/user';
 import { Error } from '../error-handler/error-handler.component';
+import { Skill } from '../core/domain/skill';
 
 @Component({
   selector: 'app-navbar-search',
@@ -18,12 +19,15 @@ export class NavbarSearchComponent implements OnInit {
   // tags data
   tags: Array<Tag> = []
 
+  // skills data
+  skills: Array<Skill> = []
+
   // search data
   search = {
     form: new FormGroup({}),
-    usersTag: new Array<UserTagsSearch>(),
-    tags: new Array<NavSearchTag>(),
-    tagState: {
+    usersItems: new Array<UserItemsSearch>(),
+    items: new Array<NavSearchItem>(),
+    itemState: {
       loading: false,
       error: null,
       settings: null
@@ -36,7 +40,7 @@ export class NavbarSearchComponent implements OnInit {
   }
 
   constructor(
-    private auth: AuthService,
+    public auth: AuthService,
     private formBuilder: FormBuilder,
     private sharedServices: SharedService
   ) {
@@ -46,28 +50,36 @@ export class NavbarSearchComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.search.tagState.loading = true
-    this.search.tagState.error = null
-    this.sharedServices.getTags().then(tags => {
+    this.search.itemState.loading = true
+    this.search.itemState.error = null
+    // get skills
+    this.sharedServices.getSkills().then(skills => {
+      this.skills = skills
+      //get tags
+      return this.sharedServices.getTags()
+    }).then(tags => {
       this.tags = tags
-      this.search.tagState.loading = false
+      this.search.itemState.loading = false
       this.search.form.controls.text.valueChanges.pipe(
         debounceTime(200),
         distinctUntilChanged(),
         map((text: string) => text.toLocaleLowerCase().trim().split(',').map(x => x.trim()).filter(x => x))
-      ).subscribe(searchTags => {
-        this.search.tags = this.tags
-          .filter(x => searchTags.indexOf(x.name.trim().toLocaleLowerCase()) > -1)
-          .map(x => new NavSearchTag({ tag: x }))
-        if (this.search.tags && this.search.tags.length > 0) {
-          // autogenerate weights
-          this.search.tags.forEach(x => x.weight = 1 / this.search.tags.length)
+      ).subscribe(searchItems => {
+        this.search.items  = []
+        searchItems.forEach(item => {
+          const tag = this.tags.find(x => item.indexOf(x.name.trim().toLocaleLowerCase()) > -1)
+          const skill = this.skills.find(x => item === x.name.trim().toLocaleLowerCase())
+          if (tag || skill) this.search.items.push(new NavSearchItem({ item: tag || skill }))
+        })
+        if (this.search.items && this.search.items.length > 0) {
+          // autogenerate weights - same weight for all items in search
+          this.search.items.forEach(x => x.weight = 1 / this.search.items.length)
           // ... like average
           this.search.userState.loading = true
           this.search.userState.error = null
-          this.sharedServices.getUsersByTag(this.search.tags).then(data => {
+          this.sharedServices.getUsersBySearchItem(this.search.items).then(data => {
             this.search.userState.loading = false
-            this.search.usersTag = data
+            this.search.usersItems = data
           }).catch(err => {
             this.search.userState.loading = false
             this.search.userState.error = new Error()
@@ -76,8 +88,8 @@ export class NavbarSearchComponent implements OnInit {
         }
       })
     }).catch(err => {
-      this.search.tagState.loading = false
-      this.search.tagState.error = new Error()
+      this.search.itemState.loading = false
+      this.search.itemState.error = new Error()
       console.error(err)
     })
   }

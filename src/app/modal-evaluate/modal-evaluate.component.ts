@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { DashboardTag } from '../core/domain/tag';
+import { DashboardTag, NavSearchItem } from '../core/domain/tag';
 import { SharedService } from '../core/shared.service';
 import { EvaluationSkill, Skill, SkillName } from '../core/domain/skill';
-import { User } from '../core/domain/user';
+import { User, UserItemsSearch } from '../core/domain/user';
 import { UserService } from '../core/user.service';
 import { Error } from '../error-handler/error-handler.component';
 
@@ -20,12 +20,15 @@ export class ModalEvaluateComponent implements OnInit {
   @Output() reloadUserSkills = new EventEmitter()
 
   evaluationSkills: Array<EvaluationSkill> = []
+  usersReferents: Array<UserItemsSearch> = []
 
   state: any = {
     loading: false,
     error: null,
     saveLoading: false,
-    saveError: null
+    saveError: null,
+    refLoading: false,
+    refError: null
   }
 
   constructor(
@@ -49,6 +52,19 @@ export class ModalEvaluateComponent implements OnInit {
     }).catch(err => {
       this.state.loading = false
       this.state.error = new Error()
+      console.error(err)
+    })
+
+    this.state.refLoading = true
+    this.state.refError = null
+    const tags = Array<NavSearchItem>()
+    tags.push(new NavSearchItem({ tag: this.tag.tag }))
+    this.sharedService.getUsersBySearchItem(tags).then(data => {
+      this.usersReferents = data.slice(0, 5)
+      this.state.refLoading = false
+    }).catch(err => {
+      this.state.refLoading = false
+      this.state.refError = new Error()
       console.error(err)
     })
   }

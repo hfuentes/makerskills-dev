@@ -1,15 +1,15 @@
 pipeline {
     agent 'any'
-    
+
     options {
         timeout(time: 30, unit: 'MINUTES')
     }
-    
+
     environment {
         PROJECT_NAME = 'makerskills'
         PROJECT_PATH = 'makerskills'
     }
-    
+
     tools {
         'org.jenkinsci.plugins.docker.commons.tools.DockerTool' '18.09'
         nodejs '13'
@@ -27,7 +27,7 @@ pipeline {
                       sh 'ng build --prod'
                     }
                     else {
-                      sh 'ng build'  
+                      sh 'ng build'
                     }
                 }
                 // Realizar paquete y archivar
@@ -35,11 +35,11 @@ pipeline {
                 archiveArtifacts "${PROJECT_NAME}-${BRANCH_NAME}-${VERSION}.tgz"
             }
         }
-        
+
         stage('Publish Artifactory') {
             environment {
               ARTIFACTORY = credentials('artifactory')
-            } 
+            }
             steps {
               sh "curl -u${ARTIFACTORY} -T ${PROJECT_NAME}-${BRANCH_NAME}-${VERSION}.tgz http://worker1.linux.server.im:8081/artifactory/Desarrollo/${PROJECT_PATH}/${BRANCH_NAME}-${VERSION}/${PROJECT_NAME}-${BRANCH_NAME}-${VERSION}.tgz"
             }
@@ -49,16 +49,18 @@ pipeline {
             steps {
               script {
                 BRANCHNAME_LOW = BRANCH_NAME.toLowerCase()
-                PROJECTNAME_LOW = PROJECT_NAME.toLowerCase() 
+                PROJECTNAME_LOW = PROJECT_NAME.toLowerCase()
               }
               sh """
                 mkdir docker
                 cp -r dist/makerskills docker
+                cp -r nginx.conf docker
                 """
               sh """cat << EOF > docker/Dockerfile
 FROM nginx
 
 # copy build to nginx
+COPY  nginx.conf /etc/nginx/nginx.conf
 COPY  makerskills/ /usr/share/nginx/html
 
 # run server
@@ -85,7 +87,7 @@ EOF
                           println "Branch es develop"
                           PORT_FRONT = 9997
                           break
-                      default: 
+                      default:
                           println "branch no mapeado"
                           currentBuild.result = 'ABORTED'
                           error('No mapeada la configuracion para este branch... Solicitar su revision y asignacion de puerto')
@@ -94,10 +96,10 @@ EOF
                 println "Delete deploy stack from olimpo.web"
                 sh "ssh root@10.10.100.11 'docker stack rm ${STACK_NAME}_${BRANCH_NAME}'"
                 println "Create compose-${BRANCH_NAME}.yml"
-                sh """cat << EOF > compose-${BRANCH_NAME}.yml 
+                sh """cat << EOF > compose-${BRANCH_NAME}.yml
 version: '3.5'
 services:
-  app: 
+  app:
     image: "${PROJECTNAME_LOW}-${BRANCHNAME_LOW}:${VERSION}"
     deploy:
       placement:

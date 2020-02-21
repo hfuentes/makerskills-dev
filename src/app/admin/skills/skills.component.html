@@ -1,83 +1,50 @@
 <div class="row" *ngIf="!this.addSkill">
-    <label class="col-10 col-form-label">&nbsp;</label>
-    <div class="col-2">
-        <button type="button" class="btn btn-primary btn-circle" (click)="viewAddSkill()">
+  <label class="col-10 col-form-label">&nbsp;</label>
+  <div class="col-2">
+    <button type="button" class="btn btn-primary btn-circle" (click)="viewAddSkillForm()">
       +
     </button>
-    </div>
-</div>
-<!--
-<form *ngIf="this.addSkill" [formGroup]="formAddSkill" (ngSubmit)="guardarSkill()">
-    <div>
-        <div class="form-group row">
-            <input class="form-control col-7" type="skill" placeholder="Skill" formControlName="skill">
-
-            <label class="col-1 col-form-label">&nbsp;</label>
-            <div class="input-group" class="col-2">
-                <button type="button" class="btn btn-danger" (click)="viewAddSkill()">
-                  Cancelar
-                </button>
-            </div>
-
-            <div class="input-group" class="col-2">
-                <button type="submit" class="btn btn-outline-primary" [disabled]="!formAddSkill.valid">
-                  Guardar
-                </button>
-            </div>
-        </div>
-    </div>
-    {{ form.valid }}
-</form>
--->
-
-
-<div>
-  <div class="skill" *ngFor="let skill of this.skills; let i = index;">
-
-    <div *ngIf="!skill.viewEdit" class="skill-header">
-      <div>
-        <label>Skill: </label>
-        <span>{{skill.name}}</span>
-      </div>
-
-      <div>
-        Estado: {{skill.active}}
-      </div>
-    </div>
-
-    <div *ngIf="!skill.viewEdit" class="skill-tags">
-      <span class="m-1 badge badge-info" *ngFor="let tag of skill.tags; let i = index;">
-        {{tag.name}}
-      </span>
-    </div>
-
-    <div *ngIf="!skill.viewEdit" class="skill-footer">
-      <button (click)="skillActiveEdit(i, skill)">Editar</button>
-    </div>
-
-    <div *ngIf="skill.viewEdit" class="skill-header">
-      <div>
-        <label>Skill: </label>
-        <span><input type="text" placeholder="Skill" value="asdasd"></span>
-      </div>
-      <div>
-        <input type="checkbox" class="form-check-input" id="checkbox">
-        <label for="checkbox">Activo</label>
-      </div>
-    </div>
-
-    <div *ngIf="skill.viewEdit" class="skill-tags">
-      <span class="m-1 badge badge-info tag-hover">
-          asdasd
-          <img src="../../../assets/icon/ios-close.svg" class="tag-close" alt="...">
-      </span>
-    </div>
-
-    <div *ngIf="skill.viewEdit" class="skill-footer">
-      <button (click)="skillActiveEdit(i, skill)">Cancelar</button>
-      <button>Eliminar</button>
-      <button>Guardar</button>
-    </div>
-
   </div>
 </div>
+
+<app-error-handler [loading]="loading.skills" [error]="error.skills">
+  <div class="row mt-3">
+    <div class="col">
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Active</th>
+          <th scope="col">Tags</th>
+        </tr>
+        </thead>
+        <tbody>
+        <ng-container *ngFor="let skill of skillsFront; let i = index">
+          <tr>
+            <th scope="row">{{i}}</th>
+            <th scope="row">{{skill.name}}</th>
+            <th align="center">
+              <ng-container>
+                <app-error-handler [loading]="skill.loading" [error]="error.activarSkill">
+                <div class="btn-group btn-group-toggle">
+                  <label [ngClass]="{'btn-success': skill.active, 'btn-danger': !skill.active}" ngbButtonLabel>
+                    <input type="checkbox" ngbButton (click)="onClick(skill)">
+                    <span>{{skill.active ? 'Activo' : 'Inactivo'}}</span>
+                  </label>
+                </div>
+                </app-error-handler>
+              </ng-container>
+            </th>
+            <th scope="row">
+              <ng-container *ngFor="let tag of skill.tags">
+                <span class="badge badge-primary mr-1">{{tag.name}}</span>
+              </ng-container>
+            </th>
+          </tr>
+        </ng-container>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</app-error-handler>

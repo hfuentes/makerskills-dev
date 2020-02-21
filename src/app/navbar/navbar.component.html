@@ -1,52 +1,37 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
+<nav class="navbar navbar-expand-md navbar-light sticky-top" style="background-color: #e3f2fd;" *ngIf="auth.authenticated">
   <a class="navbar-brand" href="#">
-    <img src="https://static.wixstatic.com/media/1cbd15_365ed530bdb843248cc8e39024a7a98a~mv2.png/v1/fill/w_362,h_217,al_c,q_85/1cbd15_365ed530bdb843248cc8e39024a7a98a~mv2.webp" width="30" height="30" alt="logo">
+    <img
+      src="https://static.wixstatic.com/media/1cbd15_365ed530bdb843248cc8e39024a7a98a~mv2.png/v1/fill/w_362,h_217,al_c,q_85/1cbd15_365ed530bdb843248cc8e39024a7a98a~mv2.webp"
+      width="30" height="30" alt="logo">
     Maker<strong>Skills</strong>
   </a>
   <button class="navbar-toggler hidden-sm-up" type="button" (click)="isNavbarCollapsed = !isNavbarCollapsed"
-          data-target="#navbarsDefault" aria-controls="navbarsDefault" aria-expanded="false"
-          aria-label="Toggle navigation">
+    data-target="#navbarsDefault" aria-controls="navbarsDefault" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div [ngbCollapse]="isNavbarCollapsed" class="collapse navbar-collapse" *ngIf="auth.authenticated"
-       id="navbarsDefault">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item dropdown" ngbDropdown>
-          <a class="nav-link dropdown-toggle" id="id01" ngbDropdownToggle>Menu</a>
-          <div class="dropdown-menu bg-dark" aria-labelledby="id01" ngbDropdownMenu>
-            <div *ngFor="let item of MENU">
-              <a class="dropdown-item text-light" *ngIf="auth.matchingRoles([item.role])"
-                 routerLink="{{item.route}}" ngbDropdownItem>{{item.name}}</a>
-            </div>
-          </div>
-        </li>
-      </ul>
-      <div class="input-group align-content-md-center ml-5">
-        <input class="form-control col-8" type="search" placeholder="search..." id="search-input">
-        <span class="input-group-append">
-          <div class="input-group-text bg-white"><i class="fa fa-search"></i></div>
-        </span>
-      </div>
-      <ul class="navbar-nav mr-auto mb-auto mt-auto">
-        <li class="nav-item dropdown" ngbDropdown>
-            <img
-              src="{{auth.userData.photoURL}}" width="35" height="35"
-              class="rounded-circle" ngbDropdownMenu>
-          <div class="dropdown-menu bg-dark" aria-labelledby="id01" ngbDropdownMenu>
-            <app-logout></app-logout>
-          </div>
-        </li>
-      </ul>
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item dropdown" ngbDropdown>
-        <a class="nav-link dropdown-toggle" id="id02" ngbDropdownToggle>
-          <img
-            src="{{auth.userData.photoURL}}" width="35" height="35"
-            class="rounded-circle">
+  <div [ngbCollapse]="isNavbarCollapsed" class="collapse navbar-collapse"
+    id="navbarsDefault">
+    <app-navbar-search *ngIf="auth.matchingRoles(['searcher'])" class="input-group align-content-md-center ml-5">
+    </app-navbar-search>
+    <ul class="navbar-nav mb-auto ml-auto">
+      <li class="nav-item dropdown mt-3" ngbDropdown>
+        <a class="nav-link dropdown-toggle" id="id01" ngbDropdownToggle>
+          Welcome, {{ auth.userData.displayName }}
         </a>
-        <div class="dropdown-menu bg-dark" aria-labelledby="id02" ngbDropdownMenu>
-            <app-logout></app-logout>
+        <div class="dropdown-menu dropdown-menu-right" style="background-color: #f2f9ff;" aria-labelledby="id01"
+          ngbDropdownMenu>
+          <div *ngFor="let item of MENU">
+            <a class="dropdown-item" *ngIf="auth.matchingRoles([item.role])" [routerLink]="item.route" ngbDropdownItem>
+              {{ item.name }}
+            </a>
+          </div>
         </div>
+      </li>
+      <li class="nav-item mt-3">
+        <img [src]="auth.userData.photoURL" width="35" height="35" class="rounded-circle">
+      </li>
+      <li class="nav-item mt-3">
+        <app-logout></app-logout>
       </li>
     </ul>
   </div>

@@ -7,39 +7,71 @@
   </div>
   <div class="p-3">
     <app-error-handler [loading]="state.loading" [error]="state.error">
-      <p>Indicate your level in each skill and years of experience:</p>
-      <div class="row">
-        <ng-container *ngFor="let evaluationSkill of this.evaluationSkills">
-          <div class="col-12 col-xl-6">
-            <table class="table table-sm table-borderless">
-              <tr>
-                <td style="width: 40%">
-                  <span class="badge badge-pill"
-                    [ngClass]="{ 'badge-success text-white': evaluationSkill.check, 'badge-primary': !evaluationSkill.check }">
-                    {{ evaluationSkill.skill.name }}
-                    <fa *ngIf="!evaluationSkill.check" name="chevron-circle-right"></fa>
-                    <fa *ngIf="evaluationSkill.check" name="times-circle"
-                      (click)="resetEvaluationSkill(evaluationSkill)"></fa>
-                  </span>
-                </td>
-                <td style="width: 30%">
-                  <ngb-rating class="text-warning" placement="top" [ngbTooltip]="Level" [max]="5"
-                    [(rate)]="evaluationSkill.skill.level">
-                  </ngb-rating>
-                </td>
-                <td style="width: 20%">
-                  <input type="number" class="form-control form-control-sm" placeholder="Years"
-                    [(ngModel)]="evaluationSkill.skill.exp" />
-                </td>
-              </tr>
-            </table>
+      <app-error-handler [loading]="state.refLoading" [error]="state.refError">
+        <div class="row mb-3" *ngIf="usersReferents && usersReferents.length > 0">
+          <div class="col">
+            <p>Referents:</p>
+            <ng-container *ngFor="let userTag of usersReferents">
+              <div class="float-left mr-3 text-center">
+                <img src="{{userTag.user.photoURL}}" width="35" height="35" class="rounded-circle"
+                  [ngbPopover]="userPop" triggers="mouseenter:mouseleave">
+                <ng-template #userPop>
+                  {{userTag.user.displayName}}
+                </ng-template>
+                <ng-container *ngFor="let tagLevel of userTag.tags">
+                  <br>
+                  <ngb-rating [readonly]="true" placement="bottom"
+                    [ngbTooltip]="'# ' + tagLevel.tag.name + ' Level: ' + (tagLevel.avgLevels | number) + '!'" [max]="5"
+                    [rate]="tagLevel.avgLevels" class="text-{{tagLevel.bg}}"></ngb-rating>
+                </ng-container>
+                <br>
+                <a [routerLink]="['profile']" [queryParams]="{ email: userTag.user.email }">Go to profile!</a>
+              </div>
+            </ng-container>
           </div>
-        </ng-container>
+        </div>
+      </app-error-handler>
+      <div *ngIf="evaluationSkills && evaluationSkills.length > 0">
+        <p>Indicate your level in each skill and years of experience:</p>
+        <div class="row">
+          <ng-container *ngFor="let evaluationSkill of evaluationSkills">
+            <div class="col-12 col-xl-6">
+              <table class="table table-sm table-borderless">
+                <tr>
+                  <td style="width: 40%">
+                    <span class="badge badge-pill"
+                      [ngClass]="{ 'badge-success text-white': evaluationSkill.check, 'badge-primary': !evaluationSkill.check }">
+                      {{ evaluationSkill.skill.name }}
+                      <fa *ngIf="!evaluationSkill.check" name="chevron-circle-right"></fa>
+                      <fa *ngIf="evaluationSkill.check" name="times-circle"
+                        (click)="resetEvaluationSkill(evaluationSkill)"></fa>
+                    </span>
+                  </td>
+                  <td style="width: 30%">
+                    <ngb-rating class="text-warning" placement="top"
+                      [ngbTooltip]="evaluationSkill.skill.level ? evaluationSkill.skill.levelLabel + ' level' : 'Select level'"
+                      [max]="5" [(rate)]="evaluationSkill.skill.level">
+                    </ngb-rating>
+                  </td>
+                  <td style="width: 20%">
+                    <input type="number" class="form-control form-control-sm" placeholder="Years"
+                      [(ngModel)]="evaluationSkill.skill.exp" min="0" />
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </ng-container>
+        </div>
+        <div class="text-center">
+          <app-error-handler [loading]="state.saveLoading" [error]="state.saveError">
+            <button type="button" class="btn btn-primary" (click)="saveEvaluation()">Save</button>
+          </app-error-handler>
+        </div>
       </div>
-      <div class="text-center">
-        <app-error-handler [loading]="state.saveLoading" [error]="state.saveError">
-          <button type="button" class="btn btn-primary" (click)="saveEvaluation()">Save</button>
-        </app-error-handler>
+      <div *ngIf="!evaluationSkills && (evaluationSkills && evaluationSkills.length == 0)">
+        <div class="alert alert-warning" role="alert">
+          Ops! We have not found any skills for this category.
+        </div>
       </div>
     </app-error-handler>
   </div>

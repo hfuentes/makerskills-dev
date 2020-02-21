@@ -1,11 +1,13 @@
-import { Skill } from './skill'
+import { Skill, SkillName } from './skill'
 import { DocumentReference } from '@angular/fire/firestore'
+import { getLevelLabel } from '../constants/constants'
 
 export class Tag {
   id: string
   name: string
   active: boolean
-  constructor(data: any) {
+  constructor(data?: any) {
+    if (!data) return
     this.id = data.id
     this.name = data.name
     this.active = data.active
@@ -25,6 +27,7 @@ export class DashboardTag {
   tag: Tag
   skills: Array<Skill>
   bg: string
+  get maxSkillsChart(): number { return 8 }
   get avgLeveles(): number {
     if (this.skills) {
       if (this.skills.length === 0) return 0
@@ -33,7 +36,11 @@ export class DashboardTag {
     }
     return null
   }
-  constructor(data: any) {
+  get avgLevelLabel() {
+    return getLevelLabel(this.avgLeveles)
+  }
+  constructor(data?: any) {
+    if (!data) return
     this.tag = data.tag
     this.skills = data.skills
   }
@@ -44,6 +51,28 @@ export class DashboardTag {
       'bg-danger',
       'bg-warning',
       'bg-info']
+    this.bg = bgClassList[Math.floor(Math.random() * bgClassList.length)]
+  }
+}
+
+export class NavSearchItem {
+  item: Tag | SkillName
+  bg: string
+  weight: number
+  skillsCount?: number
+  constructor(data?: any) {
+    if (!data) return
+    this.item = data.item
+    this.weight = 1
+    this.setBg()
+  }
+  setBg(): void {
+    const bgClassList = [
+      'primary',
+      'success',
+      'danger',
+      'warning',
+      'info']
     this.bg = bgClassList[Math.floor(Math.random() * bgClassList.length)]
   }
 }

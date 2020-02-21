@@ -1,0 +1,48 @@
+<ng-container [formGroup]="search.form">
+  <span class="input-group-prepend">
+    <div class="input-group-text bg-white"><i class="fa fa-search"></i></div>
+  </span>
+  <input class="form-control col-8" autocomplete="off" type="search" placeholder="Find your maker!"
+    [ngbPopover]="popContent" [autoClose]="'outside'" placement="bottom-left" [popoverClass]="'nav-search-popover'"
+    formControlName="text">
+  <ng-template #popContent>
+    <div class="row">
+      <div class="col">
+        <div class="clearfix">
+          <ng-container *ngFor="let searchTag of search.items">
+            <span class="badge badge-{{ searchTag.bg }} float-left mr-1"># {{ searchTag.item.name }}</span>
+          </ng-container>
+          <a href="#" class="float-right text-muted"><u>SEE MORE</u>
+            <fa name="plus-circle"></fa>
+          </a>
+        </div>
+        <hr>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="clearfix">
+          <app-error-handler [loading]="search.userState.loading" [error]="search.userState.error">
+            <ng-container *ngFor="let userItem of search.usersItems">
+              <div class="float-left mr-3 text-center">
+                <a [routerLink]="['profile']" [queryParams]="{ email: userItem.user.email }">
+                  <img src="{{userItem.user.photoURL}}" width="35" height="35" class="rounded-circle"
+                    [ngbPopover]="userPop" triggers="mouseenter:mouseleave">
+                  <ng-template #userPop>
+                    {{userItem.user.displayName}}
+                  </ng-template>
+                </a>
+                <ng-container *ngFor="let itemLevel of userItem.items">
+                  <br>
+                  <ngb-rating [readonly]="true" placement="bottom"
+                    [ngbTooltip]="'# ' + itemLevel.item + ' Level: ' + (itemLevel.avgLevels | number) + '!'"
+                    [max]="5" [rate]="itemLevel.avgLevels" class="text-{{itemLevel.bg}}"></ngb-rating>
+                </ng-container>
+              </div>
+            </ng-container>
+          </app-error-handler>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</ng-container>

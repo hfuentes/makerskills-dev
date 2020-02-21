@@ -1,179 +1,104 @@
-<div class="row" *ngIf="!this.addUser">
-    <label class="col-10 col-form-label">&nbsp;</label>
-    <div class="col-2">
-      <button type="button" class="btn btn-primary btn-circle" (click)="addUserView()">
-        +
-      </button>
+<div class="row mt-3 mb-3">
+  <div class="col">
+    <div class="card mb-3">
+      <div class="card-body">
+        <div class="clearfix" *ngIf="create.active === false">
+          <button type="button" class="float-right btn btn-primary btn-sm text-white m-1"
+            (click)="create.active = true">
+            Add user <fa name="check-circle"></fa>
+          </button>
+        </div>
+        <div *ngIf="create.active === true">
+          <app-error-handler [loading]="create.state.loading" [error]="create.state.error">
+            <form [formGroup]="create.form" *ngIf="create.state.success === false">
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" placeholder="User email" formControlName="email">
+                <div>
+                  <span class="badge badge-danger"
+                    *ngIf="create.form.controls.email.invalid && (create.form.controls.email.dirty || create.form.controls.email.touched)">
+                    <ng-container *ngIf="create.form.controls.email.errors.required">Required
+                    </ng-container>
+                    <ng-container *ngIf="create.form.controls.email.errors.email">Hey! Give us a valid email
+                    </ng-container>
+                  </span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" placeholder="User name" formControlName="name">
+              </div>
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="activeCheck" formControlName="active">
+                <label class="form-check-label" for="activeCheck">User active</label>
+              </div>
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="adminCheck" formControlName="roleAdmin">
+                <label class="form-check-label" for="adminCheck">Has role admin</label>
+              </div>
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="profileCheck" formControlName="roleProfile">
+                <label class="form-check-label" for="profileCheck">Has role profile</label>
+              </div>
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="searcherCheck" formControlName="roleSearcher">
+                <label class="form-check-label" for="searcherCheck">Has role searcher</label>
+              </div>
+              <br>
+              <button type="submit" class="btn btn-sm btn-success mr-1" [disabled]="create.form.invalid"
+                (click)="saveUser()">Save</button>
+                <button type="button" class="btn btn-sm btn-secondary" (click)="cancel()">Cancel</button>
+            </form>
+          </app-error-handler>
+          <div *ngIf="create.state.success === true">
+            <div class="alert alert-success" role="alert">
+              User added successfully, thanks!
+            </div>
+            <div class="text-center">
+              <button type="button" class="btn btn-success text-white mt-3" (click)="cancel()">
+                Accept <fa name="check-circle"></fa>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+    <app-error-handler [loading]="state.loading" [error]="state.error">
+      <div class="card mb-3" *ngFor="let item of users; let index = i">
+        <div class="card-body">
+          <span>{{ item.user.displayName || '-'  }}</span><br>
+          <span class="text-muted">{{ item.user.email }}</span><br>
+          <app-error-handler [loading]="item.state.activeLoading" [error]="item.state.activeError"
+            [settings]="item.state.activeSettings">
+            <button title="Click to switch" type="button" class="btn btn-sm text-white m-1"
+              [ngClass]="{'btn-success': item.user.active, 'btn-danger': !item.user.active}" (click)="setActive(item)">
+              {{ item.user.active ? 'Active' : 'Desactive' }}
+              <fa [name]="item.user.active ? 'check-circle' : 'times-circle'"></fa>
+            </button>
+          </app-error-handler>
+          <app-error-handler [loading]="item.state.rolesLoading" [error]="item.state.rolesError"
+            [settings]="item.state.rolesSettings">
+            <button title="Click to switch" type="button" class="btn btn-sm text-white m-1"
+              [ngClass]="{'btn-success': item.user.roles && item.user.roles.admin, 'btn-danger': item.user.roles && !item.user.roles.admin}"
+              (click)="setRoles(item, 'admin')">
+              {{ item.user.roles && item.user.roles.admin ? 'Has role admin' : 'No role admin' }}
+              <fa [name]="item.user.roles && item.user.roles.admin ? 'check-circle' : 'times-circle'"></fa>
+            </button>
+            <button title="Click to switch" type="button" class="btn btn-sm text-white m-1"
+              [ngClass]="{'btn-success': item.user.roles && item.user.roles.profile, 'btn-danger': item.user.roles && !item.user.roles.profile}"
+              (click)="setRoles(item, 'profile')">
+              {{ item.user.roles && item.user.roles.profile ? 'Has role profile' : 'No role profile' }}
+              <fa [name]="item.user.roles && item.user.roles.profile ? 'check-circle' : 'times-circle'"></fa>
+            </button>
+            <button title="Click to switch" type="button" class="btn btn-sm text-white m-1"
+              [ngClass]="{'btn-success': item.user.roles && item.user.roles.searcher, 'btn-danger': item.user.roles && !item.user.roles.searcher}"
+              (click)="setRoles(item, 'searcher')">
+              {{ item.user.roles && item.user.roles.searcher ? 'Has role searcher' : 'No role searcher' }}
+              <fa [name]="item.user.roles && item.user.roles.searcher ? 'check-circle' : 'times-circle'"></fa>
+            </button>
+          </app-error-handler>
+        </div>
+      </div>
+    </app-error-handler>
+  </div>
 </div>
-
-<form *ngIf="this.addUser" [formGroup]="forma" (ngSubmit)="guardarUsuario()">
-  <div class="row mt-3">
-    <div class="col">
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">Email</th>
-            <th scope="col">Name</th>
-            <th scope="col">Admin</th>
-            <th scope="col">Profile</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              <!-- Email -->
-              <div>
-                <div class="form-group row">
-                  <div class="col-12">
-                    <input 
-                      class="form-control"
-                      [ngClass]="{'is-invalid':!forma.get('email').valid && forma.value.email !== null }"
-                      type="email"
-                      placeholder="Email"
-                      formControlName="email">
-                    <div *ngIf="!forma.controls['email'].valid" class="invalid-feedback">
-                      Debe ingresar un mail valido
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </td>
-            <td>
-              <!-- Name -->
-              <div>
-                <div class="form-group row danger">
-                  <div class="col-10">
-                    <input 
-                      class="form-control"
-                      [ngClass]="{'is-invalid':!forma.get('name').valid && forma.value.name !== null }"
-                      type="text"
-                      placeholder="Name"
-                      formControlName="name">
-                    <div *ngIf="!forma.controls['name'].valid" class="invalid-feedback">
-                      Debe ingresar un nombre
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div formGroupName="roles">
-                <div class="btn-group btn-group-toggle">
-                  <label 
-                    [ngClass]="{'btn-success': this.forma.value.roles.admin, 'btn-danger': !this.forma.value.roles.admin}"
-                    ngbButtonLabel>
-                    <input 
-                      type="checkbox"
-                      formControlName="admin"
-                      ngbButton>
-                    <span *ngIf="this.forma.value.roles.admin">Activo</span>
-                    <span *ngIf="!this.forma.value.roles.admin">Inactivo</span>
-                  </label>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div formGroupName="roles">
-                <div class="btn-group btn-group-toggle">
-                  <label 
-                    [ngClass]="{'btn-success': this.forma.value.roles.profile, 'btn-danger': !this.forma.value.roles.profile}"
-                    ngbButtonLabel>
-                    <input 
-                      type="checkbox"
-                      formControlName="profile"
-                      ngbButton>
-                    <span *ngIf="this.forma.value.roles.profile">Activo</span>
-                    <span *ngIf="!this.forma.value.roles.profile">Inactivo</span>
-                  </label>
-                </div>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-  <!-- Submit -->
-  <div>
-    <div class="form-group row">
-      <div class="input-group" class="col-2">
-        <button type="button" class="btn btn-danger" (click)="addUserView()">
-          Cancelar
-        </button>
-      </div>
-      <label class="col-8 col-form-label">&nbsp;</label>
-      <div class="input-group" class="col-2" >
-        <button type="submit" class="btn btn-outline-primary" [disabled]="!forma.valid">
-          Guardar
-        </button>
-      </div>
-    </div>
-  </div>
-  {{ forma.valid }}
-</form>
-     
-<app-error-handler [loading]="this.loadingGetUsers.loading" [error]="this.loadingGetUsers.error">
-  <div class="row mt-3">
-      <div class="col">
-          <table class="table">
-              <thead>
-                  <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Email</th>
-                      <th scope="col">Name</th>
-                      <th scope="col">Active</th>
-                      <th scope="col">Admin</th>
-                      <th scope="col">Profile</th>
-                  </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let userFront of this.usersFront; let i = index">
-                  <th>
-                    {{i + 1}}
-                  </th>
-                  <th>
-                    {{userFront.user.email}}
-                  </th>
-                  <th>
-                    {{userFront.user.displayName}}
-                  </th>
-                  <th>
-                    <app-error-handler [loading]="userFront.user.loadingUpdateUser" [error]="this.loadingUpdateUser.error">
-                      <div class="btn-group btn-group-toggle">
-                        <label [ngClass]="{'btn-success': userFront.user.active, 'btn-danger': !userFront.user.active}" ngbButtonLabel>
-                          <input type="checkbox" ngbButton (click)="onClick(userFront)">
-                            <span *ngIf="userFront.user.active">Activo</span>
-                            <span *ngIf="!userFront.user.active">Inactivo</span>
-                        </label>
-                      </div>
-                    </app-error-handler>
-                  </th>
-                  <th>
-                    <app-error-handler [loading]="userFront.user.adminRoleUserLoading" [error]="this.loadingUpdateUser.error">
-                      <div class="btn-group btn-group-toggle">
-                        <label [ngClass]="{'btn-success': userFront.user.roles.admin, 'btn-danger': !userFront.user.roles.admin}" ngbButtonLabel>
-                          <input type="checkbox" ngbButton (click)="onClickRole(userFront,'admin')">
-                          <span *ngIf="userFront.user.roles.admin">Activo</span>
-                          <span *ngIf="!userFront.user.roles.admin">Inactivo</span>
-                        </label>
-                      </div>
-                    </app-error-handler>
-                  </th>
-                  <th>
-                    <app-error-handler [loading]="userFront.user.profileRoleUserLoading" [error]="this.loadingUpdateUser.error">
-                      <div class="btn-group btn-group-toggle">
-                        <label [ngClass]="{'btn-success': userFront.user.roles.profile, 'btn-danger': !userFront.user.roles.profile}" ngbButtonLabel>
-                          <input type="checkbox" ngbButton (click)="onClickRole(userFront,'profile')">
-                          <span *ngIf="userFront.user.roles.profile">Activo</span>
-                          <span *ngIf="!userFront.user.roles.profile">Inactivo</span>
-                        </label>
-                      </div>
-                    </app-error-handler>
-                  </th>
-                </tr>
-              </tbody>
-          </table>
-      </div>
-  </div>
-</app-error-handler>

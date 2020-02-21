@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { UserService } from '../core/user.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { User } from '../core/domain/user';
@@ -9,15 +9,16 @@ import { AuthService } from '../core/auth.service';
   selector: 'app-users-search',
   templateUrl: './users-search.component.html'
 })
-export class UsersSearchComponent implements OnInit {
+export class UsersSearchComponent implements OnInit, OnChanges {
 
-  @Input() search: SearchData
+  @Input() search: SearchData = new SearchData()
+  @Input() email = ''
   form: FormGroup
 
   constructor(
     private userService: UserService,
     private formBuilder: FormBuilder,
-    private auth: AuthService
+    public auth: AuthService
   ) {
     this.form = this.formBuilder.group({
       email: new FormControl('', [
@@ -26,7 +27,19 @@ export class UsersSearchComponent implements OnInit {
     })
   }
 
-  ngOnInit() { }
+  ngOnChanges() {
+    if (this.email && this.email !== '') {
+      this.form.controls.email.setValue(this.email)
+      this.searchUser()
+    }
+  }
+
+  ngOnInit() {
+    if (this.email && this.email !== '') {
+      this.form.controls.email.setValue(this.email)
+      this.searchUser()
+    }
+  }
 
   findMySelf() {
     this.form.reset()

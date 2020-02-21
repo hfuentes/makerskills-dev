@@ -28,7 +28,13 @@ import { SkillsTagComponent } from './skills-tag/skills-tag.component'
 import { DashboardComponent } from './dashboard/dashboard.component'
 import { NavbarConstants} from './navbar/navbar.constants'
 import { ModalEvaluateComponent } from './modal-evaluate/modal-evaluate.component'
-import {ErrorHandlerModule} from './error-handler/error-handler.module'
+import {ErrorHandlerModule} from './error-handler/error-handler.module';
+import { NavbarSearchComponent } from './navbar-search/navbar-search.component';
+import { CommentsComponent } from './comments/comments.component';
+import { BtnCommentComponent } from './btn-comment/btn-comment.component';
+import { ModalCommentComponent } from './modal-comment/modal-comment.component';
+import { FooterComponent } from './footer/footer.component';
+import { UserDashboardComponent } from './user-dashboard/user-dashboard.component'
 
 @NgModule({
   declarations: [
@@ -47,7 +53,13 @@ import {ErrorHandlerModule} from './error-handler/error-handler.module'
     SkillsSearchComponent,
     SkillsTagComponent,
     DashboardComponent,
-    ModalEvaluateComponent
+    ModalEvaluateComponent,
+    NavbarSearchComponent,
+    CommentsComponent,
+    BtnCommentComponent,
+    ModalCommentComponent,
+    FooterComponent,
+    UserDashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -64,7 +76,8 @@ import {ErrorHandlerModule} from './error-handler/error-handler.module'
   providers: [NavbarConstants],
   bootstrap: [AppComponent],
   entryComponents: [
-    ModalEvaluateComponent
+    ModalEvaluateComponent,
+    ModalCommentComponent
   ]
 })
 export class AppModule { }

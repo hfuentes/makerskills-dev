@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core'
+import { Component, OnInit, Input, OnChanges } from '@angular/core'
 import { SharedService } from '../core/shared.service'
 import { Tag, DashboardTag } from '../core/domain/tag'
 import { Error } from '../error-handler/error-handler.component'
@@ -8,16 +8,21 @@ import { User } from '../core/domain/user'
 import { AuthService } from '../core/auth.service'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { ModalEvaluateComponent } from '../modal-evaluate/modal-evaluate.component'
+import * as constants from '../core/constants/constants'
+import { SearchData } from '../users-search/users-search.component'
+import { SeedService } from '../core/seed.service'
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnChanges {
 
   // user data
   @Input() user: User
+  email = '' // query parameter
+  search: SearchData = new SearchData()
 
   // tags data
   tags = new Array<DashboardTag>()
@@ -32,14 +37,25 @@ export class DashboardComponent implements OnInit {
     error: null
   }
 
+  // constants
+  constants = constants
+
   constructor(
     private sharedService: SharedService,
     private userService: UserService,
     private auth: AuthService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    //borrar
+    private seed: SeedService
   ) { }
 
   ngOnInit() {
+    this.seed.populate()
+    this.setUser()
+    this.loadData()
+  }
+
+  ngOnChanges() {
     this.setUser()
     this.loadData()
   }
@@ -102,7 +118,7 @@ export class DashboardComponent implements OnInit {
     modalEvaluateRef.componentInstance.tag = tag
     modalEvaluateRef.componentInstance.userSkills = this.skills
     modalEvaluateRef.componentInstance.user = this.user
-    modalEvaluateRef.componentInstance.reloadUserSkills.subscribe($e => this.reloadData($e))
+    modalEvaluateRef.componentInstance.reloadUserSkills.subscribe(event => this.reloadData(event))
   }
 
   deleteConfirm(tag: Tag) {

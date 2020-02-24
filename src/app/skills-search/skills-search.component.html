@@ -1,10 +1,79 @@
 <div class="row mt-3">
-    <div class="col">
-        <h3>Skill search</h3>
+  <div class="col">
+    <div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text bg-white" id="search-input-av">
+            <fa name="search"></fa>
+          </span>
+        </div>
+        <input type="text" class="form-control" placeholder="Find your maker!" aria-label="search"
+          aria-describedby="search-input-av">
+      </div>
     </div>
-</div>
-<div class="row mt-3">
-    <div class="col">
-        
+    <div>
+      <p>
+        <span class="mr-1">Search results:</span>
+        <span class="badge badge-primary mr-1"># Angular</span>
+        <span class="badge badge-primary mr-1"># Fullstack Java</span>
+        <span class="badge badge-primary mr-1"># Angular</span>
+      </p>
     </div>
+    <div class="row">
+      <div class="col">Name</div>
+      <div class="col">Skills</div>
+      <div class="col">Experience</div>
+      <div class="col">Level</div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <hr>
+      </div>
+    </div>
+    <ng-container *ngFor="let item of [1,2,3,4,5,6]">
+      <div class="row">
+        <div class="col">
+          <img src="https://lh3.googleusercontent.com/a-/AAuE7mBN7qmQmCE8ILmRjBFgiA_rkxc1NpWZQa73wwUzOOU" width="35"
+            height="35" class="float-left rounded-circle">
+          <span title="Héctor Gerardo Fuentes Gaete" class="d-none d-sm-block d-inline-block text-truncate ml-5"
+            style="max-width: 200px;">
+            Héctor Gerardo Fuentes Gaete
+          </span>
+        </div>
+        <div class="col">
+          <span>Programming Paradigms</span><br>
+          <span>Full Stack .NET</span><br>
+          <span>Angular</span><br>
+        </div>
+        <div class="col">
+          <span>1 to 4 years</span><br>
+          <span>5 years</span><br>
+          <span>3 years</span><br>
+        </div>
+        <div class="col">
+          <div class="row">
+            <div class="col">
+              <ngb-rating [readonly]="true" placement="bottom" [ngbTooltip]="'# Angular'" [max]="5" [rate]="4"
+                class="text-primary"></ngb-rating><br>
+              <ngb-rating [readonly]="true" placement="bottom" [ngbTooltip]="'# Angular'" [max]="5" [rate]="4"
+                class="text-primary"></ngb-rating><br>
+              <ngb-rating [readonly]="true" placement="bottom" [ngbTooltip]="'# Angular'" [max]="5" [rate]="4"
+                class="text-primary"></ngb-rating><br>
+            </div>
+            <div class="col">
+              <fa class="float-right" name="angle-right"></fa>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <hr>
+        </div>
+      </div>
+    </ng-container>
+    <div class="row mb-3">
+      <div class="col"></div>
+    </div>
+  </div>
 </div>

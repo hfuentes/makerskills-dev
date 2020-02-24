@@ -6,7 +6,7 @@ import { Skill } from '../core/domain/skill'
 import { UserService } from '../core/user.service'
 import { User } from '../core/domain/user'
 import { AuthService } from '../core/auth.service'
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap'
 import { ModalEvaluateComponent } from '../modal-evaluate/modal-evaluate.component'
 import * as constants from '../core/constants/constants'
 import { SearchData } from '../users-search/users-search.component'
@@ -37,6 +37,9 @@ export class DashboardComponent implements OnInit, OnChanges {
     error: null
   }
 
+  // modal
+  modalEvaluateRef: NgbModalRef
+
   // constants
   constants = constants
 
@@ -61,7 +64,12 @@ export class DashboardComponent implements OnInit, OnChanges {
   }
 
   setUser(): void {
-    if (!this.user) this.user = this.auth.userData
+    if (!this.user) {
+      this.user = this.auth.userData
+      if (this.modalEvaluateRef) {
+        this.modalEvaluateRef.close()
+      }
+    }
   }
 
   loadData() {
@@ -114,11 +122,11 @@ export class DashboardComponent implements OnInit, OnChanges {
   }
 
   evaluateModal(tag: DashboardTag) {
-    const modalEvaluateRef = this.modalService.open(ModalEvaluateComponent, { size: 'lg' })
-    modalEvaluateRef.componentInstance.tag = tag
-    modalEvaluateRef.componentInstance.userSkills = this.skills
-    modalEvaluateRef.componentInstance.user = this.user
-    modalEvaluateRef.componentInstance.reloadUserSkills.subscribe(event => this.reloadData(event))
+    this.modalEvaluateRef = this.modalService.open(ModalEvaluateComponent, { size: 'lg' })
+    this.modalEvaluateRef.componentInstance.tag = tag
+    this.modalEvaluateRef.componentInstance.userSkills = this.skills
+    this.modalEvaluateRef.componentInstance.user = this.user
+    this.modalEvaluateRef.componentInstance.reloadUserSkills.subscribe(event => this.reloadData(event))
   }
 
   deleteConfirm(tag: Tag) {

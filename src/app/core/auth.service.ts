@@ -64,7 +64,7 @@ export class AuthService {
         .then(profile => this.userService.updateUserByGoogleProfile(profile))
         .then(profile => this.userService.getUserByEmail(profile.email))
         .then(user => {
-          delete user.skills //skills has 
+          delete user.skills //skills has
           localStorage.setItem('userData', JSON.stringify(user))
           return resolve(user)
         }).catch(err => reject(err))

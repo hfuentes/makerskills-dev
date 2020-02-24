@@ -22,8 +22,9 @@ export class BtnCommentComponent implements OnInit {
 
   isVisible() {
     const isValidURL =
-      this.router.url.indexOf('dashboard') > -1 ||
-      this.router.url.indexOf('/profile') > -1
+      this.router.url.indexOf('/dashboard') > -1 ||
+      this.router.url.indexOf('/profile') > -1 ||
+      this.router.url.indexOf('/searcher') > -1
     return this.auth && this.auth.userData !== null && isValidURL
   }
 

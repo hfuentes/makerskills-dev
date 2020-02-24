@@ -168,16 +168,17 @@ export class SharedService {
     return new Promise<any>((resolve, reject) => {
       const res: Array<UserItemsSearch> = []
       if (searchItems && searchItems.length > 0) {
+        console.log(searchItems)
         return this.getCollectionSkills().then(docs => {
-          searchItems.forEach(tag => {
-            if (tag.item.constructor.name === Tag.name) {
+          searchItems.forEach(searchItem => {
+            if (searchItem.item.constructor.name === Tag.name) {
               let count = 0
               docs.forEach(doc => {
-                if (doc.data().tags && doc.data().tags.map(t => t.ref.id).includes(tag.item.id)) {
+                if (doc.data().tags && doc.data().tags.map(t => t.ref.id).includes(searchItem.item.id)) {
                   count++
                 }
               })
-              tag.skillsCount = count
+              searchItem.skillsCount = count
             }
           })
           return this.getCollectionUsers()

@@ -16,7 +16,7 @@ export class UserService {
     return new Promise<any>((resolve, reject) => {
       return this.db.firestore.collection('users').doc(email).get()
         .then(doc => {
-          if (doc && doc.exists && doc.data().active == true) {
+          if (doc && doc.exists && doc.data().active === true) {
             const user: User = {
               email: doc.id,
               displayName: doc.data().displayName,

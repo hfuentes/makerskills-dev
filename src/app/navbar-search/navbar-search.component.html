@@ -1,10 +1,17 @@
-<ng-container [formGroup]="search.form">
-  <span class="input-group-prepend">
-    <div class="input-group-text bg-white"><i class="fa fa-search"></i></div>
+<ng-container [formGroup]="search.form" *ngIf="isVisible()">
+  <span class="input-group-prepend" *ngIf="!p.isOpen()" (click)="openPopoverBavBar(p)">
+    <div class="input-group-text bg-white" title="Open searche">
+      <fa name="search"></fa>
+    </div>
+  </span>
+  <span class="input-group-prepend" *ngIf="p.isOpen()" (click)="closePopoverBavBar(p)">
+    <div class="input-group-text bg-white" title="Close searche">
+      <fa name="times"></fa>
+    </div>
   </span>
   <input class="form-control col-8" autocomplete="off" type="search" placeholder="Find your maker!"
-    [ngbPopover]="popContent" [autoClose]="'outside'" placement="bottom-left" [popoverClass]="'nav-search-popover'"
-    formControlName="text">
+    [ngbPopover]="popContent" autoClose="false" placement="bottom-left" [popoverClass]="'nav-search-popover'"
+    formControlName="text" triggers="manual" #p="ngbPopover" (click)="openPopoverBavBar(p)">
   <ng-template #popContent>
     <div class="row">
       <div class="col">
@@ -12,7 +19,9 @@
           <ng-container *ngFor="let searchTag of search.items">
             <span class="badge badge-{{ searchTag.bg }} float-left mr-1"># {{ searchTag.item.name }}</span>
           </ng-container>
-          <a href="#" class="float-right text-muted"><u>SEE MORE</u>
+          <a class="float-right text-muted" [routerLink]="['searcher']"
+            [queryParams]="{ text: search.form.controls.text.value }">
+            <u>SEE MORE</u>
             <fa name="plus-circle"></fa>
           </a>
         </div>
@@ -25,7 +34,7 @@
           <app-error-handler [loading]="search.userState.loading" [error]="search.userState.error">
             <ng-container *ngFor="let userItem of search.usersItems">
               <div class="float-left mr-3 text-center">
-                <a [routerLink]="['profile']" [queryParams]="{ email: userItem.user.email }">
+                <a [routerLink]="['dashboard']" [queryParams]="{ email: userItem.user.email }">
                   <img src="{{userItem.user.photoURL}}" width="35" height="35" class="rounded-circle"
                     [ngbPopover]="userPop" triggers="mouseenter:mouseleave">
                   <ng-template #userPop>
@@ -35,8 +44,8 @@
                 <ng-container *ngFor="let itemLevel of userItem.items">
                   <br>
                   <ngb-rating [readonly]="true" placement="bottom"
-                    [ngbTooltip]="'# ' + itemLevel.item + ' Level: ' + (itemLevel.avgLevels | number) + '!'"
-                    [max]="5" [rate]="itemLevel.avgLevels" class="text-{{itemLevel.bg}}"></ngb-rating>
+                    [ngbTooltip]="'# ' + itemLevel.item + ' Level: ' + (itemLevel.avgLevels | number) + '!'" [max]="5"
+                    [rate]="itemLevel.avgLevels" class="text-{{itemLevel.bg}}"></ngb-rating>
                 </ng-container>
               </div>
             </ng-container>

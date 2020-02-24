@@ -6,6 +6,7 @@ import { EvaluationSkill, Skill, SkillName } from '../core/domain/skill';
 import { User, UserItemsSearch } from '../core/domain/user';
 import { UserService } from '../core/user.service';
 import { Error } from '../error-handler/error-handler.component';
+import { AuthService } from '../core/auth.service';
 
 @Component({
   selector: 'app-modal-evaluate',
@@ -28,16 +29,22 @@ export class ModalEvaluateComponent implements OnInit {
     saveLoading: false,
     saveError: null,
     refLoading: false,
-    refError: null
+    refError: null,
+    enableSave: false
   }
 
   constructor(
     public activeModal: NgbActiveModal,
     private sharedService: SharedService,
-    private userService: UserService
+    private userService: UserService,
+    public auth: AuthService
   ) { }
 
   ngOnInit() {
+    console.log(this.user.email)
+    console.log(this.auth.userData.email)
+    this.state.enableSave = this.user.email === this.auth.userData.email
+    console.log('enable = ' + this.state.enableSave)
     this.state.loading = true
     this.state.error = null
     this.sharedService.getSkillsByTag(this.tag.tag).then(data => {
@@ -57,9 +64,9 @@ export class ModalEvaluateComponent implements OnInit {
 
     this.state.refLoading = true
     this.state.refError = null
-    const tags = Array<NavSearchItem>()
-    tags.push(new NavSearchItem({ tag: this.tag.tag }))
-    this.sharedService.getUsersBySearchItem(tags).then(data => {
+    const navSearchItems = Array<NavSearchItem>()
+    navSearchItems.push(new NavSearchItem({ item: this.tag.tag }))
+    this.sharedService.getUsersBySearchItem(navSearchItems).then(data => {
       this.usersReferents = data.slice(0, 5)
       this.state.refLoading = false
     }).catch(err => {

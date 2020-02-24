@@ -8,6 +8,8 @@ import { SharedService } from '../core/shared.service';
 import { UserItemsSearch } from '../core/domain/user';
 import { Error } from '../error-handler/error-handler.component';
 import { Skill } from '../core/domain/skill';
+import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar-search',
@@ -42,7 +44,8 @@ export class NavbarSearchComponent implements OnInit {
   constructor(
     public auth: AuthService,
     private formBuilder: FormBuilder,
-    private sharedServices: SharedService
+    private sharedServices: SharedService,
+    private router: Router
   ) {
     this.search.form = this.formBuilder.group({
       text: new FormControl('')
@@ -92,6 +95,37 @@ export class NavbarSearchComponent implements OnInit {
       this.search.itemState.error = new Error()
       console.error(err)
     })
+  }
+
+  configurePopoverBavBar(popoverNavbar: NgbPopover = null) {
+    if (popoverNavbar) {
+      popoverNavbar.triggers = 'manual'
+      popoverNavbar.autoClose = false
+    }
+  }
+
+  openPopoverBavBar(popoverNavbar: NgbPopover = null) {
+    if (popoverNavbar && !popoverNavbar.isOpen()) {
+      this.configurePopoverBavBar(popoverNavbar)
+      popoverNavbar.open()
+    }
+  }
+
+  closePopoverBavBar(popoverNavbar: NgbPopover = null) {
+    if (popoverNavbar && popoverNavbar.isOpen()) {
+      this.configurePopoverBavBar(popoverNavbar)
+      // close and remove search data
+      popoverNavbar.close()
+      this.search.form.controls.text.setValue('')
+      this.search.items  = []
+      this.search.usersItems = []
+    }
+  }
+
+  isVisible() {
+    const isInvalidURL =
+      this.router.url.indexOf('/searcher') > -1
+    return this.auth && this.auth.userData !== null && !isInvalidURL
   }
 
 }
